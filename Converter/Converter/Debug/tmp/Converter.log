@@ -1,0 +1,13 @@
+﻿I:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(367,5): warning MSB8004: Intermediate Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Intermediate Directory.
+I:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(368,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
+  main.cpp
+g:\github\lives2d_tools\converter\converter\model.h(56): warning C4018: “<”: 有符号/无符号不匹配
+g:\github\lives2d_tools\converter\converter\model.h(62): warning C4018: “<”: 有符号/无符号不匹配
+g:\github\lives2d_tools\converter\converter\model.h(74): warning C4018: “<”: 有符号/无符号不匹配
+g:\github\lives2d_tools\converter\converter\model.h(105): warning C4018: “<”: 有符号/无符号不匹配
+g:\github\lives2d_tools\converter\converter\model.h(108): warning C4018: “<”: 有符号/无符号不匹配
+g:\github\lives2d_tools\converter\converter\model.h(134): warning C4018: “<”: 有符号/无符号不匹配
+LINK : warning LNK4075: 忽略“/INCREMENTAL”(由于“/PROFILE”规范)
+main.obj : warning LNK4075: 忽略“/EDITANDCONTINUE”(由于“/OPT:LBR”规范)
+  Converter.vcxproj -> G:\Github\Lives2D_Tools\Converter\Converter\Debug\Converter.exe
+  Converter.vcxproj -> G:\Github\Lives2D_Tools\Converter\Converter\Debug\Converter.pdb (Full PDB)

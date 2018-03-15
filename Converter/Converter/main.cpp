@@ -3,6 +3,7 @@
 #include<fstream>
 #include<ctime>
 #include"Profiler.h"
+#include<string>
 
 #define _CRT_SECURE_NO_WARNINGS
 
@@ -45,8 +46,10 @@ int main(int argc,char* argv[])
 void Convert(const char* srcfile,const char* dstfile)
 {
 	ofstream fout(dstfile, ios::binary);
+	
+	ofstream foutLog("log.txt");
 
-	cout << "Assimp Read " << srcfile << endl;
+	std::cout << "Assimp Read " << srcfile << std::endl;
 
 	Model model(srcfile);
 
@@ -54,18 +57,24 @@ void Convert(const char* srcfile,const char* dstfile)
 	int meshcount = model.meshes.size();
 	fout.write((char*)(&meshcount), sizeof(meshcount));
 
-	cout << "MeshCount: " << meshcount << endl;
+	std::cout << "MeshCount: " << meshcount << std::endl;
+
+	foutLog<< "MeshCount: " << meshcount << endl;
 
 	for (size_t meshindex = 0; meshindex < model.meshes.size(); meshindex++)
 	{
-		cout << "Mesh" << meshindex << endl;
+		std::cout << "Mesh" << meshindex << std::endl;
 
 		Mesh mesh = model.meshes[meshindex];
 
 
-		cout << "VertexCount:" << mesh.vertices.size() << endl;
-		cout << "IndicesCount:" << mesh.indices.size() << endl;
-		cout << "TextureCount:" << mesh.textures.size() << endl;
+		std::cout << "VertexCount:" << mesh.vertices.size() << std::endl;
+		std::cout << "IndicesCount:" << mesh.indices.size() << std::endl;
+		std::cout << "TextureCount:" << mesh.textures.size() << std::endl;
+
+		foutLog << "VertexCount:" << mesh.vertices.size() << endl;
+		foutLog << "IndicesCount:" << mesh.indices.size() << endl;
+		foutLog << "TextureCount:" << mesh.textures.size() << endl;
 
 		int vertexsize =sizeof(Vertex) * mesh.vertices.size();
 
@@ -84,6 +93,25 @@ void Convert(const char* srcfile,const char* dstfile)
 			fout.write((char*)(&mesh.vertices[vertexindex]), sizeof(mesh.vertices[vertexindex]));
 		}
 
+		foutLog << "Vertex:" << mesh.vertices.size()<< std::endl;
+		for (size_t vertexindex = 0; vertexindex < mesh.vertices.size(); vertexindex++)
+		{
+			foutLog << "(" << mesh.vertices[vertexindex].Position.x << "," << mesh.vertices[vertexindex].Position.y << "," << mesh.vertices[vertexindex].Position.z << ")" << endl;
+		}
+
+		foutLog << "UV:" << mesh.vertices.size()<< std::endl;
+		for (size_t vertexindex = 0; vertexindex < mesh.vertices.size(); vertexindex++)
+		{
+			foutLog << "(" << mesh.vertices[vertexindex].TexCoords.x << "," << mesh.vertices[vertexindex].TexCoords.y << ")" << endl;
+		}
+
+		foutLog << "Normal:" << mesh.vertices.size()<< std::endl;
+		for (size_t vertexindex = 0; vertexindex < mesh.vertices.size(); vertexindex++)
+		{
+			foutLog << "(" << mesh.vertices[vertexindex].Normal.x << "," << mesh.vertices[vertexindex].Normal.y << "," << mesh.vertices[vertexindex].Normal.z << ")" << endl;
+		}
+
+
 		//Ð´Èëindicessize;
 		fout.write((char*)(&indicessize), sizeof(indicessize));
 
@@ -94,6 +122,14 @@ void Convert(const char* srcfile,const char* dstfile)
 		{
 			fout.write((char*)(&mesh.indices[indexindex]), sizeof(mesh.indices[indexindex]));
 		}
+
+
+		foutLog << "Indices:" << mesh.indices.size()<< std::endl;
+		for (size_t indexindex = 0; indexindex < mesh.indices.size();)
+		{
+			foutLog <<mesh.indices[indexindex++] << "," << mesh.indices[indexindex++] << "," << mesh.indices[indexindex++] << endl;
+		}
+
 
 		//Ð´Èëtexturesize;
 		fout.write((char*)(&texturesize), sizeof(texturesize));
@@ -106,8 +142,9 @@ void Convert(const char* srcfile,const char* dstfile)
 	}
 
 	fout.close();
+	foutLog.close();
 
-	cout << "Sucess" << endl;
+	std::cout << "Sucess" << std::endl;
 
 }
 
