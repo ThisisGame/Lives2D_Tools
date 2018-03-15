@@ -127,7 +127,9 @@ void Convert(const char* srcfile,const char* dstfile)
 		foutLog << "Indices:" << mesh.indices.size()<< std::endl;
 		for (size_t indexindex = 0; indexindex < mesh.indices.size();)
 		{
-			foutLog <<mesh.indices[indexindex++] << "," << mesh.indices[indexindex++] << "," << mesh.indices[indexindex++] << endl;
+			foutLog << mesh.indices[indexindex++] << ",";
+			foutLog << mesh.indices[indexindex++] << ",";
+			foutLog << mesh.indices[indexindex++] << endl;
 		}
 
 

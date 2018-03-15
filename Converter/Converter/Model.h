@@ -35,7 +35,7 @@ private:
 	void loadModel(string path)
 	{
 		Assimp::Importer import;
-		const aiScene* scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipWindingOrder);
+		const aiScene* scene = import.ReadFile(path, aiProcess_Triangulate);
 
 		if (!scene || scene->mFlags == AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 		{
@@ -139,6 +139,7 @@ private:
 			Texture texture;
 			texture.id = 0;// TextureFromFile(str.C_Str(), this->directory);
 			texture.texturetype = texturetype;
+
 
 			memcpy(texture.path, str.data,str.length+1);
 			textures.push_back(texture);
