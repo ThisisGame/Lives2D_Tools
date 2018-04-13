@@ -1,0 +1,37 @@
+﻿生成启动时间为 2018/4/13 17:54:22。
+     1>项目“G:\Github\Lives2D_Tools\maxProject1\maxProject1\maxProject1.vcxproj”在节点 2 上(build 个目标)。
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(298,5): warning MSB8004: Intermediate 目录未以斜杠结尾。此生成实例将添加斜杠，因为必须有这个斜杠才能正确计算 Intermediate 目录。
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(299,5): warning MSB8004: Output 目录未以斜杠结尾。此生成实例将添加斜杠，因为必须有这个斜杠才能正确计算 Output 目录。
+     1>InitializeBuildStatus:
+         正在创建“.\obj\maxProject1.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\x86_amd64\CL.exe /c /I"I:\Program Files\Autodesk\3ds Max 2014 SDK\maxsdk\\include" /I"G:\Github\Lives2D_Tools\maxProject1\maxProject1\GLM-0.9.6.3" /Zi /nologo /W0 /WX- /Od /D _USRDLL /D _ADESK_3DSMAX_WINDOWS_ /D WINVER=0x0502 /D _WIN32_WINNT=0x0502 /D _WIN32_WINDOWS=0x0502 /D _WIN32_IE=0x0800 /D _WINDOWS /D _CRT_SECURE_NO_DEPRECATE /D _CRT_NONSTDC_NO_DEPRECATE /D _SCL_SECURE_NO_DEPRECATE /D ISOLATION_AWARE_ENABLED=1 /D MODULE_NAME=maxProject1.dle /D _DEBUG /D WIN32 /D WIN64 /D _WINDLL /D _UNICODE /D UNICODE /Gm- /EHa /RTC1 /MDd /GS /fp:fast /Zc:wchar_t /Zc:forScope /GR /Fo".\obj\\" /Fd".\obj\vc100.pdb" /Gd /TP /FC /errorReport:prompt maxProject1.cpp /GR /we4706 /we4390 /we4557 /we4546 /we4545 /we4295 /we4310 /we4130 /we4611 /we4213 /we4121 /we4715 /w34701 /w34265 /wd4244 /wd4018 /wd4819 
+         maxProject1.cpp
+       ResourceCompile:
+         所有输出均为最新。
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"G:\Program Files\Autodesk\3ds Max 2014\plugins\maxProject1.dle" /NOLOGO /LIBPATH:"I:\Program Files\Autodesk\3ds Max 2014 SDK\maxsdk\lib\x64\Release" core.lib geom.lib gfx.lib mesh.lib maxutil.lib maxscrpt.lib paramblk2.lib msxml2.lib igame.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /DEF:"maxProject1.def" /MANIFEST:NO /DEBUG /PDB:"G:\Program Files\Autodesk\3ds Max 2014\plugins\maxProject1.dle.pdb" /PDBSTRIPPED:"I:\Program Files\Autodesk\3ds Max 2014 SDK\maxsdk\\pdb\x64\Debug\maxProject1.dle.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE:NO /NXCOMPAT /IMPLIB:".\obj\\maxProject1.lib" /MACHINE:X64 /DLL .\obj\maxProject1.res
+         .\obj\maxProject1.obj
+         .\obj\DllEntry.obj
+         .\obj\MeshEnumProc.obj
+         LINK : 没有找到 G:\Program Files\Autodesk\3ds Max 2014\plugins\maxProject1.dle 或上一个增量链接没有生成它；正在执行完全链接
+            正在创建库 .\obj\\maxProject1.lib 和对象 .\obj\\maxProject1.exp
+         maxProject1.vcxproj -> G:\Program Files\Autodesk\3ds Max 2014\plugins\maxProject1.dle
+       PostBuildEvent:
+         "I:\Program Files\Autodesk\3ds Max 2014 SDK\maxsdk\tools\RunMUIRCT.exe" "G:\Program Files\Autodesk\3ds Max 2014\plugins\\" maxProject1.dle
+         :VCEnd
+         ==== RunMUIRCT: Start ====
+         RunMUIRCT: WARNING - Could not find version info in file: G:\Program Files\Autodesk\3ds Max 2014\plugins\maxProject1.dle
+         
+         There is no version resource in the file 
+         Language neutral file (G:\Program Files\Autodesk\3ds Max 2014\plugins\en-US\maxProject1.dle.ln) successfully created
+         MUI file (G:\Program Files\Autodesk\3ds Max 2014\plugins\en-US\maxProject1.dle.mui) successfully created 
+         ==== RunMUIRCT: Successs ====
+       FinalizeBuildStatus:
+         正在删除文件“.\obj\maxProject1.unsuccessfulbuild”。
+         正在对“.\obj\maxProject1.lastbuildstate”执行 Touch 任务。
+     1>已完成生成项目“G:\Github\Lives2D_Tools\maxProject1\maxProject1\maxProject1.vcxproj”(build 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:03.23
