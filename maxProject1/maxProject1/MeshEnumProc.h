@@ -1,5 +1,5 @@
 #pragma once
-#include "i:\program files\autodesk\3ds max 2014 sdk\maxsdk\include\inode.h"
+#include "inode.h"
 #include "3dsmaxsdk_preinclude.h"
 #include <sceneapi.h>
 #include <triobj.h>

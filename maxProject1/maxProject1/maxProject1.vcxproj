@@ -18,9 +18,12 @@
     <ProjectName>maxProject1</ProjectName>
     <ProjectGuid>{6671F0BA-6FB8-4f35-8392-0676D05113A8}</ProjectGuid>
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <MaxSDK>I:\Program Files\Autodesk\3ds Max 2014 SDK\maxsdk</MaxSDK>
+    <MaxSDK>..\..\3ds Max 2014 SDK\maxsdk</MaxSDK>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
   <Import Project="$(MaxSDK)\ProjectSettings\PropertySheets\3dsmax.general.project.settings.props" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="PropertySheets">
@@ -28,7 +31,7 @@
   </ImportGroup>
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Platform)'=='x64'">G:\Program Files\Autodesk\3ds Max 2014\plugins</OutDir>
+    <OutDir Condition="'$(Platform)'=='x64'">$(ADSK_3DSMAX_x64_2014)\plugins</OutDir>
     <IntDir>.\obj</IntDir>
     <TargetName>maxProject1</TargetName>
     <TargetExt>.dle</TargetExt>
@@ -39,17 +42,18 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <WholeProgramOptimization>false</WholeProgramOptimization>
-      <PreprocessorDefinitions>_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(MaxSdkInc);G:\Github\Lives2D_Tools\maxProject1\maxProject1\GLM-0.9.6.3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(MaxSdkInc);.\GLM-0.9.6.3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</MultiProcessorCompilation>
+      <UndefinePreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(UndefinePreprocessorDefinitions)</UndefinePreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>I:\Program Files\Autodesk\3ds Max 2014 SDK\maxsdk\lib\x64\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\3ds Max 2014 SDK\maxsdk\lib\x64\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>core.lib;geom.lib;gfx.lib;mesh.lib;maxutil.lib;maxscrpt.lib;paramblk2.lib;msxml2.lib;igame.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>maxProject1.def</ModuleDefinitionFile>
-      <OutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">G:\Program Files\Autodesk\3ds Max 2014\plugins\maxProject1.dle</OutputFile>
-      <ShowProgress Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotSet</ShowProgress>
+      <OutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ADSK_3DSMAX_x64_2014)\plugins\maxProject1.dle</OutputFile>
+      <ShowProgress Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">LinkVerbose</ShowProgress>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

@@ -162,6 +162,54 @@ BOOL maxProject1::SupportsOptions(int /*ext*/, DWORD /*options*/)
 }
 
 
+
+std::string WChar2Ansi(LPCWSTR pwszSrc)  
+{  
+	int nLen = WideCharToMultiByte(CP_ACP, 0, pwszSrc, -1, NULL, 0, NULL, NULL);  
+
+	if (nLen<= 0) return std::string("");  
+
+	char* pszDst = new char[nLen];  
+	if (NULL == pszDst) return std::string("");  
+
+	WideCharToMultiByte(CP_ACP, 0, pwszSrc, -1, pszDst, nLen, NULL, NULL);  
+	pszDst[nLen -1] = 0;  
+
+	std::string strTemp(pszDst);  
+	delete [] pszDst;  
+
+	return strTemp;  
+}  
+
+string ws2s(wstring& inputws){ return WChar2Ansi(inputws.c_str()); }  
+
+//Converting a Ansi string to WChar string  
+
+std::wstring Ansi2WChar(LPCSTR pszSrc, int nLen)  
+
+{  
+	int nSize = MultiByteToWideChar(CP_ACP, 0, (LPCSTR)pszSrc, nLen, 0, 0);  
+	if(nSize <= 0) return NULL;  
+
+	WCHAR *pwszDst = new WCHAR[nSize+1];  
+	if( NULL == pwszDst) return NULL;  
+
+	MultiByteToWideChar(CP_ACP, 0,(LPCSTR)pszSrc, nLen, pwszDst, nSize);  
+	pwszDst[nSize] = 0;  
+
+	if( pwszDst[0] == 0xFEFF) // skip Oxfeff  
+		for(int i = 0; i < nSize; i ++)   
+			pwszDst[i] = pwszDst[i+1];  
+
+	wstring wcharString(pwszDst);  
+	delete pwszDst;  
+
+	return wcharString;  
+}  
+
+std::wstring s2ws(const string& s){ return Ansi2WChar(s.c_str(),s.size());} 
+
+
 //bool CreateExportPluginDialog(IGameScene* varGameScene,const string& varFileName);
 
 int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BOOL suppressPrompts, DWORD options)
@@ -209,6 +257,9 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 
 	vector<IGameNode*> tmpVectorGameNodeBones;
 	vector<map<unsigned short,float>> tmpVectorWeight;
+
+	vector<GMatrix> tmpVectorBoneGMatrixInvert;//存储第0帧逆矩阵
+	map<TimeValue,vector<GMatrix>> tmpMapBoneGMatrix;//存储每一帧的矩阵
 
 	//得到第一级
 	int tmpSize=tmpGameScene->GetTopLevelNodeCount();
@@ -349,6 +400,34 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 
 					tmpVectorWeight.push_back(tmpMapWeightOneVertex);
 				}
+
+				//获取第0帧骨骼逆矩阵
+				for (int tmpGameNodeBoneIndex=0;tmpGameNodeBoneIndex<tmpVectorGameNodeBones.size();tmpGameNodeBoneIndex++)
+				{
+					INode* tmpNodeBone=tmpVectorGameNodeBones[tmpGameNodeBoneIndex]->GetMaxNode();
+					Matrix3 tmpMatrix3NodeBone=tmpNodeBone->GetObjTMAfterWSM(0);
+					tmpMatrix3NodeBone.Invert();
+					GMatrix tmpGMatrixNodeBoneInvert(tmpMatrix3NodeBone);
+
+					tmpVectorBoneGMatrixInvert.push_back(tmpGMatrixNodeBoneInvert);
+				}
+
+				//获取骨骼矩阵
+				for (;tmpTimeValueBegin<tmpTimeValueEnd;tmpTimeValueBegin+=tmpTimeValueTicks)
+				{
+					vector<GMatrix> tmpVectorBoneGMatrix;
+					for (int tmpGameNodeBoneIndex=0;tmpGameNodeBoneIndex<tmpVectorGameNodeBones.size();tmpGameNodeBoneIndex++)
+					{
+						INode* tmpNodeBone=tmpVectorGameNodeBones[tmpGameNodeBoneIndex]->GetMaxNode();
+						Matrix3 tmpMatrix3NodeBone=tmpNodeBone->GetObjTMAfterWSM(tmpTimeValueBegin);
+						GMatrix tmpGMatrixNodeBone(tmpMatrix3NodeBone);
+
+						tmpVectorBoneGMatrix.push_back(tmpGMatrixNodeBone);
+					}
+
+					tmpMapBoneGMatrix.insert(pair<TimeValue,vector<GMatrix>>(tmpTimeValueBegin,tmpVectorBoneGMatrix));
+				}
+
 			}
 		}
 
@@ -413,14 +492,6 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 		for (size_t vertexindex = 0; vertexindex < tmpVectorVertex.size(); vertexindex++)
 		{
 			foutLog << "(" << tmpVectorVertex[vertexindex].Position.x << "," << tmpVectorVertex[vertexindex].Position.y << "," << tmpVectorVertex[vertexindex].Position.z << ")";
-			
-			//顶点权重信息
-			map<unsigned short,float> tmpMapWeightOneVertex=tmpVectorWeight[vertexindex];
-			for (map<unsigned short,float>::iterator tmpIterBegin=tmpMapWeightOneVertex.begin();tmpIterBegin!=tmpMapWeightOneVertex.end();tmpIterBegin++)
-			{
-				foutLog<<" "<<tmpIterBegin->first<<":"<<tmpIterBegin->second;
-			}
-			foutLog<<endl;
 		}
 
 		foutLog << "UV:" << tmpVectorVertex.size()<< std::endl;
@@ -469,12 +540,110 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 
 
 		//写入骨骼数据
+		int tmpGameNodeBoneSize=tmpVectorGameNodeBones.size();
+		fout.write((char*)(&tmpGameNodeBoneSize),sizeof(tmpGameNodeBoneSize));
+
 		for (size_t tmpGameNodeBoneIndex=0;tmpGameNodeBoneIndex<tmpVectorGameNodeBones.size();tmpGameNodeBoneIndex++)
 		{
-			wstring tmpGameNodeBoneName=tmpVectorGameNodeBones[tmpGameNodeBoneIndex]->GetName();
-			foutLog<<tmpGameNodeBoneName<<std::endl;
+			const wchar_t* tmpGameNodeBoneName=tmpVectorGameNodeBones[tmpGameNodeBoneIndex]->GetName();
+			std::wstring tmpGameNodeBoneNameWString(tmpGameNodeBoneName);
+			std::string tmpGameNodeBoneNameString=ws2s(tmpGameNodeBoneNameWString);
+			foutLog<<tmpGameNodeBoneNameString<<std::endl;
+
+			int tmpGameNodeBoneNameStringSize=tmpGameNodeBoneNameString.size();
+			fout.write((char*)(&tmpGameNodeBoneNameStringSize),sizeof(tmpGameNodeBoneNameStringSize));
+			fout.write(tmpGameNodeBoneNameString.c_str(),tmpGameNodeBoneNameStringSize);
 		}
 
+		//写入第0帧逆矩阵
+		int tmpVectorBoneGMatrixInvertSize=tmpVectorBoneGMatrixInvert.size();
+		fout.write((char*)(&tmpVectorBoneGMatrixInvertSize),sizeof(tmpVectorBoneGMatrixInvertSize));
+
+		foutLog<<"Invert GMatrix:"<<endl;
+		for (size_t tmpBoneGMatrixInvertIndex=0;tmpBoneGMatrixInvertIndex<tmpVectorBoneGMatrixInvert.size();tmpBoneGMatrixInvertIndex++)
+		{
+			const wchar_t* tmpGameNodeBoneName=tmpVectorGameNodeBones[tmpBoneGMatrixInvertIndex]->GetName();
+			std::wstring tmpGameNodeBoneNameWString(tmpGameNodeBoneName);
+			std::string tmpGameNodeBoneNameString=ws2s(tmpGameNodeBoneNameWString);
+			foutLog<<tmpGameNodeBoneNameString<<endl;
+
+			GMatrix tmpBoneGMatrixInvert=tmpVectorBoneGMatrixInvert[tmpBoneGMatrixInvertIndex];
+			foutLog<<tmpBoneGMatrixInvert[0][0]<<" "<<tmpBoneGMatrixInvert[0][1]<<" "<<tmpBoneGMatrixInvert[0][2]<<" "<<tmpBoneGMatrixInvert[0][3]<<endl;
+			foutLog<<tmpBoneGMatrixInvert[1][0]<<" "<<tmpBoneGMatrixInvert[1][1]<<" "<<tmpBoneGMatrixInvert[1][2]<<" "<<tmpBoneGMatrixInvert[1][3]<<endl;
+			foutLog<<tmpBoneGMatrixInvert[2][0]<<" "<<tmpBoneGMatrixInvert[2][1]<<" "<<tmpBoneGMatrixInvert[2][2]<<" "<<tmpBoneGMatrixInvert[2][3]<<endl;
+			foutLog<<tmpBoneGMatrixInvert[3][0]<<" "<<tmpBoneGMatrixInvert[3][1]<<" "<<tmpBoneGMatrixInvert[3][2]<<" "<<tmpBoneGMatrixInvert[3][3]<<endl;
+
+			glm::mat4x4 tmpMat4x4BoneGMatrixInvert;
+			tmpMat4x4BoneGMatrixInvert[0][0]=tmpBoneGMatrixInvert[0][0];tmpMat4x4BoneGMatrixInvert[0][1]=tmpBoneGMatrixInvert[0][1];tmpMat4x4BoneGMatrixInvert[0][2]=tmpBoneGMatrixInvert[0][2];tmpMat4x4BoneGMatrixInvert[0][3]=tmpBoneGMatrixInvert[0][3];
+			tmpMat4x4BoneGMatrixInvert[1][0]=tmpBoneGMatrixInvert[1][0];tmpMat4x4BoneGMatrixInvert[1][1]=tmpBoneGMatrixInvert[1][1];tmpMat4x4BoneGMatrixInvert[1][2]=tmpBoneGMatrixInvert[1][2];tmpMat4x4BoneGMatrixInvert[1][3]=tmpBoneGMatrixInvert[1][3];
+			tmpMat4x4BoneGMatrixInvert[2][0]=tmpBoneGMatrixInvert[2][0];tmpMat4x4BoneGMatrixInvert[2][1]=tmpBoneGMatrixInvert[2][1];tmpMat4x4BoneGMatrixInvert[2][2]=tmpBoneGMatrixInvert[2][2];tmpMat4x4BoneGMatrixInvert[2][3]=tmpBoneGMatrixInvert[2][3];
+			tmpMat4x4BoneGMatrixInvert[3][0]=tmpBoneGMatrixInvert[3][0];tmpMat4x4BoneGMatrixInvert[3][1]=tmpBoneGMatrixInvert[3][1];tmpMat4x4BoneGMatrixInvert[3][2]=tmpBoneGMatrixInvert[3][2];tmpMat4x4BoneGMatrixInvert[3][3]=tmpBoneGMatrixInvert[3][3];
+
+			fout.write((char*)(&tmpMat4x4BoneGMatrixInvert),sizeof(tmpMat4x4BoneGMatrixInvert));
+		}
+
+		//写入骨骼时间轴矩阵
+		int tmpMapBoneGMatrixSize=tmpMapBoneGMatrix.size();
+		fout.write((char*)(&tmpMapBoneGMatrixSize),sizeof(tmpMapBoneGMatrixSize));
+
+		foutLog<<"Animation:"<<std::endl;
+		for (map<TimeValue,vector<GMatrix>>::iterator tmpIterBegin=tmpMapBoneGMatrix.begin();tmpIterBegin!=tmpMapBoneGMatrix.end();tmpIterBegin++)
+		{
+			TimeValue tmpTimeValueCurrent=tmpIterBegin->first;
+			foutLog<<tmpTimeValueCurrent<<std::endl;
+
+			fout.write((char*)(&tmpTimeValueCurrent),sizeof(tmpTimeValueCurrent));
+
+			vector<GMatrix> tmpVectorGMatrixCurrent=tmpIterBegin->second;
+
+			int tmpVectorGMatrixCurrentSize=tmpVectorGMatrixCurrent.size();
+			fout.write((char*)(&tmpVectorGMatrixCurrentSize),sizeof(tmpVectorGMatrixCurrentSize));
+
+			for (size_t tmpVectorGMatrixCurrentIndex=0;tmpVectorGMatrixCurrentIndex<tmpVectorGMatrixCurrent.size();tmpVectorGMatrixCurrentIndex++)
+			{
+				const wchar_t* tmpGameNodeBoneName=tmpVectorGameNodeBones[tmpVectorGMatrixCurrentIndex]->GetName();
+				std::wstring tmpGameNodeBoneNameWString(tmpGameNodeBoneName);
+				std::string tmpGameNodeBoneNameString=ws2s(tmpGameNodeBoneNameWString);
+				foutLog<<tmpGameNodeBoneNameString<<endl;
+
+				GMatrix tmpGMatrixNodeBone=tmpVectorGMatrixCurrent[tmpVectorGMatrixCurrentIndex];
+				foutLog<<tmpGMatrixNodeBone[0][0]<<" "<<tmpGMatrixNodeBone[0][1]<<" "<<tmpGMatrixNodeBone[0][2]<<" "<<tmpGMatrixNodeBone[0][3]<<endl;
+				foutLog<<tmpGMatrixNodeBone[1][0]<<" "<<tmpGMatrixNodeBone[1][1]<<" "<<tmpGMatrixNodeBone[1][2]<<" "<<tmpGMatrixNodeBone[1][3]<<endl;
+				foutLog<<tmpGMatrixNodeBone[2][0]<<" "<<tmpGMatrixNodeBone[2][1]<<" "<<tmpGMatrixNodeBone[2][2]<<" "<<tmpGMatrixNodeBone[2][3]<<endl;
+				foutLog<<tmpGMatrixNodeBone[3][0]<<" "<<tmpGMatrixNodeBone[3][1]<<" "<<tmpGMatrixNodeBone[3][2]<<" "<<tmpGMatrixNodeBone[3][3]<<endl;
+
+				glm::mat4x4 tmpMat4x4BoneGMatrix;
+				tmpMat4x4BoneGMatrix[0][0]=tmpGMatrixNodeBone[0][0];tmpMat4x4BoneGMatrix[0][1]=tmpGMatrixNodeBone[0][1];tmpMat4x4BoneGMatrix[0][2]=tmpGMatrixNodeBone[0][2];tmpMat4x4BoneGMatrix[0][3]=tmpGMatrixNodeBone[0][3];
+				tmpMat4x4BoneGMatrix[1][0]=tmpGMatrixNodeBone[1][0];tmpMat4x4BoneGMatrix[1][1]=tmpGMatrixNodeBone[1][1];tmpMat4x4BoneGMatrix[1][2]=tmpGMatrixNodeBone[1][2];tmpMat4x4BoneGMatrix[1][3]=tmpGMatrixNodeBone[1][3];
+				tmpMat4x4BoneGMatrix[2][0]=tmpGMatrixNodeBone[2][0];tmpMat4x4BoneGMatrix[2][1]=tmpGMatrixNodeBone[2][1];tmpMat4x4BoneGMatrix[2][2]=tmpGMatrixNodeBone[2][2];tmpMat4x4BoneGMatrix[2][3]=tmpGMatrixNodeBone[2][3];
+				tmpMat4x4BoneGMatrix[3][0]=tmpGMatrixNodeBone[3][0];tmpMat4x4BoneGMatrix[3][1]=tmpGMatrixNodeBone[3][1];tmpMat4x4BoneGMatrix[3][2]=tmpGMatrixNodeBone[3][2];tmpMat4x4BoneGMatrix[3][3]=tmpGMatrixNodeBone[3][3];
+
+				fout.write((char*)(&tmpMat4x4BoneGMatrix),sizeof(tmpMat4x4BoneGMatrix));
+			}
+		}
+
+		//顶点权重信息
+		int tmpVectorVertexSize=tmpVectorVertex.size();
+		fout.write((char*)(&tmpVectorVertexSize),sizeof(tmpVectorVertexSize));
+
+		for (size_t vertexindex = 0; vertexindex < tmpVectorVertex.size(); vertexindex++)
+		{
+			foutLog << "(" << tmpVectorVertex[vertexindex].Position.x << "," << tmpVectorVertex[vertexindex].Position.y << "," << tmpVectorVertex[vertexindex].Position.z << ")";
+
+			map<unsigned short,float> tmpMapWeightOneVertex=tmpVectorWeight[vertexindex];
+
+			int tmpMapWeightOneVertexSize=tmpMapWeightOneVertex.size();
+			fout.write((char*)(&tmpMapWeightOneVertexSize),sizeof(tmpMapWeightOneVertexSize));
+
+			for (map<unsigned short,float>::iterator tmpIterBegin=tmpMapWeightOneVertex.begin();tmpIterBegin!=tmpMapWeightOneVertex.end();tmpIterBegin++)
+			{
+				foutLog<<" "<<tmpIterBegin->first<<":"<<tmpIterBegin->second;
+
+				fout.write((char*)(&tmpIterBegin->first),sizeof(tmpIterBegin->first));
+				fout.write((char*)(&tmpIterBegin->second),sizeof(tmpIterBegin->second));
+			}
+			foutLog<<endl;
+		}
 	}
 
 	fout.close();

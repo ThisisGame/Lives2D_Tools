@@ -6,8 +6,8 @@
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LocalDebuggerCommand>G:\Program Files\Autodesk\3ds Max 2014\3dsmax.exe</LocalDebuggerCommand>
-    <LocalDebuggerWorkingDirectory>G:\Program Files\Autodesk\3ds Max 2014\</LocalDebuggerWorkingDirectory>
+    <LocalDebuggerCommand>$(ADSK_3DSMAX_x64_2014)\3dsmax.exe</LocalDebuggerCommand>
+    <LocalDebuggerWorkingDirectory>$(ADSK_3DSMAX_x64_2014)</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

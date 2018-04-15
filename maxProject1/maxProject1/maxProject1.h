@@ -26,6 +26,7 @@
 #include<fstream>
 #include<iostream>
 #include<string>
+#include<xstring>
 #include<vector>
 #include <map>
 #include "Vertex.h"

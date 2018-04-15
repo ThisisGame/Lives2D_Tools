@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+	<!-- Define character sets, platforms and configurations 3ds Max can use.
+	Changing the values of these properties affects the name of the project configurations too.-->
+	<PropertyGroup Label="UserMacros">
+		<PlatformX32>Win32</PlatformX32>
+		<PlatformX64>x64</PlatformX64>
+		<ConfigDebug>Debug</ConfigDebug>
+		<ConfigRelease>Release</ConfigRelease>
+		<ConfigHybrid>Hybrid</ConfigHybrid>
+		<CharSetMultibyte>Multibyte</CharSetMultibyte>
+		<!-- Configuration without the 'Unicode' symbol -->
+		<MaxConfiguration Condition="'$(Configuration)'=='Debug'">Debug</MaxConfiguration>
+		<MaxConfiguration Condition="'$(Configuration)'=='Hybrid'">Hybrid</MaxConfiguration>
+		<MaxConfiguration Condition="'$(Configuration)'=='Release'">Release</MaxConfiguration>
+		<!-- Configuration where Hybrid is replaced with Release -->
+		<ExternalConfiguration Condition="'$(Configuration)'=='Debug'">Debug</ExternalConfiguration>
+		<ExternalConfiguration Condition="'$(Configuration)'=='Hybrid'">Release</ExternalConfiguration>
+		<ExternalConfiguration Condition="'$(Configuration)'=='Release'">Release</ExternalConfiguration>
+		<UnicodeConfig Condition="'$(Configuration)'=='Debug'">DebugUnicode</UnicodeConfig>
+		<UnicodeConfig Condition="'$(Configuration)'=='Hybrid'">HybridUnicode</UnicodeConfig>
+		<UnicodeConfig Condition="'$(Configuration)'=='Release'">ReleaseUnicode</UnicodeConfig>
+		<MaxPlatform Condition="'$(Platform)'=='Win32'">x32</MaxPlatform>
+		<MaxPlatform Condition="'$(Platform)'=='x64'">x64</MaxPlatform>
+		<x86_or_x64 Condition="'$(Platform)'=='Win32'">x86</x86_or_x64>
+		<x86_or_x64 Condition="'$(Platform)'=='x64'">x64</x86_or_x64>
+		<_32_or_64 Condition="'$(Platform)'=='Win32'">32</_32_or_64>
+		<_32_or_64 Condition="'$(Platform)'=='x64'">64</_32_or_64>
+	</PropertyGroup>
+	
+	<!-- Defines properties for use in project files. -->
+	<PropertyGroup>
+		<!-- The root directory for the entire build -->
+		<MaxDevelDir>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\..\..\..\..\'))</MaxDevelDir>
+		<!-- The directory that contains all the max source code -->
+		<MaxSourceDir>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\..\..\'))</MaxSourceDir>
+		<!-- The Internal, Non-Public library directory -->
+		<MaxLib>$(MaxDevelDir)\3dswin\lib\$(MaxPlatform)\$(MaxConfiguration)\</MaxLib>
+		<!-- The Internal, Non-Public Include directory -->
+		<MaxInc>$(MaxSourceDir)\include\</MaxInc>
+		<!-- The root 3dsmax directory where 3dsmax.exe is built at -->
+		<MaxBuild>$(MaxDevelDir)\3dswin\bin\$(MaxPlatform)\$(MaxConfiguration)\</MaxBuild>
+		<!-- The plugin directory under the root max build directory -->
+		<MaxBuildPlugins>$(MaxBuild)\plugins\</MaxBuildPlugins>
+		<!-- The standard native plugin directory in the build directory -->
+		<MaxBuildStdplugs>$(MaxBuild)stdplugs\</MaxBuildStdplugs>
+		<!-- The directory for directx plugins -->
+		<MaxBuildStdplugsDx>$(MaxBuildStdplugs)DxPlugins\</MaxBuildStdplugsDx>
+		<!-- The standard managed plugin directory in the build directory -->
+		<MaxBuildBinAssembly>$(MaxBuild)bin\assemblies\</MaxBuildBinAssembly>
+		<!-- The directory where the SDK resides -->
+		<MaxSdkDir>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\..\'))</MaxSdkDir>
+		<!-- The directory where SDK howto example projects are built to -->
+		<MaxSdkPlugin>$(MaxSdkDir)\plugin\$(MaxPlatform)\$(MaxConfiguration)\</MaxSdkPlugin>
+		<!-- The directory in the SDK where managed plugin assemblies are copied to -->
+		<MaxSdkAssemblies>$(MaxSdkDir)\assemblies\$(MaxPlatform)\$(MaxConfiguration)\</MaxSdkAssemblies>
+		<!-- The include directory for header files in the public SDK -->
+		<MaxSdkInc>$(MaxSdkDir)\include</MaxSdkInc>
+		<!-- Directory for Public Stripped PDB's -->
+		<MaxPdbDir>$(MaxSdkDir)\pdb\$(Platform)\$(MaxConfiguration)</MaxPdbDir>
+		<!-- The public MaxSDK library directory -->
+		<MaxSdkLib>$(MaxSdkDir)lib\$(Platform)\$(Configuration)\</MaxSdkLib>
+		<!-- The private build directory. For internal use only. -->
+		<MaxBuildPrivate>$(MaxDevelDir)\3dswin\bin_private\$(MaxPlatform)\$(MaxConfiguration)\</MaxBuildPrivate>
+	</PropertyGroup>
+	
+	<!-- Defines properties for internal use only -->
+	<PropertyGroup>
+		<!-- Autocad RealDWG -->
+		<AcadRealDWG>$(MaxDevelDir)\AcadComponents\RealDWG\include\</AcadRealDWG>
+		<AcadRealDWGx64>$(MaxDevelDir)\AcadComponents\RealDWG\includex64</AcadRealDWGx64>
+		<AcadRealDWGLib>$(MaxDevelDir)\AcadComponents\RealDWG\Lib\$(MaxPlatform)\$(ExternalConfiguration)\</AcadRealDWGLib>
+		<!-- Autocad RealDWG Brep -->
+		<AcadRealDWGBrep>$(MaxDevelDir)\AcadComponents\RealDWG\Utils\Brep\include\</AcadRealDWGBrep>
+		<AcadRealDWGBrepLib>$(MaxDevelDir)\AcadComponents\RealDWG\Utils\Brep\lib\$(MaxPlatform)\$(ExternalConfiguration)\</AcadRealDWGBrepLib>
+		<!-- Autocad ASM -->
+		<AcadASM>$(MaxDevelDir)\AcadComponents\ASM\</AcadASM>
+		<AcadASMLib>$(AcadASM)bin\$(MaxPlatform)\$(ExternalConfiguration)\</AcadASMLib>
+		<!-- Internal Testing Frameworks -->
+		<CppUnitInc>$(MaxDevelDir)BuildTools\TestFrameworks\cppunit\include\</CppUnitInc>
+		<CppUnitLib>$(MaxDevelDir)BuildTools\TestFrameworks\cppunit\lib\$(Platform)\$(UnicodeConfig)\</CppUnitLib>
+		<!-- AirMax Include directories -->
+		<AirMaxInclude>$(MaxDevelDir)AirMaxBundle\include\</AirMaxInclude>
+		<!-- AirMax Library directories -->
+		<AirMaxCoreUnitsLib>$(MaxDevelDir)AirMaxBundle\binary\lib\AdCoreUnits\win_vc10\$(x86_or_x64)\$(ExternalConfiguration)\</AirMaxCoreUnitsLib>
+		<AirMaxDataLib>$(MaxDevelDir)AirMaxBundle\binary\lib\ADP\win_vc10\$(x86_or_x64)\$(ExternalConfiguration)\</AirMaxDataLib>
+		<AirMaxVizLib>$(MaxDevelDir)AirMaxBundle\binary\lib\AIRViz\win_vc10\$(x86_or_x64)\$(ExternalConfiguration)\</AirMaxVizLib>
+		<AirMaxProtein>$(MaxDevelDir)AirMaxBundle\binary\lib\Protein\win_vc10\$(x86_or_x64)\$(ExternalConfiguration)\</AirMaxProtein>
+	</PropertyGroup>
+	
+	<PropertyGroup Label="Configuration">
+		<UseOfMfc>false</UseOfMfc>
+		<UseOfAtl>false</UseOfAtl>
+		<PlatformToolset>v100</PlatformToolset>
+		<CharacterSet>Unicode</CharacterSet>
+	</PropertyGroup>
+	
+	<PropertyGroup>
+		<!-- Get whether the project is in the maxsdk or not. -->
+		<IsInSDK>$(ProjectDir.Contains(\maxsdk\))</IsInSDK>
+		<!-- The location for intermediate files for native .vcxproj files. 
+			Intermediate Directory path needs to end in  "\" -->
+		<IntDir Condition="'$(IsInSDK)'=='false'">$(MaxDevelDir)\3dswin\obj\$(MaxPlatform)\$(MaxConfiguration)\$(ProjectName)\</IntDir>
+		<IntDir Condition="'$(IsInSDK)'=='true'">$(MaxSdkDir)\obj\$(MaxPlatform)\$(MaxConfiguration)\$(ProjectName)\</IntDir>
+		<!-- The location for intermediate files for managed .csproj files -->
+		<IntermediateOutputPath Condition="'$(IsInSDK)'=='false'">$(MaxDevelDir)\3dswin\obj\$(MaxPlatform)\$(MaxConfiguration)\$(MSBuildProjectName)\</IntermediateOutputPath>
+		<IntermediateOutputPath Condition="'$(IsInSDK)'=='true'">$(MaxSdkDir)\obj\$(MaxPlatform)\$(MaxConfiguration)\$(MSBuildProjectName)\</IntermediateOutputPath>
+	</PropertyGroup>
+</Project>

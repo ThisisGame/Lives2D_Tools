@@ -1,37 +1,1431 @@
-﻿生成启动时间为 2018/4/13 17:54:22。
-     1>项目“G:\Github\Lives2D_Tools\maxProject1\maxProject1\maxProject1.vcxproj”在节点 2 上(build 个目标)。
+﻿生成启动时间为 2018/4/15 星期日 23:47:44。
+     1>项目“C:\Users\Administrator\Documents\GitHub\Lives2D_Tools\maxProject1\maxProject1\maxProject1.vcxproj”在节点 2 上(build 个目标)。
      1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(298,5): warning MSB8004: Intermediate 目录未以斜杠结尾。此生成实例将添加斜杠，因为必须有这个斜杠才能正确计算 Intermediate 目录。
      1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(299,5): warning MSB8004: Output 目录未以斜杠结尾。此生成实例将添加斜杠，因为必须有这个斜杠才能正确计算 Output 目录。
      1>InitializeBuildStatus:
          正在创建“.\obj\maxProject1.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
        ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\x86_amd64\CL.exe /c /I"I:\Program Files\Autodesk\3ds Max 2014 SDK\maxsdk\\include" /I"G:\Github\Lives2D_Tools\maxProject1\maxProject1\GLM-0.9.6.3" /Zi /nologo /W0 /WX- /Od /D _USRDLL /D _ADESK_3DSMAX_WINDOWS_ /D WINVER=0x0502 /D _WIN32_WINNT=0x0502 /D _WIN32_WINDOWS=0x0502 /D _WIN32_IE=0x0800 /D _WINDOWS /D _CRT_SECURE_NO_DEPRECATE /D _CRT_NONSTDC_NO_DEPRECATE /D _SCL_SECURE_NO_DEPRECATE /D ISOLATION_AWARE_ENABLED=1 /D MODULE_NAME=maxProject1.dle /D _DEBUG /D WIN32 /D WIN64 /D _WINDLL /D _UNICODE /D UNICODE /Gm- /EHa /RTC1 /MDd /GS /fp:fast /Zc:wchar_t /Zc:forScope /GR /Fo".\obj\\" /Fd".\obj\vc100.pdb" /Gd /TP /FC /errorReport:prompt maxProject1.cpp /GR /we4706 /we4390 /we4557 /we4546 /we4545 /we4295 /we4310 /we4130 /we4611 /we4213 /we4121 /we4715 /w34701 /w34265 /wd4244 /wd4018 /wd4819 
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\x86_amd64\CL.exe /c /I"C:\Users\Administrator\Documents\GitHub\Lives2D_Tools\3ds Max 2014 SDK\maxsdk\\include" /I".\GLM-0.9.6.3" /Zi /nologo /W0 /WX- /Od /D _ADESK_3DSMAX_WINDOWS_ /D WINVER=0x0502 /D _WIN32_WINNT=0x0502 /D _WIN32_WINDOWS=0x0502 /D _WIN32_IE=0x0800 /D _WINDOWS /D _CRT_SECURE_NO_DEPRECATE /D _CRT_NONSTDC_NO_DEPRECATE /D _SCL_SECURE_NO_DEPRECATE /D ISOLATION_AWARE_ENABLED=1 /D MODULE_NAME=maxProject1.dle /D _DEBUG /D WIN32 /D WIN64 /D _WINDLL /D _UNICODE /D UNICODE /Gm- /EHa /RTC1 /MDd /GS /fp:fast /Zc:wchar_t /Zc:forScope /GR /Fo".\obj\\" /Fd".\obj\vc100.pdb" /Gd /TP /FC /errorReport:prompt maxProject1.cpp /GR /we4706 /we4390 /we4557 /we4546 /we4545 /we4295 /we4310 /we4130 /we4611 /we4213 /we4121 /we4715 /w34701 /w34265 /wd4244 /wd4018 /wd4819 
          maxProject1.cpp
        ResourceCompile:
          所有输出均为最新。
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"G:\Program Files\Autodesk\3ds Max 2014\plugins\maxProject1.dle" /NOLOGO /LIBPATH:"I:\Program Files\Autodesk\3ds Max 2014 SDK\maxsdk\lib\x64\Release" core.lib geom.lib gfx.lib mesh.lib maxutil.lib maxscrpt.lib paramblk2.lib msxml2.lib igame.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /DEF:"maxProject1.def" /MANIFEST:NO /DEBUG /PDB:"G:\Program Files\Autodesk\3ds Max 2014\plugins\maxProject1.dle.pdb" /PDBSTRIPPED:"I:\Program Files\Autodesk\3ds Max 2014 SDK\maxsdk\\pdb\x64\Debug\maxProject1.dle.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE:NO /NXCOMPAT /IMPLIB:".\obj\\maxProject1.lib" /MACHINE:X64 /DLL .\obj\maxProject1.res
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Program Files\Autodesk\3ds Max 2014\\plugins\maxProject1.dle" /VERBOSE /NOLOGO /LIBPATH:"..\..\3ds Max 2014 SDK\maxsdk\lib\x64\Release" core.lib geom.lib gfx.lib mesh.lib maxutil.lib maxscrpt.lib paramblk2.lib msxml2.lib igame.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /DEF:"maxProject1.def" /MANIFEST:NO /DEBUG /PDB:"D:\Program Files\Autodesk\3ds Max 2014\\plugins\maxProject1.dle.pdb" /PDBSTRIPPED:"C:\Users\Administrator\Documents\GitHub\Lives2D_Tools\3ds Max 2014 SDK\maxsdk\\pdb\x64\Debug\maxProject1.dle.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE:NO /NXCOMPAT /IMPLIB:".\obj\\maxProject1.lib" /MACHINE:X64 /DLL .\obj\maxProject1.res
          .\obj\maxProject1.obj
          .\obj\DllEntry.obj
          .\obj\MeshEnumProc.obj
-         LINK : 没有找到 G:\Program Files\Autodesk\3ds Max 2014\plugins\maxProject1.dle 或上一个增量链接没有生成它；正在执行完全链接
+         LINK : 没有找到 D:\Program Files\Autodesk\3ds Max 2014\\plugins\maxProject1.dle 或上一个增量链接没有生成它；正在执行完全链接
+         
+         正在启动传递 1
+         已处理 /DEFAULTLIB: msvcprtd
+         已处理 /DEFAULTLIB: uuid.lib
+         已处理 /DEFAULTLIB: MSVCRTD
+         已处理 /DEFAULTLIB: OLDNAMES
+         
+         正在搜索库
+             正在搜索 ..\..\3ds Max 2014 SDK\maxsdk\lib\x64\Release\core.lib:
+               已找到 "public: virtual wchar_t const * __cdecl ClassDesc::GetRsrcString(__int64)" (?GetRsrcString@ClassDesc@@UEAAPEB_W_J@Z)
+                 已在 maxProject1.obj 中引用
+                 已加载 core.lib(core.dll)
+               已找到 "public: virtual class FPInterface * __cdecl ClassDesc::GetInterface(wchar_t const *)" (?GetInterface@ClassDesc@@UEAAPEAVFPInterface@@PEB_W@Z)
+                 已在 maxProject1.obj 中引用
+                 已加载 core.lib(core.dll)
+               已找到 "public: virtual class FPInterface * __cdecl ClassDesc::GetInterface(class Interface_ID)" (?GetInterface@ClassDesc@@UEAAPEAVFPInterface@@VInterface_ID@@@Z)
+                 已在 maxProject1.obj 中引用
+                 已加载 core.lib(core.dll)
+               已找到 "public: virtual void __cdecl ClassDesc::AddInterface(class FPInterface *)" (?AddInterface@ClassDesc@@UEAAXPEAVFPInterface@@@Z)
+                 已在 maxProject1.obj 中引用
+                 已加载 core.lib(core.dll)
+               已找到 "__declspec(dllimport) int __cdecl CenterWindow(struct HWND__ *,struct HWND__ *)" (__imp_?CenterWindow@@YAHPEAUHWND__@@0@Z)
+                 已在 maxProject1.obj 中引用
+                 已加载 core.lib(core.dll)
+               已找到 __IMPORT_DESCRIPTOR_core
+                 已在 core.lib(core.dll) 中引用
+                 已在 core.lib(core.dll) 中引用
+                 已在 core.lib(core.dll) 中引用
+                 已在 core.lib(core.dll) 中引用
+                 已在 core.lib(core.dll) 中引用
+                 已加载 core.lib(core.dll)
+               已找到 __NULL_IMPORT_DESCRIPTOR
+                 已在 core.lib(core.dll) 中引用
+                 已加载 core.lib(core.dll)
+               已找到 core_NULL_THUNK_DATA
+                 已在 core.lib(core.dll) 中引用
+                 已加载 core.lib(core.dll)
+             正在搜索 ..\..\3ds Max 2014 SDK\maxsdk\lib\x64\Release\geom.lib:
+               已找到 "__declspec(dllimport) public: float & __cdecl Point4::operator[](int)" (__imp_??APoint4@@QEAAAEAMH@Z)
+                 已在 maxProject1.obj 中引用
+                 已加载 geom.lib(geom.dll)
+               已找到 "__declspec(dllimport) public: void __cdecl Matrix3::Invert(void)" (__imp_?Invert@Matrix3@@QEAAXXZ)
+                 已在 maxProject1.obj 中引用
+                 已加载 geom.lib(geom.dll)
+               已找到 "__declspec(dllimport) public: __cdecl Point3::Point3(class Point3 const &)" (__imp_??0Point3@@QEAA@AEBV0@@Z)
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 geom.lib(geom.dll)
+               已找到 __IMPORT_DESCRIPTOR_geom
+                 已在 geom.lib(geom.dll) 中引用
+                 已在 geom.lib(geom.dll) 中引用
+                 已在 geom.lib(geom.dll) 中引用
+                 已加载 geom.lib(geom.dll)
+               已找到 geom_NULL_THUNK_DATA
+                 已在 geom.lib(geom.dll) 中引用
+                 已加载 geom.lib(geom.dll)
+             正在搜索 ..\..\3ds Max 2014 SDK\maxsdk\lib\x64\Release\gfx.lib:
+             正在搜索 ..\..\3ds Max 2014 SDK\maxsdk\lib\x64\Release\mesh.lib:
+               已找到 "public: void __cdecl Mesh::buildNormals(void)" (?buildNormals@Mesh@@QEAAXXZ)
+                 已在 maxProject1.obj 中引用
+                 已加载 mesh.lib(mesh.dll)
+               已找到 "__declspec(dllimport) public: class Point3 & __cdecl Mesh::getNormal(int)" (__imp_?getNormal@Mesh@@QEAAAEAVPoint3@@H@Z)
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 mesh.lib(mesh.dll)
+               已找到 __IMPORT_DESCRIPTOR_mesh
+                 已在 mesh.lib(mesh.dll) 中引用
+                 已在 mesh.lib(mesh.dll) 中引用
+                 已加载 mesh.lib(mesh.dll)
+               已找到 mesh_NULL_THUNK_DATA
+                 已在 mesh.lib(mesh.dll) 中引用
+                 已加载 mesh.lib(mesh.dll)
+             正在搜索 ..\..\3ds Max 2014 SDK\maxsdk\lib\x64\Release\maxutil.lib:
+               已找到 "__declspec(dllimport) public: static void __cdecl MaxHeapOperators::operator delete(void *)" (__imp_??3MaxHeapOperators@@SAXPEAX@Z)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 maxutil.lib(maxutil.dll)
+               已找到 "__declspec(dllimport) public: static void * __cdecl MaxHeapOperators::operator new(unsigned __int64)" (__imp_??2MaxHeapOperators@@SAPEAX_K@Z)
+                 已在 maxProject1.obj 中引用
+                 已加载 maxutil.lib(maxutil.dll)
+               已找到 "__declspec(dllimport) int __cdecl assert1(int,wchar_t const *,wchar_t const *,wchar_t const *)" (__imp_?assert1@@YAHHPEB_W00@Z)
+                 已在 maxProject1.obj 中引用
+                 已加载 maxutil.lib(maxutil.dll)
+               已找到 "public: __cdecl MaxSDK::Util::OutOfRangeException::OutOfRangeException(class MaxSDK::Util::OutOfRangeException const &)" (??0OutOfRangeException@Util@MaxSDK@@QEAA@AEBV012@@Z)
+                 已在 maxProject1.obj 中引用
+                 已加载 maxutil.lib(maxutil.dll)
+               已找到 "public: __cdecl MaxSDK::Util::Exception::Exception(class MaxSDK::Util::Exception const &)" (??0Exception@Util@MaxSDK@@QEAA@AEBV012@@Z)
+                 已在 maxProject1.obj 中引用
+                 已加载 maxutil.lib(maxutil.dll)
+               已找到 "__declspec(dllimport) public: virtual __cdecl MaxSDK::Util::OutOfRangeException::~OutOfRangeException(void)" (__imp_??1OutOfRangeException@Util@MaxSDK@@UEAA@XZ)
+                 已在 maxProject1.obj 中引用
+                 已加载 maxutil.lib(maxutil.dll)
+               已找到 "__declspec(dllimport) public: __cdecl MaxSDK::Util::OutOfRangeException::OutOfRangeException(wchar_t const *)" (__imp_??0OutOfRangeException@Util@MaxSDK@@QEAA@PEB_W@Z)
+                 已在 maxProject1.obj 中引用
+                 已加载 maxutil.lib(maxutil.dll)
+               已找到 "__declspec(dllimport) void __cdecl zfree(void * *)" (__imp_?zfree@@YAXPEAPEAX@Z)
+                 已在 maxProject1.obj 中引用
+                 已在 DllEntry.obj 中引用
+                 已加载 maxutil.lib(maxutil.dll)
+               已找到 __IMPORT_DESCRIPTOR_maxutil
+                 已在 maxutil.lib(maxutil.dll) 中引用
+                 已在 maxutil.lib(maxutil.dll) 中引用
+                 已在 maxutil.lib(maxutil.dll) 中引用
+                 已在 maxutil.lib(maxutil.dll) 中引用
+                 已在 maxutil.lib(maxutil.dll) 中引用
+                 已在 maxutil.lib(maxutil.dll) 中引用
+                 已在 maxutil.lib(maxutil.dll) 中引用
+                 已在 maxutil.lib(maxutil.dll) 中引用
+                 已加载 maxutil.lib(maxutil.dll)
+               已找到 maxutil_NULL_THUNK_DATA
+                 已在 maxutil.lib(maxutil.dll) 中引用
+                 已加载 maxutil.lib(maxutil.dll)
+             正在搜索 ..\..\3ds Max 2014 SDK\maxsdk\lib\x64\Release\maxscrpt.lib:
+             正在搜索 ..\..\3ds Max 2014 SDK\maxsdk\lib\x64\Release\paramblk2.lib:
+               已找到 "__declspec(dllimport) public: virtual __cdecl ClassDesc2::~ClassDesc2(void)" (__imp_??1ClassDesc2@@UEAA@XZ)
+                 已在 maxProject1.obj 中引用
+                 已加载 paramblk2.lib(ParamBlk2.dll)
+               已找到 "__declspec(dllimport) public: __cdecl ClassDesc2::ClassDesc2(void)" (__imp_??0ClassDesc2@@QEAA@XZ)
+                 已在 maxProject1.obj 中引用
+                 已加载 paramblk2.lib(ParamBlk2.dll)
+               已找到 "public: virtual void __cdecl ClassDesc2::ResetClassParams(int)" (?ResetClassParams@ClassDesc2@@UEAAXH@Z)
+                 已在 maxProject1.obj 中引用
+                 已加载 paramblk2.lib(ParamBlk2.dll)
+               已找到 "public: virtual int __cdecl ClassDesc2::NumParamBlockDescs(void)" (?NumParamBlockDescs@ClassDesc2@@UEAAHXZ)
+                 已在 maxProject1.obj 中引用
+                 已加载 paramblk2.lib(ParamBlk2.dll)
+               已找到 "public: virtual class ParamBlockDesc2 * __cdecl ClassDesc2::GetParamBlockDesc(int)" (?GetParamBlockDesc@ClassDesc2@@UEAAPEAVParamBlockDesc2@@H@Z)
+                 已在 maxProject1.obj 中引用
+                 已加载 paramblk2.lib(ParamBlk2.dll)
+               已找到 "public: virtual class ParamBlockDesc2 * __cdecl ClassDesc2::GetParamBlockDescByID(short)" (?GetParamBlockDescByID@ClassDesc2@@UEAAPEAVParamBlockDesc2@@F@Z)
+                 已在 maxProject1.obj 中引用
+                 已加载 paramblk2.lib(ParamBlk2.dll)
+               已找到 "public: virtual void __cdecl ClassDesc2::AddParamBlockDesc(class ParamBlockDesc2 *)" (?AddParamBlockDesc@ClassDesc2@@UEAAXPEAVParamBlockDesc2@@@Z)
+                 已在 maxProject1.obj 中引用
+                 已加载 paramblk2.lib(ParamBlk2.dll)
+               已找到 "public: virtual void __cdecl ClassDesc2::BeginEditParams(class IObjParam *,class ReferenceMaker *,unsigned long,class Animatable *)" (?BeginEditParams@ClassDesc2@@UEAAXPEAVIObjParam@@PEAVReferenceMaker@@KPEAVAnimatable@@@Z)
+                 已在 maxProject1.obj 中引用
+                 已加载 paramblk2.lib(ParamBlk2.dll)
+               已找到 "public: virtual void __cdecl ClassDesc2::EndEditParams(class IObjParam *,class ReferenceMaker *,unsigned long,class Animatable *)" (?EndEditParams@ClassDesc2@@UEAAXPEAVIObjParam@@PEAVReferenceMaker@@KPEAVAnimatable@@@Z)
+                 已在 maxProject1.obj 中引用
+                 已加载 paramblk2.lib(ParamBlk2.dll)
+               已找到 "public: virtual void __cdecl ClassDesc2::InvalidateUI(class ParamBlockDesc2 *)" (?InvalidateUI@ClassDesc2@@UEAAXPEAVParamBlockDesc2@@@Z)
+                 已在 maxProject1.obj 中引用
+                 已加载 paramblk2.lib(ParamBlk2.dll)
+               已找到 "public: virtual void __cdecl ClassDesc2::MakeAutoParamBlocks(class ReferenceMaker *)" (?MakeAutoParamBlocks@ClassDesc2@@UEAAXPEAVReferenceMaker@@@Z)
+                 已在 maxProject1.obj 中引用
+                 已加载 paramblk2.lib(ParamBlk2.dll)
+               已找到 "public: virtual int __cdecl ClassDesc2::NumParamMaps(void)" (?NumParamMaps@ClassDesc2@@UEAAHXZ)
+                 已在 maxProject1.obj 中引用
+                 已加载 paramblk2.lib(ParamBlk2.dll)
+               已找到 "public: virtual class IParamMap2 * __cdecl ClassDesc2::GetParamMap(int)" (?GetParamMap@ClassDesc2@@UEAAPEAVIParamMap2@@H@Z)
+                 已在 maxProject1.obj 中引用
+                 已加载 paramblk2.lib(ParamBlk2.dll)
+               已找到 "__declspec(dllimport) public: void __cdecl ClassDesc2::SetUserDlgProc(class ParamBlockDesc2 *,short,class ParamMap2UserDlgProc *)" (__imp_?SetUserDlgProc@ClassDesc2@@QEAAXPEAVParamBlockDesc2@@FPEAVParamMap2UserDlgProc@@@Z)
+                 已在 maxProject1.obj 中引用
+                 已加载 paramblk2.lib(ParamBlk2.dll)
+               已找到 __IMPORT_DESCRIPTOR_ParamBlk2
+                 已在 paramblk2.lib(ParamBlk2.dll) 中引用
+                 已在 paramblk2.lib(ParamBlk2.dll) 中引用
+                 已在 paramblk2.lib(ParamBlk2.dll) 中引用
+                 已在 paramblk2.lib(ParamBlk2.dll) 中引用
+                 已在 paramblk2.lib(ParamBlk2.dll) 中引用
+                 已在 paramblk2.lib(ParamBlk2.dll) 中引用
+                 已在 paramblk2.lib(ParamBlk2.dll) 中引用
+                 已在 paramblk2.lib(ParamBlk2.dll) 中引用
+                 已在 paramblk2.lib(ParamBlk2.dll) 中引用
+                 已在 paramblk2.lib(ParamBlk2.dll) 中引用
+                 已在 paramblk2.lib(ParamBlk2.dll) 中引用
+                 已在 paramblk2.lib(ParamBlk2.dll) 中引用
+                 已在 paramblk2.lib(ParamBlk2.dll) 中引用
+                 已在 paramblk2.lib(ParamBlk2.dll) 中引用
+                 已加载 paramblk2.lib(ParamBlk2.dll)
+               已找到 ParamBlk2_NULL_THUNK_DATA
+                 已在 paramblk2.lib(ParamBlk2.dll) 中引用
+                 已加载 paramblk2.lib(ParamBlk2.dll)
+             正在搜索 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\lib\x64\msxml2.lib:
+             正在搜索 ..\..\3ds Max 2014 SDK\maxsdk\lib\x64\Release\igame.lib:
+               已找到 "public: __cdecl GMatrix::GMatrix(class Matrix3)" (??0GMatrix@@QEAA@VMatrix3@@@Z)
+                 已在 maxProject1.obj 中引用
+                 已加载 igame.lib(IGame.dll)
+               已找到 "public: class IGameModifier * __cdecl IGameObject::GetIGameModifier(int)" (?GetIGameModifier@IGameObject@@QEAAPEAVIGameModifier@@H@Z)
+                 已在 maxProject1.obj 中引用
+                 已加载 igame.lib(IGame.dll)
+               已找到 "public: int __cdecl IGameObject::GetNumModifiers(void)" (?GetNumModifiers@IGameObject@@QEAAHXZ)
+                 已在 maxProject1.obj 中引用
+                 已加载 igame.lib(IGame.dll)
+               已找到 "class IGameConversionManager * __cdecl GetConversionManager(void)" (?GetConversionManager@@YAPEAVIGameConversionManager@@XZ)
+                 已在 maxProject1.obj 中引用
+                 已加载 igame.lib(IGame.dll)
+               已找到 "class IGameScene * __cdecl GetIGameInterface(void)" (?GetIGameInterface@@YAPEAVIGameScene@@XZ)
+                 已在 maxProject1.obj 中引用
+                 已加载 igame.lib(IGame.dll)
+               已找到 __IMPORT_DESCRIPTOR_IGame
+                 已在 igame.lib(IGame.dll) 中引用
+                 已在 igame.lib(IGame.dll) 中引用
+                 已在 igame.lib(IGame.dll) 中引用
+                 已在 igame.lib(IGame.dll) 中引用
+                 已在 igame.lib(IGame.dll) 中引用
+                 已加载 igame.lib(IGame.dll)
+               已找到 IGame_NULL_THUNK_DATA
+                 已在 igame.lib(IGame.dll) 中引用
+                 已加载 igame.lib(IGame.dll)
+             正在搜索 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\lib\x64\kernel32.lib:
+               已找到 __imp_WideCharToMultiByte
+                 已在 maxProject1.obj 中引用
+                 已加载 kernel32.lib(KERNEL32.dll)
+               已找到 __imp_MultiByteToWideChar
+                 已在 maxProject1.obj 中引用
+                 已加载 kernel32.lib(KERNEL32.dll)
+               已找到 __imp_SetLastError
+                 已在 maxProject1.obj 中引用
+                 已加载 kernel32.lib(KERNEL32.dll)
+               已找到 __imp_GetLastError
+                 已在 maxProject1.obj 中引用
+                 已加载 kernel32.lib(KERNEL32.dll)
+               已找到 __imp_DeactivateActCtx
+                 已在 maxProject1.obj 中引用
+                 已加载 kernel32.lib(KERNEL32.dll)
+               已找到 __imp_OutputDebugStringA
+                 已在 maxProject1.obj 中引用
+                 已加载 kernel32.lib(KERNEL32.dll)
+               已找到 __imp_ActivateActCtx
+                 已在 maxProject1.obj 中引用
+                 已加载 kernel32.lib(KERNEL32.dll)
+               已找到 __imp_LoadLibraryW
+                 已在 maxProject1.obj 中引用
+                 已加载 kernel32.lib(KERNEL32.dll)
+               已找到 __imp_GetModuleFileNameW
+                 已在 maxProject1.obj 中引用
+                 已加载 kernel32.lib(KERNEL32.dll)
+               已找到 __imp_GetModuleHandleExW
+                 已在 maxProject1.obj 中引用
+                 已加载 kernel32.lib(KERNEL32.dll)
+               已找到 __imp_CreateActCtxW
+                 已在 maxProject1.obj 中引用
+                 已加载 kernel32.lib(KERNEL32.dll)
+               已找到 __imp_FindActCtxSectionStringW
+                 已在 maxProject1.obj 中引用
+                 已加载 kernel32.lib(KERNEL32.dll)
+               已找到 __imp_QueryActCtxW
+                 已在 maxProject1.obj 中引用
+                 已加载 kernel32.lib(KERNEL32.dll)
+               已找到 __imp_DisableThreadLibraryCalls
+                 已在 DllEntry.obj 中引用
+                 已加载 kernel32.lib(KERNEL32.dll)
+               已找到 __IMPORT_DESCRIPTOR_KERNEL32
+                 已在 kernel32.lib(KERNEL32.dll) 中引用
+                 已在 kernel32.lib(KERNEL32.dll) 中引用
+                 已在 kernel32.lib(KERNEL32.dll) 中引用
+                 已在 kernel32.lib(KERNEL32.dll) 中引用
+                 已在 kernel32.lib(KERNEL32.dll) 中引用
+                 已在 kernel32.lib(KERNEL32.dll) 中引用
+                 已在 kernel32.lib(KERNEL32.dll) 中引用
+                 已在 kernel32.lib(KERNEL32.dll) 中引用
+                 已在 kernel32.lib(KERNEL32.dll) 中引用
+                 已在 kernel32.lib(KERNEL32.dll) 中引用
+                 已在 kernel32.lib(KERNEL32.dll) 中引用
+                 已在 kernel32.lib(KERNEL32.dll) 中引用
+                 已在 kernel32.lib(KERNEL32.dll) 中引用
+                 已在 kernel32.lib(KERNEL32.dll) 中引用
+                 已加载 kernel32.lib(KERNEL32.dll)
+               已找到 KERNEL32_NULL_THUNK_DATA
+                 已在 kernel32.lib(KERNEL32.dll) 中引用
+                 已加载 kernel32.lib(KERNEL32.dll)
+             正在搜索 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\lib\x64\user32.lib:
+               已找到 __imp_EndDialog
+                 已在 maxProject1.obj 中引用
+                 已加载 user32.lib(USER32.dll)
+               已找到 __imp_GetParent
+                 已在 maxProject1.obj 中引用
+                 已加载 user32.lib(USER32.dll)
+               已找到 __imp_GetActiveWindow
+                 已在 maxProject1.obj 中引用
+                 已加载 user32.lib(USER32.dll)
+               已找到 __imp_DialogBoxParamW
+                 已在 maxProject1.obj 中引用
+                 已加载 user32.lib(USER32.dll)
+               已找到 __imp_LoadStringW
+                 已在 DllEntry.obj 中引用
+                 已加载 user32.lib(USER32.dll)
+               已找到 __IMPORT_DESCRIPTOR_USER32
+                 已在 user32.lib(USER32.dll) 中引用
+                 已在 user32.lib(USER32.dll) 中引用
+                 已在 user32.lib(USER32.dll) 中引用
+                 已在 user32.lib(USER32.dll) 中引用
+                 已在 user32.lib(USER32.dll) 中引用
+                 已加载 user32.lib(USER32.dll)
+               已找到 USER32_NULL_THUNK_DATA
+                 已在 user32.lib(USER32.dll) 中引用
+                 已加载 user32.lib(USER32.dll)
+             正在搜索 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\lib\x64\gdi32.lib:
+             正在搜索 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\lib\x64\winspool.lib:
+             正在搜索 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\lib\x64\comdlg32.lib:
+             正在搜索 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\lib\x64\advapi32.lib:
+             正在搜索 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\lib\x64\shell32.lib:
+             正在搜索 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\lib\x64\ole32.lib:
+             正在搜索 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\lib\x64\oleaut32.lib:
+             正在搜索 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\lib\x64\uuid.lib:
+               已找到 GUID_NULL
+                 已在 maxProject1.obj 中引用
+                 已在 DllEntry.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 uuid.lib(cguid_i.obj)
+             正在搜索 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\lib\x64\odbc32.lib:
+             正在搜索 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\lib\x64\odbccp32.lib:
+             正在搜索 C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\lib\amd64\msvcprtd.lib:
+               已找到 "void * __cdecl operator new[](unsigned __int64)" (??_U@YAPEAX_K@Z)
+                 已在 maxProject1.obj 中引用
+                 已加载 msvcprtd.lib(newaop_s.obj)
+               已找到 "__declspec(dllimport) public: class std::basic_ostream<char,struct std::char_traits<char> > & __cdecl std::basic_ostream<char,struct std::char_traits<char> >::operator<<(unsigned short)" (__imp_??6?$basic_ostream@DU?$char_traits@D@std@@@std@@QEAAAEAV01@G@Z)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) public: class std::basic_ostream<char,struct std::char_traits<char> > & __cdecl std::basic_ostream<char,struct std::char_traits<char> >::operator<<(float)" (__imp_??6?$basic_ostream@DU?$char_traits@D@std@@@std@@QEAAAEAV01@M@Z)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) public: class std::basic_ostream<char,struct std::char_traits<char> > & __cdecl std::basic_ostream<char,struct std::char_traits<char> >::operator<<(unsigned __int64)" (__imp_??6?$basic_ostream@DU?$char_traits@D@std@@@std@@QEAAAEAV01@_K@Z)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) public: class std::basic_ostream<char,struct std::char_traits<char> > & __cdecl std::basic_ostream<char,struct std::char_traits<char> >::operator<<(class std::basic_ostream<char,struct std::char_traits<char> > & (__cdecl*)(class std::basic_ostream<char,struct std::char_traits<char> > &))" (__imp_??6?$basic_ostream@DU?$char_traits@D@std@@@std@@QEAAAEAV01@P6AAEAV01@AEAV01@@Z@Z)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) class std::basic_ostream<char,struct std::char_traits<char> > & __cdecl std::endl(class std::basic_ostream<char,struct std::char_traits<char> > &)" (__imp_?endl@std@@YAAEAV?$basic_ostream@DU?$char_traits@D@std@@@1@AEAV21@@Z)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) public: class std::basic_ostream<char,struct std::char_traits<char> > & __cdecl std::basic_ostream<char,struct std::char_traits<char> >::operator<<(int)" (__imp_??6?$basic_ostream@DU?$char_traits@D@std@@@std@@QEAAAEAV01@H@Z)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) class std::basic_ostream<char,struct std::char_traits<char> > std::cout" (__imp_?cout@std@@3V?$basic_ostream@DU?$char_traits@D@std@@@1@A)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) public: class std::basic_ostream<char,struct std::char_traits<char> > & __cdecl std::basic_ostream<char,struct std::char_traits<char> >::write(char const *,__int64)" (__imp_?write@?$basic_ostream@DU?$char_traits@D@std@@@std@@QEAAAEAV12@PEBD_J@Z)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) public: virtual __cdecl std::basic_ios<char,struct std::char_traits<char> >::~basic_ios<char,struct std::char_traits<char> >(void)" (__imp_??1?$basic_ios@DU?$char_traits@D@std@@@std@@UEAA@XZ)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) public: __cdecl std::_Lockit::~_Lockit(void)" (__imp_??1_Lockit@std@@QEAA@XZ)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) public: __cdecl std::_Lockit::_Lockit(int)" (__imp_??0_Lockit@std@@QEAA@H@Z)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) void __cdecl std::_Debug_message(wchar_t const *,wchar_t const *,unsigned int)" (__imp_?_Debug_message@std@@YAXPEB_W0I@Z)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) public: virtual __cdecl std::basic_ostream<char,struct std::char_traits<char> >::~basic_ostream<char,struct std::char_traits<char> >(void)" (__imp_??1?$basic_ostream@DU?$char_traits@D@std@@@std@@UEAA@XZ)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) public: void __cdecl std::basic_ios<char,struct std::char_traits<char> >::setstate(int,bool)" (__imp_?setstate@?$basic_ios@DU?$char_traits@D@std@@@std@@QEAAXH_N@Z)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) public: __cdecl std::basic_ostream<char,struct std::char_traits<char> >::basic_ostream<char,struct std::char_traits<char> >(class std::basic_streambuf<char,struct std::char_traits<char> > *,bool)" (__imp_??0?$basic_ostream@DU?$char_traits@D@std@@@std@@QEAA@PEAV?$basic_streambuf@DU?$char_traits@D@std@@@1@_N@Z)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) protected: __cdecl std::basic_ios<char,struct std::char_traits<char> >::basic_ios<char,struct std::char_traits<char> >(void)" (__imp_??0?$basic_ios@DU?$char_traits@D@std@@@std@@IEAA@XZ)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) public: virtual __cdecl std::basic_streambuf<char,struct std::char_traits<char> >::~basic_streambuf<char,struct std::char_traits<char> >(void)" (__imp_??1?$basic_streambuf@DU?$char_traits@D@std@@@std@@UEAA@XZ)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "protected: virtual __int64 __cdecl std::basic_streambuf<char,struct std::char_traits<char> >::showmanyc(void)" (?showmanyc@?$basic_streambuf@DU?$char_traits@D@std@@@std@@MEAA_JXZ)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "protected: virtual __int64 __cdecl std::basic_streambuf<char,struct std::char_traits<char> >::xsgetn(char *,__int64)" (?xsgetn@?$basic_streambuf@DU?$char_traits@D@std@@@std@@MEAA_JPEAD_J@Z)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "protected: virtual __int64 __cdecl std::basic_streambuf<char,struct std::char_traits<char> >::xsputn(char const *,__int64)" (?xsputn@?$basic_streambuf@DU?$char_traits@D@std@@@std@@MEAA_JPEBD_J@Z)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) public: int __cdecl std::codecvt<char,char,int>::out(int &,char const *,char const *,char const * &,char *,char *,char * &)const " (__imp_?out@?$codecvt@DDH@std@@QEBAHAEAHPEBD1AEAPEBDPEAD3AEAPEAD@Z)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) protected: char * __cdecl std::basic_streambuf<char,struct std::char_traits<char> >::_Pninc(void)" (__imp_?_Pninc@?$basic_streambuf@DU?$char_traits@D@std@@@std@@IEAAPEADXZ)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) protected: char * __cdecl std::basic_streambuf<char,struct std::char_traits<char> >::epptr(void)const " (__imp_?epptr@?$basic_streambuf@DU?$char_traits@D@std@@@std@@IEBAPEADXZ)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) protected: char * __cdecl std::basic_streambuf<char,struct std::char_traits<char> >::pptr(void)const " (__imp_?pptr@?$basic_streambuf@DU?$char_traits@D@std@@@std@@IEBAPEADXZ)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) protected: char * __cdecl std::basic_streambuf<char,struct std::char_traits<char> >::_Gndec(void)" (__imp_?_Gndec@?$basic_streambuf@DU?$char_traits@D@std@@@std@@IEAAPEADXZ)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) protected: char * __cdecl std::basic_streambuf<char,struct std::char_traits<char> >::eback(void)const " (__imp_?eback@?$basic_streambuf@DU?$char_traits@D@std@@@std@@IEBAPEADXZ)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) protected: char * __cdecl std::basic_streambuf<char,struct std::char_traits<char> >::gptr(void)const " (__imp_?gptr@?$basic_streambuf@DU?$char_traits@D@std@@@std@@IEBAPEADXZ)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) protected: char * __cdecl std::basic_streambuf<char,struct std::char_traits<char> >::egptr(void)const " (__imp_?egptr@?$basic_streambuf@DU?$char_traits@D@std@@@std@@IEBAPEADXZ)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) public: int __cdecl std::codecvt<char,char,int>::in(int &,char const *,char const *,char const * &,char *,char *,char * &)const " (__imp_?in@?$codecvt@DDH@std@@QEBAHAEAHPEBD1AEAPEBDPEAD3AEAPEAD@Z)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) protected: char * __cdecl std::basic_streambuf<char,struct std::char_traits<char> >::_Gninc(void)" (__imp_?_Gninc@?$basic_streambuf@DU?$char_traits@D@std@@@std@@IEAAPEADXZ)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) __int64 const std::_BADOFF" (__imp_?_BADOFF@std@@3_JB)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) public: __cdecl std::_Container_base12::~_Container_base12(void)" (__imp_??1_Container_base12@std@@QEAA@XZ)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) public: __cdecl std::_Container_base12::_Container_base12(void)" (__imp_??0_Container_base12@std@@QEAA@XZ)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) public: void __cdecl std::_Container_base12::_Orphan_all(void)" (__imp_?_Orphan_all@_Container_base12@std@@QEAAXXZ)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) public: struct std::_Iterator_base12 * * __cdecl std::_Container_base12::_Getpfirst(void)const " (__imp_?_Getpfirst@_Container_base12@std@@QEBAPEAPEAU_Iterator_base12@2@XZ)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) protected: __cdecl std::basic_streambuf<char,struct std::char_traits<char> >::basic_streambuf<char,struct std::char_traits<char> >(void)" (__imp_??0?$basic_streambuf@DU?$char_traits@D@std@@@std@@IEAA@XZ)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) public: class std::locale __cdecl std::basic_streambuf<char,struct std::char_traits<char> >::getloc(void)const " (__imp_?getloc@?$basic_streambuf@DU?$char_traits@D@std@@@std@@QEBA?AVlocale@2@XZ)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) struct _iobuf * __cdecl std::_Fiopen(char const *,int,int)" (__imp_?_Fiopen@std@@YAPEAU_iobuf@@PEBDHH@Z)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) public: class std::locale::facet * __cdecl std::locale::facet::_Decref(void)" (__imp_?_Decref@facet@locale@std@@QEAAPEAV123@XZ)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) struct _iobuf * __cdecl std::_Fiopen(wchar_t const *,int,int)" (__imp_?_Fiopen@std@@YAPEAU_iobuf@@PEB_WHH@Z)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) protected: void __cdecl std::basic_streambuf<char,struct std::char_traits<char> >::_Init(char * *,char * *,int *,char * *,char * *,int *)" (__imp_?_Init@?$basic_streambuf@DU?$char_traits@D@std@@@std@@IEAAXPEAPEAD0PEAH001@Z)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) protected: void __cdecl std::basic_streambuf<char,struct std::char_traits<char> >::_Init(void)" (__imp_?_Init@?$basic_streambuf@DU?$char_traits@D@std@@@std@@IEAAXXZ)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) public: int __cdecl std::codecvt<char,char,int>::unshift(int &,char *,char *,char * &)const " (__imp_?unshift@?$codecvt@DDH@std@@QEBAHAEAHPEAD1AEAPEAD@Z)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) public: bool __cdecl std::codecvt_base::always_noconv(void)const " (__imp_?always_noconv@codecvt_base@std@@QEBA_NXZ)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) protected: void __cdecl std::basic_streambuf<char,struct std::char_traits<char> >::setg(char *,char *,char *)" (__imp_?setg@?$basic_streambuf@DU?$char_traits@D@std@@@std@@IEAAXPEAD00@Z)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) void __cdecl std::_Xlength_error(char const *)" (__imp_?_Xlength_error@std@@YAXPEBD@Z)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) void __cdecl std::_Xout_of_range(char const *)" (__imp_?_Xout_of_range@std@@YAXPEBD@Z)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) public: __int64 __cdecl std::ios_base::width(__int64)" (__imp_?width@ios_base@std@@QEAA_J_J@Z)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) public: __int64 __cdecl std::basic_streambuf<char,struct std::char_traits<char> >::sputn(char const *,__int64)" (__imp_?sputn@?$basic_streambuf@DU?$char_traits@D@std@@@std@@QEAA_JPEBD_J@Z)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) public: int __cdecl std::basic_streambuf<char,struct std::char_traits<char> >::sputc(char)" (__imp_?sputc@?$basic_streambuf@DU?$char_traits@D@std@@@std@@QEAAHD@Z)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) public: class std::basic_streambuf<char,struct std::char_traits<char> > * __cdecl std::basic_ios<char,struct std::char_traits<char> >::rdbuf(void)const " (__imp_?rdbuf@?$basic_ios@DU?$char_traits@D@std@@@std@@QEBAPEAV?$basic_streambuf@DU?$char_traits@D@std@@@2@XZ)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) public: char __cdecl std::basic_ios<char,struct std::char_traits<char> >::fill(void)const " (__imp_?fill@?$basic_ios@DU?$char_traits@D@std@@@std@@QEBADXZ)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) public: int __cdecl std::ios_base::flags(void)const " (__imp_?flags@ios_base@std@@QEBAHXZ)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) public: __int64 __cdecl std::ios_base::width(void)const " (__imp_?width@ios_base@std@@QEBA_JXZ)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) public: class std::basic_ostream<char,struct std::char_traits<char> > & __cdecl std::basic_ostream<char,struct std::char_traits<char> >::flush(void)" (__imp_?flush@?$basic_ostream@DU?$char_traits@D@std@@@std@@QEAAAEAV12@XZ)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) public: class std::basic_ostream<char,struct std::char_traits<char> > * __cdecl std::basic_ios<char,struct std::char_traits<char> >::tie(void)const " (__imp_?tie@?$basic_ios@DU?$char_traits@D@std@@@std@@QEBAPEAV?$basic_ostream@DU?$char_traits@D@std@@@2@XZ)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) public: bool __cdecl std::ios_base::good(void)const " (__imp_?good@ios_base@std@@QEBA_NXZ)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) public: void __cdecl std::basic_ostream<char,struct std::char_traits<char> >::_Osfx(void)" (__imp_?_Osfx@?$basic_ostream@DU?$char_traits@D@std@@@std@@QEAAXXZ)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) bool __cdecl std::uncaught_exception(void)" (__imp_?uncaught_exception@std@@YA_NXZ)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) public: void __cdecl std::locale::facet::_Incref(void)" (__imp_?_Incref@facet@locale@std@@QEAAXXZ)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) public: static unsigned __int64 __cdecl std::codecvt<char,char,int>::_Getcat(class std::locale::facet const * *,class std::locale const *)" (__imp_?_Getcat@?$codecvt@DDH@std@@SA_KPEAPEBVfacet@locale@2@PEBV42@@Z)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) public: __cdecl std::locale::id::operator unsigned __int64(void)" (__imp_??Bid@locale@std@@QEAA_KXZ)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) public: static class std::locale::id std::codecvt<char,char,int>::id" (__imp_?id@?$codecvt@DDH@std@@2V0locale@2@A)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "private: static void __cdecl std::locale::facet::_Facet_Register(class std::locale::facet *)" (?_Facet_Register@facet@locale@std@@CAXPEAV123@@Z)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(locale0_implib.obj)
+               已找到 "__declspec(dllimport) private: static class std::locale::_Locimp * __cdecl std::locale::_Getgloballocale(void)" (__imp_?_Getgloballocale@locale@std@@CAPEAV_Locimp@12@XZ)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) public: void __cdecl std::_Container_base12::_Swap_all(struct std::_Container_base12 &)" (__imp_?_Swap_all@_Container_base12@std@@QEAAXAEAU12@@Z)
+                 已在 maxProject1.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) void __cdecl std::_Xinvalid_argument(char const *)" (__imp_?_Xinvalid_argument@std@@YAXPEBD@Z)
+                 已在 maxProject1.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 __IMPORT_DESCRIPTOR_MSVCP100D
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) void __cdecl operator delete(void *,struct std::_DebugHeapTag_t const &,char *,int)" (__imp_??3@YAXPEAXAEBU_DebugHeapTag_t@std@@PEADH@Z)
+                 已在 msvcprtd.lib(locale0_implib.obj) 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) void * __cdecl operator new(unsigned __int64,struct std::_DebugHeapTag_t const &,char *,int)" (__imp_??2@YAPEAX_KAEBU_DebugHeapTag_t@std@@PEADH@Z)
+                 已在 msvcprtd.lib(locale0_implib.obj) 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) struct std::_DebugHeapTag_t const & __cdecl std::_DebugHeapTag_func(void)" (__imp_?_DebugHeapTag_func@std@@YAAEBU_DebugHeapTag_t@1@XZ)
+                 已在 msvcprtd.lib(locale0_implib.obj) 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 MSVCP100D_NULL_THUNK_DATA
+                 已在 msvcprtd.lib(MSVCP100D.dll) 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+             正在搜索 C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\lib\amd64\MSVCRTD.lib:
+               已找到 _RTC_Shutdown
+                 已在 maxProject1.obj 中引用
+                 已在 DllEntry.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 MSVCRTD.lib(_init_.obj)
+               已找到 __CxxFrameHandler3
+                 已在 maxProject1.obj 中引用
+                 已在 DllEntry.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已在 msvcprtd.lib(locale0_implib.obj) 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 atexit
+                 已在 maxProject1.obj 中引用
+                 已在 msvcprtd.lib(locale0_implib.obj) 中引用
+                 已加载 MSVCRTD.lib(atonexit.obj)
+               已找到 "const type_info::`vftable'" (??_7type_info@@6B@)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 MSVCRTD.lib(ti_inst.obj)
+               已找到 _purecall
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 __GSHandlerCheck_EH
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 MSVCRTD.lib(gshandlereh.obj)
+               已找到 "void __cdecl operator delete[](void *)" (??_V@YAXPEAX@Z)
+                 已在 maxProject1.obj 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 __security_cookie
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 MSVCRTD.lib(gs_cookie.obj)
+               已找到 __security_check_cookie
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 MSVCRTD.lib(amdsecgs.obj)
+               已找到 _RTC_CheckStackVars
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 MSVCRTD.lib(_stack_.obj)
+               已找到 "void __cdecl operator delete(void *)" (??3@YAXPEAX@Z)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已在 msvcprtd.lib(locale0_implib.obj) 中引用
+                 已在 MSVCRTD.lib(ti_inst.obj) 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 _fltused
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 MSVCRTD.lib(dllsupp.obj)
+               已找到 __chkstk
+                 已在 maxProject1.obj 中引用
+                 已加载 MSVCRTD.lib(chkstk.obj)
+               已找到 __C_specific_handler
+                 已在 maxProject1.obj 中引用
+                 已在 MSVCRTD.lib(atonexit.obj) 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 __GSHandlerCheck_SEH
+                 已在 maxProject1.obj 中引用
+                 已加载 MSVCRTD.lib(gshandlerseh.obj)
+               已找到 "void __cdecl `eh vector destructor iterator'(void *,unsigned __int64,int,void (__cdecl*)(void *))" (??_M@YAXPEAX_KHP6AX0@Z@Z)
+                 已在 maxProject1.obj 中引用
+                 已在 MSVCRTD.lib(ti_inst.obj) 中引用
+                 已加载 MSVCRTD.lib(ehvecdtr.obj)
+               已找到 _CxxThrowException
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 __imp__invalid_parameter
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 __imp__CrtDbgReportW
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 __imp__lock_file
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 __imp__unlock_file
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 __imp_fwrite
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 __imp_fputc
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 __imp_ungetc
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 __imp_memcpy_s
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 __imp_fgetc
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 __imp_fgetpos
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 __imp__fseeki64
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 __imp_fsetpos
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 __imp_setvbuf
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 __imp_fflush
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 __imp_memmove
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 strlen
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 memcpy
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 __imp_wcslen
+                 已在 maxProject1.obj 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 __imp_fclose
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 memset
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 __imp_free
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已在 msvcprtd.lib(locale0_implib.obj) 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 __imp__wassert
+                 已在 maxProject1.obj 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 "void __cdecl `eh vector constructor iterator'(void *,unsigned __int64,int,void (__cdecl*)(void *),void (__cdecl*)(void *))" (??_L@YAXPEAX_KHP6AX0@Z2@Z)
+                 已在 maxProject1.obj 中引用
+                 已加载 MSVCRTD.lib(ehvecctr.obj)
+               已找到 "__declspec(dllimport) public: __cdecl std::bad_cast::bad_cast(char const *)" (__imp_??0bad_cast@std@@QEAA@PEBD@Z)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 "public: virtual __cdecl std::bad_cast::~bad_cast(void)" (??1bad_cast@std@@UEAA@XZ)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 "public: __cdecl std::bad_cast::bad_cast(class std::bad_cast const &)" (??0bad_cast@std@@QEAA@AEBV01@@Z)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 "public: __cdecl std::exception::exception(class std::exception const &)" (??0exception@std@@QEAA@AEBV01@@Z)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 "void * __cdecl operator new(unsigned __int64)" (??2@YAPEAX_K@Z)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已在 msvcprtd.lib(newaop_s.obj) 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 "__declspec(dllimport) public: virtual __cdecl std::exception::~exception(void)" (__imp_??1exception@std@@UEAA@XZ)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 "__declspec(dllimport) public: __cdecl std::exception::exception(char const * const &)" (__imp_??0exception@std@@QEAA@AEBQEBD@Z)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 "public: virtual char const * __cdecl std::exception::what(void)const " (?what@exception@std@@UEBAPEBDXZ)
+                 已在 maxProject1.obj 中引用
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 __imp__cprintf
+                 已在 MeshEnumProc.obj 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 _DllMainCRTStartup
+                 已加载 MSVCRTD.lib(crtdll.obj)
+               已找到 _RTC_SetErrorFuncW
+                 已在 MSVCRTD.lib(_init_.obj) 中引用
+                 已加载 MSVCRTD.lib(_userapi_.obj)
+               已找到 _CRT_RTC_INITW
+                 已在 MSVCRTD.lib(_init_.obj) 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 __IMPORT_DESCRIPTOR_MSVCR100D
+                 已在 MSVCRTD.lib(MSVCR100D.dll) 中引用
+                 已在 MSVCRTD.lib(MSVCR100D.dll) 中引用
+                 已在 MSVCRTD.lib(MSVCR100D.dll) 中引用
+                 已在 MSVCRTD.lib(MSVCR100D.dll) 中引用
+                 已在 MSVCRTD.lib(MSVCR100D.dll) 中引用
+                 已在 MSVCRTD.lib(MSVCR100D.dll) 中引用
+                 已在 MSVCRTD.lib(MSVCR100D.dll) 中引用
+                 已在 MSVCRTD.lib(MSVCR100D.dll) 中引用
+                 已在 MSVCRTD.lib(MSVCR100D.dll) 中引用
+                 已在 MSVCRTD.lib(MSVCR100D.dll) 中引用
+                 已在 MSVCRTD.lib(MSVCR100D.dll) 中引用
+                 已在 MSVCRTD.lib(MSVCR100D.dll) 中引用
+                 已在 MSVCRTD.lib(MSVCR100D.dll) 中引用
+                 已在 MSVCRTD.lib(MSVCR100D.dll) 中引用
+                 已在 MSVCRTD.lib(MSVCR100D.dll) 中引用
+                 已在 MSVCRTD.lib(MSVCR100D.dll) 中引用
+                 已在 MSVCRTD.lib(MSVCR100D.dll) 中引用
+                 已在 MSVCRTD.lib(MSVCR100D.dll) 中引用
+                 已在 MSVCRTD.lib(MSVCR100D.dll) 中引用
+                 已在 MSVCRTD.lib(MSVCR100D.dll) 中引用
+                 已在 MSVCRTD.lib(MSVCR100D.dll) 中引用
+                 已在 MSVCRTD.lib(MSVCR100D.dll) 中引用
+                 已在 MSVCRTD.lib(MSVCR100D.dll) 中引用
+                 已在 MSVCRTD.lib(MSVCR100D.dll) 中引用
+                 已在 MSVCRTD.lib(MSVCR100D.dll) 中引用
+                 已在 MSVCRTD.lib(MSVCR100D.dll) 中引用
+                 已在 MSVCRTD.lib(MSVCR100D.dll) 中引用
+                 已在 MSVCRTD.lib(MSVCR100D.dll) 中引用
+                 已在 MSVCRTD.lib(MSVCR100D.dll) 中引用
+                 已在 MSVCRTD.lib(MSVCR100D.dll) 中引用
+                 已在 MSVCRTD.lib(MSVCR100D.dll) 中引用
+                 已在 MSVCRTD.lib(MSVCR100D.dll) 中引用
+                 已在 MSVCRTD.lib(MSVCR100D.dll) 中引用
+                 已在 MSVCRTD.lib(MSVCR100D.dll) 中引用
+                 已在 MSVCRTD.lib(MSVCR100D.dll) 中引用
+                 已在 MSVCRTD.lib(MSVCR100D.dll) 中引用
+                 已在 MSVCRTD.lib(MSVCR100D.dll) 中引用
+                 已在 MSVCRTD.lib(MSVCR100D.dll) 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 _unlock
+                 已在 MSVCRTD.lib(atonexit.obj) 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 __dllonexit
+                 已在 MSVCRTD.lib(atonexit.obj) 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 _lock
+                 已在 MSVCRTD.lib(atonexit.obj) 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 __imp__onexit
+                 已在 MSVCRTD.lib(atonexit.obj) 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 "public: virtual __cdecl type_info::~type_info(void)" (??1type_info@@UEAA@XZ)
+                 已在 MSVCRTD.lib(ti_inst.obj) 中引用
+                 已加载 MSVCRTD.lib(typeinfo_dtor_64.obj)
+               已找到 __GSHandlerCheckCommon
+                 已在 MSVCRTD.lib(gshandlereh.obj) 中引用
+                 已在 MSVCRTD.lib(gshandlerseh.obj) 中引用
+                 已加载 MSVCRTD.lib(gshandler.obj)
+               已找到 __report_gsfailure
+                 已在 MSVCRTD.lib(amdsecgs.obj) 中引用
+                 已加载 MSVCRTD.lib(gs_report.obj)
+               已找到 "void __cdecl _RTC_StackFailure(void *,char const *)" (?_RTC_StackFailure@@YAXPEAXPEBD@Z)
+                 已在 MSVCRTD.lib(_stack_.obj) 中引用
+                 已加载 MSVCRTD.lib(_error_.obj)
+               已找到 "void __cdecl terminate(void)" (?terminate@@YAXXZ)
+                 已在 MSVCRTD.lib(ehvecdtr.obj) 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 __clean_type_info_names
+                 已在 MSVCRTD.lib(crtdll.obj) 中引用
+                 已加载 MSVCRTD.lib(tncleanup.obj)
+               已找到 _RTC_Terminate
+                 已在 MSVCRTD.lib(crtdll.obj) 中引用
+                 已加载 MSVCRTD.lib(_initsect_.obj)
+               已找到 __imp__malloc_dbg
+                 已在 MSVCRTD.lib(crtdll.obj) 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 __imp__free_dbg
+                 已在 MSVCRTD.lib(crtdll.obj) 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 __imp__encoded_null
+                 已在 MSVCRTD.lib(crtdll.obj) 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 __imp__CrtSetCheckCount
+                 已在 MSVCRTD.lib(crtdll.obj) 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 _IsNonwritableInCurrentImage
+                 已在 MSVCRTD.lib(crtdll.obj) 中引用
+                 已加载 MSVCRTD.lib(pesect.obj)
+               已找到 _initterm
+                 已在 MSVCRTD.lib(crtdll.obj) 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 __xc_a
+                 已在 MSVCRTD.lib(crtdll.obj) 中引用
+                 已加载 MSVCRTD.lib(cinitexe.obj)
+         已处理 /DEFAULTLIB: kernel32.lib
+          已处理 /DISALLOWLIB: libcmt.lib
+          已处理 /DISALLOWLIB: libcmtd.lib
+          已处理 /DISALLOWLIB: msvcrt.lib
+               已找到 _initterm_e
+                 已在 MSVCRTD.lib(crtdll.obj) 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 _amsg_exit
+                 已在 MSVCRTD.lib(crtdll.obj) 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 __native_startup_state
+                 已在 MSVCRTD.lib(crtdll.obj) 中引用
+                 已加载 MSVCRTD.lib(natstart.obj)
+               已找到 __security_init_cookie
+                 已在 MSVCRTD.lib(crtdll.obj) 中引用
+                 已加载 MSVCRTD.lib(gs_support.obj)
+               已找到 __CppXcptFilter
+                 已在 MSVCRTD.lib(crtdll.obj) 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 MSVCR100D_NULL_THUNK_DATA
+                 已在 MSVCRTD.lib(MSVCR100D.dll) 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 "public: void __cdecl type_info::_type_info_dtor_internal_method(void)" (?_type_info_dtor_internal_method@type_info@@QEAAXXZ)
+                 已在 MSVCRTD.lib(typeinfo_dtor_64.obj) 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 __crt_debugger_hook
+                 已在 MSVCRTD.lib(gs_report.obj) 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 "int __cdecl _RTC_GetSrcLine(unsigned char *,wchar_t *,unsigned long,int *,wchar_t *,unsigned long)" (?_RTC_GetSrcLine@@YAHPEAEPEA_WKPEAH1K@Z)
+                 已在 MSVCRTD.lib(_error_.obj) 中引用
+                 已加载 MSVCRTD.lib(_pdblkup_.obj)
+               已找到 __clean_type_info_names_internal
+                 已在 MSVCRTD.lib(tncleanup.obj) 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+             正在搜索 C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\lib\amd64\OLDNAMES.lib:
+             正在搜索 ..\..\3ds Max 2014 SDK\maxsdk\lib\x64\Release\core.lib:
+             正在搜索 ..\..\3ds Max 2014 SDK\maxsdk\lib\x64\Release\geom.lib:
+             正在搜索 ..\..\3ds Max 2014 SDK\maxsdk\lib\x64\Release\gfx.lib:
+             正在搜索 ..\..\3ds Max 2014 SDK\maxsdk\lib\x64\Release\mesh.lib:
+             正在搜索 ..\..\3ds Max 2014 SDK\maxsdk\lib\x64\Release\maxutil.lib:
+             正在搜索 ..\..\3ds Max 2014 SDK\maxsdk\lib\x64\Release\maxscrpt.lib:
+             正在搜索 ..\..\3ds Max 2014 SDK\maxsdk\lib\x64\Release\paramblk2.lib:
+             正在搜索 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\lib\x64\msxml2.lib:
+             正在搜索 ..\..\3ds Max 2014 SDK\maxsdk\lib\x64\Release\igame.lib:
+             正在搜索 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\lib\x64\kernel32.lib:
+               已找到 __imp_EncodePointer
+                 已在 MSVCRTD.lib(atonexit.obj) 中引用
+                 已在 MSVCRTD.lib(crtdll.obj) 中引用
+                 已加载 kernel32.lib(KERNEL32.dll)
+               已找到 __imp_DecodePointer
+                 已在 MSVCRTD.lib(atonexit.obj) 中引用
+                 已在 MSVCRTD.lib(crtdll.obj) 中引用
+                 已加载 kernel32.lib(KERNEL32.dll)
+               已找到 __imp_Sleep
+                 已在 MSVCRTD.lib(crtdll.obj) 中引用
+                 已加载 kernel32.lib(KERNEL32.dll)
+               已找到 __imp_TerminateProcess
+                 已在 MSVCRTD.lib(gs_report.obj) 中引用
+                 已加载 kernel32.lib(KERNEL32.dll)
+               已找到 __imp_GetCurrentProcess
+                 已在 MSVCRTD.lib(gs_report.obj) 中引用
+                 已加载 kernel32.lib(KERNEL32.dll)
+               已找到 __imp_UnhandledExceptionFilter
+                 已在 MSVCRTD.lib(gs_report.obj) 中引用
+                 已加载 kernel32.lib(KERNEL32.dll)
+               已找到 __imp_SetUnhandledExceptionFilter
+                 已在 MSVCRTD.lib(gs_report.obj) 中引用
+                 已加载 kernel32.lib(KERNEL32.dll)
+               已找到 __imp_IsDebuggerPresent
+                 已在 MSVCRTD.lib(gs_report.obj) 中引用
+                 已在 MSVCRTD.lib(_error_.obj) 中引用
+                 已加载 kernel32.lib(KERNEL32.dll)
+               已找到 RtlVirtualUnwind
+                 已在 MSVCRTD.lib(gs_report.obj) 中引用
+                 已加载 kernel32.lib(KERNEL32.dll)
+               已找到 RtlLookupFunctionEntry
+                 已在 MSVCRTD.lib(gs_report.obj) 中引用
+                 已加载 kernel32.lib(KERNEL32.dll)
+               已找到 __imp_RtlCaptureContext
+                 已在 MSVCRTD.lib(gs_report.obj) 中引用
+                 已加载 kernel32.lib(KERNEL32.dll)
+               已找到 __imp_RaiseException
+                 已在 MSVCRTD.lib(_error_.obj) 中引用
+                 已加载 kernel32.lib(KERNEL32.dll)
+               已找到 __imp_lstrlenA
+                 已在 MSVCRTD.lib(_error_.obj) 中引用
+                 已加载 kernel32.lib(KERNEL32.dll)
+               已找到 __imp_GetProcAddress
+                 已在 MSVCRTD.lib(_error_.obj) 中引用
+                 已在 MSVCRTD.lib(_pdblkup_.obj) 中引用
+                 已加载 kernel32.lib(KERNEL32.dll)
+               已找到 __imp_QueryPerformanceCounter
+                 已在 MSVCRTD.lib(gs_support.obj) 中引用
+                 已加载 kernel32.lib(KERNEL32.dll)
+               已找到 __imp_GetTickCount
+                 已在 MSVCRTD.lib(gs_support.obj) 中引用
+                 已加载 kernel32.lib(KERNEL32.dll)
+               已找到 __imp_GetCurrentThreadId
+                 已在 MSVCRTD.lib(gs_support.obj) 中引用
+                 已加载 kernel32.lib(KERNEL32.dll)
+               已找到 __imp_GetCurrentProcessId
+                 已在 MSVCRTD.lib(gs_support.obj) 中引用
+                 已加载 kernel32.lib(KERNEL32.dll)
+               已找到 __imp_GetSystemTimeAsFileTime
+                 已在 MSVCRTD.lib(gs_support.obj) 中引用
+                 已加载 kernel32.lib(KERNEL32.dll)
+               已找到 __imp_HeapFree
+                 已在 MSVCRTD.lib(_pdblkup_.obj) 中引用
+                 已加载 kernel32.lib(KERNEL32.dll)
+               已找到 __imp_HeapAlloc
+                 已在 MSVCRTD.lib(_pdblkup_.obj) 中引用
+                 已加载 kernel32.lib(KERNEL32.dll)
+               已找到 __imp_GetProcessHeap
+                 已在 MSVCRTD.lib(_pdblkup_.obj) 中引用
+                 已加载 kernel32.lib(KERNEL32.dll)
+               已找到 __imp_VirtualQuery
+                 已在 MSVCRTD.lib(_pdblkup_.obj) 中引用
+                 已加载 kernel32.lib(KERNEL32.dll)
+               已找到 __imp_FreeLibrary
+                 已在 MSVCRTD.lib(_pdblkup_.obj) 中引用
+                 已加载 kernel32.lib(KERNEL32.dll)
+             正在搜索 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\lib\x64\user32.lib:
+             正在搜索 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\lib\x64\gdi32.lib:
+             正在搜索 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\lib\x64\winspool.lib:
+             正在搜索 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\lib\x64\comdlg32.lib:
+             正在搜索 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\lib\x64\advapi32.lib:
+             正在搜索 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\lib\x64\shell32.lib:
+             正在搜索 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\lib\x64\ole32.lib:
+             正在搜索 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\lib\x64\oleaut32.lib:
+             正在搜索 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\lib\x64\uuid.lib:
+             正在搜索 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\lib\x64\odbc32.lib:
+             正在搜索 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\lib\x64\odbccp32.lib:
+             正在搜索 C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\lib\amd64\msvcprtd.lib:
+         
+         已完成库搜索
+         
+         正在生成 .exp 文件
             正在创建库 .\obj\\maxProject1.lib 和对象 .\obj\\maxProject1.exp
-         maxProject1.vcxproj -> G:\Program Files\Autodesk\3ds Max 2014\plugins\maxProject1.dle
+         
+         已完成 .exp 文件生成
+         
+         正在搜索库
+             正在搜索 ..\..\3ds Max 2014 SDK\maxsdk\lib\x64\Release\core.lib:
+             正在搜索 ..\..\3ds Max 2014 SDK\maxsdk\lib\x64\Release\geom.lib:
+             正在搜索 ..\..\3ds Max 2014 SDK\maxsdk\lib\x64\Release\gfx.lib:
+             正在搜索 ..\..\3ds Max 2014 SDK\maxsdk\lib\x64\Release\mesh.lib:
+             正在搜索 ..\..\3ds Max 2014 SDK\maxsdk\lib\x64\Release\maxutil.lib:
+             正在搜索 ..\..\3ds Max 2014 SDK\maxsdk\lib\x64\Release\maxscrpt.lib:
+             正在搜索 ..\..\3ds Max 2014 SDK\maxsdk\lib\x64\Release\paramblk2.lib:
+             正在搜索 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\lib\x64\msxml2.lib:
+             正在搜索 ..\..\3ds Max 2014 SDK\maxsdk\lib\x64\Release\igame.lib:
+             正在搜索 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\lib\x64\kernel32.lib:
+             正在搜索 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\lib\x64\user32.lib:
+             正在搜索 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\lib\x64\gdi32.lib:
+             正在搜索 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\lib\x64\winspool.lib:
+             正在搜索 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\lib\x64\comdlg32.lib:
+             正在搜索 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\lib\x64\advapi32.lib:
+             正在搜索 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\lib\x64\shell32.lib:
+             正在搜索 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\lib\x64\ole32.lib:
+             正在搜索 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\lib\x64\oleaut32.lib:
+             正在搜索 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\lib\x64\uuid.lib:
+             正在搜索 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\lib\x64\odbc32.lib:
+             正在搜索 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\lib\x64\odbccp32.lib:
+             正在搜索 C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\lib\amd64\msvcprtd.lib:
+             正在搜索 C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\lib\amd64\MSVCRTD.lib:
+             正在搜索 C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\lib\amd64\OLDNAMES.lib:
+         
+         已完成库搜索
+         
+         已完成传递 1
+         
+         
+         正在调用 CVTRES.EXE:
+          /machine:amd64
+          /verbose
+          /out:"C:\Users\ADMINI~1\AppData\Local\Temp\lnk3AEB.tmp"
+          /readonly
+          ".\obj\maxProject1.res"
+         Microsoft(R) Windows Resource To Object Converter 版本 10.00.30319.01
+         版权所有(C) Microsoft Corporation。保留所有权利。
+         
+         正在添加资源。类型: DIALOG，名称: 101，语言: 0x0409，标记: 0x1030，大小: 476
+         正在添加资源。类型: STRING，名称: 1，语言: 0x0409，标记: 0x1030，大小: 82
+         正在启动传递 2
+              maxProject1.res
+              maxProject1.exp
+              MeshEnumProc.obj
+              DllEntry.obj
+              maxProject1.obj
+              core.lib(core.dll)
+              core.lib(core.dll)
+              core.lib(core.dll)
+              core.lib(core.dll)
+              core.lib(core.dll)
+              core.lib(core.dll)
+              core.lib(core.dll)
+              core.lib(core.dll)
+              geom.lib(geom.dll)
+              geom.lib(geom.dll)
+              geom.lib(geom.dll)
+              geom.lib(geom.dll)
+              geom.lib(geom.dll)
+              mesh.lib(mesh.dll)
+              mesh.lib(mesh.dll)
+              mesh.lib(mesh.dll)
+              mesh.lib(mesh.dll)
+              maxutil.lib(maxutil.dll)
+              maxutil.lib(maxutil.dll)
+              maxutil.lib(maxutil.dll)
+              maxutil.lib(maxutil.dll)
+              maxutil.lib(maxutil.dll)
+              maxutil.lib(maxutil.dll)
+              maxutil.lib(maxutil.dll)
+              maxutil.lib(maxutil.dll)
+              maxutil.lib(maxutil.dll)
+              maxutil.lib(maxutil.dll)
+              paramblk2.lib(ParamBlk2.dll)
+              paramblk2.lib(ParamBlk2.dll)
+              paramblk2.lib(ParamBlk2.dll)
+              paramblk2.lib(ParamBlk2.dll)
+              paramblk2.lib(ParamBlk2.dll)
+              paramblk2.lib(ParamBlk2.dll)
+              paramblk2.lib(ParamBlk2.dll)
+              paramblk2.lib(ParamBlk2.dll)
+              paramblk2.lib(ParamBlk2.dll)
+              paramblk2.lib(ParamBlk2.dll)
+              paramblk2.lib(ParamBlk2.dll)
+              paramblk2.lib(ParamBlk2.dll)
+              paramblk2.lib(ParamBlk2.dll)
+              paramblk2.lib(ParamBlk2.dll)
+              paramblk2.lib(ParamBlk2.dll)
+              paramblk2.lib(ParamBlk2.dll)
+              igame.lib(IGame.dll)
+              igame.lib(IGame.dll)
+              igame.lib(IGame.dll)
+              igame.lib(IGame.dll)
+              igame.lib(IGame.dll)
+              igame.lib(IGame.dll)
+              igame.lib(IGame.dll)
+              kernel32.lib(KERNEL32.dll)
+              kernel32.lib(KERNEL32.dll)
+              kernel32.lib(KERNEL32.dll)
+              kernel32.lib(KERNEL32.dll)
+              kernel32.lib(KERNEL32.dll)
+              kernel32.lib(KERNEL32.dll)
+              kernel32.lib(KERNEL32.dll)
+              kernel32.lib(KERNEL32.dll)
+              kernel32.lib(KERNEL32.dll)
+              kernel32.lib(KERNEL32.dll)
+              kernel32.lib(KERNEL32.dll)
+              kernel32.lib(KERNEL32.dll)
+              kernel32.lib(KERNEL32.dll)
+              kernel32.lib(KERNEL32.dll)
+              kernel32.lib(KERNEL32.dll)
+              kernel32.lib(KERNEL32.dll)
+              kernel32.lib(KERNEL32.dll)
+              kernel32.lib(KERNEL32.dll)
+              kernel32.lib(KERNEL32.dll)
+              kernel32.lib(KERNEL32.dll)
+              kernel32.lib(KERNEL32.dll)
+              kernel32.lib(KERNEL32.dll)
+              kernel32.lib(KERNEL32.dll)
+              kernel32.lib(KERNEL32.dll)
+              kernel32.lib(KERNEL32.dll)
+              kernel32.lib(KERNEL32.dll)
+              kernel32.lib(KERNEL32.dll)
+              kernel32.lib(KERNEL32.dll)
+              kernel32.lib(KERNEL32.dll)
+              kernel32.lib(KERNEL32.dll)
+              kernel32.lib(KERNEL32.dll)
+              kernel32.lib(KERNEL32.dll)
+              kernel32.lib(KERNEL32.dll)
+              kernel32.lib(KERNEL32.dll)
+              kernel32.lib(KERNEL32.dll)
+              kernel32.lib(KERNEL32.dll)
+              kernel32.lib(KERNEL32.dll)
+              kernel32.lib(KERNEL32.dll)
+              kernel32.lib(KERNEL32.dll)
+              kernel32.lib(KERNEL32.dll)
+              user32.lib(USER32.dll)
+              user32.lib(USER32.dll)
+              user32.lib(USER32.dll)
+              user32.lib(USER32.dll)
+              user32.lib(USER32.dll)
+              user32.lib(USER32.dll)
+              user32.lib(USER32.dll)
+              uuid.lib(cguid_i.obj)
+              msvcprtd.lib(locale0_implib.obj)
+              msvcprtd.lib(newaop_s.obj)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              msvcprtd.lib(MSVCP100D.dll)
+              MSVCRTD.lib(ehvecctr.obj)
+              MSVCRTD.lib(ehvecdtr.obj)
+              MSVCRTD.lib(tncleanup.obj)
+              MSVCRTD.lib(atonexit.obj)
+              MSVCRTD.lib(cinitexe.obj)
+              MSVCRTD.lib(crtdll.obj)
+              MSVCRTD.lib(gs_cookie.obj)
+              MSVCRTD.lib(gs_report.obj)
+              MSVCRTD.lib(gs_support.obj)
+              MSVCRTD.lib(natstart.obj)
+              MSVCRTD.lib(pesect.obj)
+              MSVCRTD.lib(ti_inst.obj)
+              MSVCRTD.lib(dllsupp.obj)
+              MSVCRTD.lib(amdsecgs.obj)
+              MSVCRTD.lib(gshandler.obj)
+              MSVCRTD.lib(gshandlereh.obj)
+              MSVCRTD.lib(gshandlerseh.obj)
+              MSVCRTD.lib(chkstk.obj)
+              MSVCRTD.lib(typeinfo_dtor_64.obj)
+              MSVCRTD.lib(_userapi_.obj)
+              MSVCRTD.lib(_stack_.obj)
+              MSVCRTD.lib(_pdblkup_.obj)
+              MSVCRTD.lib(_initsect_.obj)
+              MSVCRTD.lib(_init_.obj)
+              MSVCRTD.lib(_error_.obj)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
+         已完成传递 2
+         maxProject1.vcxproj -> D:\Program Files\Autodesk\3ds Max 2014\\plugins\maxProject1.dle
        PostBuildEvent:
-         "I:\Program Files\Autodesk\3ds Max 2014 SDK\maxsdk\tools\RunMUIRCT.exe" "G:\Program Files\Autodesk\3ds Max 2014\plugins\\" maxProject1.dle
+         "C:\Users\Administrator\Documents\GitHub\Lives2D_Tools\3ds Max 2014 SDK\maxsdk\tools\RunMUIRCT.exe" "D:\Program Files\Autodesk\3ds Max 2014\plugins\\" maxProject1.dle
          :VCEnd
          ==== RunMUIRCT: Start ====
-         RunMUIRCT: WARNING - Could not find version info in file: G:\Program Files\Autodesk\3ds Max 2014\plugins\maxProject1.dle
+         RunMUIRCT: WARNING - Could not find version info in file: D:\Program Files\Autodesk\3ds Max 2014\plugins\maxProject1.dle
          
          There is no version resource in the file 
-         Language neutral file (G:\Program Files\Autodesk\3ds Max 2014\plugins\en-US\maxProject1.dle.ln) successfully created
-         MUI file (G:\Program Files\Autodesk\3ds Max 2014\plugins\en-US\maxProject1.dle.mui) successfully created 
+         Language neutral file (D:\Program Files\Autodesk\3ds Max 2014\plugins\en-US\maxProject1.dle.ln) successfully created
+         MUI file (D:\Program Files\Autodesk\3ds Max 2014\plugins\en-US\maxProject1.dle.mui) successfully created 
          ==== RunMUIRCT: Successs ====
        FinalizeBuildStatus:
          正在删除文件“.\obj\maxProject1.unsuccessfulbuild”。
          正在对“.\obj\maxProject1.lastbuildstate”执行 Touch 任务。
-     1>已完成生成项目“G:\Github\Lives2D_Tools\maxProject1\maxProject1\maxProject1.vcxproj”(build 个目标)的操作。
+     1>已完成生成项目“C:\Users\Administrator\Documents\GitHub\Lives2D_Tools\maxProject1\maxProject1\maxProject1.vcxproj”(build 个目标)的操作。
 
 生成成功。
 
-已用时间 00:00:03.23
+已用时间 00:00:04.89
