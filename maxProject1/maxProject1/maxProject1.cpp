@@ -445,15 +445,21 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 	}
 
 
+	//拆分mesh和anim文件
+	wstring tmpExportFullPath(name);
+	std::size_t tmpFind= tmpExportFullPath.find_last_of(L".");
+	wstring tmpExportMeshPath= tmpExportFullPath.substr(0,tmpFind)+L".mesh";
+	wstring tmpExportAnimPath= tmpExportFullPath.substr(0,tmpFind)+L".anim";
 
 	//写文件
-	ofstream fout(name, ios::binary);
+	ofstream tmpOfStreamMesh(tmpExportMeshPath, ios::binary);
+	ofstream tmpOfStreamAnim(tmpExportAnimPath,ios::binary);
 
 	ofstream foutLog("c://log.txt");
 
 	//写入mesh count;
 	int meshcount = 1;
-	fout.write((char*)(&meshcount), sizeof(meshcount));
+	tmpOfStreamMesh.write((char*)(&meshcount), sizeof(meshcount));
 
 	std::cout << "MeshCount: " << meshcount << std::endl;
 	foutLog<< "MeshCount: " << meshcount << endl;
@@ -479,19 +485,19 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 
 
 		//写入vertexsize;
-		fout.write((char*)(&vertexsize), sizeof(vertexsize));
+		tmpOfStreamMesh.write((char*)(&vertexsize), sizeof(vertexsize));
 
 
 		//写入vertex数据;
 		for (size_t vertexindex = 0; vertexindex < tmpVectorVertex.size(); vertexindex++)
 		{
-			fout.write((char*)(&tmpVectorVertex[vertexindex]), sizeof(tmpVectorVertex[vertexindex]));
+			tmpOfStreamMesh.write((char*)(&tmpVectorVertex[vertexindex]), sizeof(tmpVectorVertex[vertexindex]));
 		}
 
 		foutLog << "Vertex:" << tmpVectorVertex.size()<< std::endl;
 		for (size_t vertexindex = 0; vertexindex < tmpVectorVertex.size(); vertexindex++)
 		{
-			foutLog << "(" << tmpVectorVertex[vertexindex].Position.x << "," << tmpVectorVertex[vertexindex].Position.y << "," << tmpVectorVertex[vertexindex].Position.z << ")";
+			foutLog << "(" << tmpVectorVertex[vertexindex].Position.x << "," << tmpVectorVertex[vertexindex].Position.y << "," << tmpVectorVertex[vertexindex].Position.z << ")"<< std::endl;
 		}
 
 		foutLog << "UV:" << tmpVectorVertex.size()<< std::endl;
@@ -508,14 +514,14 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 
 
 		//写入indicessize;
-		fout.write((char*)(&indicessize), sizeof(indicessize));
+		tmpOfStreamMesh.write((char*)(&indicessize), sizeof(indicessize));
 
 
 
 		//写入indicess数据;
 		for (size_t indexindex = 0; indexindex < tmpVectorIndices.size(); indexindex++)
 		{
-			fout.write((char*)(&tmpVectorIndices[indexindex]), sizeof(tmpVectorIndices[indexindex]));
+			tmpOfStreamMesh.write((char*)(&tmpVectorIndices[indexindex]), sizeof(tmpVectorIndices[indexindex]));
 		}
 
 
@@ -530,7 +536,7 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 
 
 		//写入texturesize;
-		fout.write((char*)(&texturesize), sizeof(texturesize));
+		tmpOfStreamMesh.write((char*)(&texturesize), sizeof(texturesize));
 
 		//写入texture数据;
 		for (size_t textureindex = 0; textureindex < texturesize; textureindex++)
@@ -541,7 +547,7 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 
 		//写入骨骼数据
 		int tmpGameNodeBoneSize=tmpVectorGameNodeBones.size();
-		fout.write((char*)(&tmpGameNodeBoneSize),sizeof(tmpGameNodeBoneSize));
+		tmpOfStreamAnim.write((char*)(&tmpGameNodeBoneSize),sizeof(tmpGameNodeBoneSize));
 
 		for (size_t tmpGameNodeBoneIndex=0;tmpGameNodeBoneIndex<tmpVectorGameNodeBones.size();tmpGameNodeBoneIndex++)
 		{
@@ -550,14 +556,14 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 			std::string tmpGameNodeBoneNameString=ws2s(tmpGameNodeBoneNameWString);
 			foutLog<<tmpGameNodeBoneNameString<<std::endl;
 
-			int tmpGameNodeBoneNameStringSize=tmpGameNodeBoneNameString.size();
-			fout.write((char*)(&tmpGameNodeBoneNameStringSize),sizeof(tmpGameNodeBoneNameStringSize));
-			fout.write(tmpGameNodeBoneNameString.c_str(),tmpGameNodeBoneNameStringSize);
+			int tmpGameNodeBoneNameStringSize=tmpGameNodeBoneNameString.size()+1;
+			tmpOfStreamAnim.write((char*)(&tmpGameNodeBoneNameStringSize),sizeof(tmpGameNodeBoneNameStringSize));
+			tmpOfStreamAnim.write(tmpGameNodeBoneNameString.c_str(),tmpGameNodeBoneNameStringSize);
 		}
 
 		//写入第0帧逆矩阵
 		int tmpVectorBoneGMatrixInvertSize=tmpVectorBoneGMatrixInvert.size();
-		fout.write((char*)(&tmpVectorBoneGMatrixInvertSize),sizeof(tmpVectorBoneGMatrixInvertSize));
+		tmpOfStreamMesh.write((char*)(&tmpVectorBoneGMatrixInvertSize),sizeof(tmpVectorBoneGMatrixInvertSize));
 
 		foutLog<<"Invert GMatrix:"<<endl;
 		for (size_t tmpBoneGMatrixInvertIndex=0;tmpBoneGMatrixInvertIndex<tmpVectorBoneGMatrixInvert.size();tmpBoneGMatrixInvertIndex++)
@@ -579,12 +585,12 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 			tmpMat4x4BoneGMatrixInvert[2][0]=tmpBoneGMatrixInvert[2][0];tmpMat4x4BoneGMatrixInvert[2][1]=tmpBoneGMatrixInvert[2][1];tmpMat4x4BoneGMatrixInvert[2][2]=tmpBoneGMatrixInvert[2][2];tmpMat4x4BoneGMatrixInvert[2][3]=tmpBoneGMatrixInvert[2][3];
 			tmpMat4x4BoneGMatrixInvert[3][0]=tmpBoneGMatrixInvert[3][0];tmpMat4x4BoneGMatrixInvert[3][1]=tmpBoneGMatrixInvert[3][1];tmpMat4x4BoneGMatrixInvert[3][2]=tmpBoneGMatrixInvert[3][2];tmpMat4x4BoneGMatrixInvert[3][3]=tmpBoneGMatrixInvert[3][3];
 
-			fout.write((char*)(&tmpMat4x4BoneGMatrixInvert),sizeof(tmpMat4x4BoneGMatrixInvert));
+			tmpOfStreamAnim.write((char*)(&tmpMat4x4BoneGMatrixInvert),sizeof(tmpMat4x4BoneGMatrixInvert));
 		}
 
 		//写入骨骼时间轴矩阵
 		int tmpMapBoneGMatrixSize=tmpMapBoneGMatrix.size();
-		fout.write((char*)(&tmpMapBoneGMatrixSize),sizeof(tmpMapBoneGMatrixSize));
+		tmpOfStreamAnim.write((char*)(&tmpMapBoneGMatrixSize),sizeof(tmpMapBoneGMatrixSize));
 
 		foutLog<<"Animation:"<<std::endl;
 		for (map<TimeValue,vector<GMatrix>>::iterator tmpIterBegin=tmpMapBoneGMatrix.begin();tmpIterBegin!=tmpMapBoneGMatrix.end();tmpIterBegin++)
@@ -592,12 +598,12 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 			TimeValue tmpTimeValueCurrent=tmpIterBegin->first;
 			foutLog<<tmpTimeValueCurrent<<std::endl;
 
-			fout.write((char*)(&tmpTimeValueCurrent),sizeof(tmpTimeValueCurrent));
+			tmpOfStreamAnim.write((char*)(&tmpTimeValueCurrent),sizeof(tmpTimeValueCurrent));
 
 			vector<GMatrix> tmpVectorGMatrixCurrent=tmpIterBegin->second;
 
 			int tmpVectorGMatrixCurrentSize=tmpVectorGMatrixCurrent.size();
-			fout.write((char*)(&tmpVectorGMatrixCurrentSize),sizeof(tmpVectorGMatrixCurrentSize));
+			tmpOfStreamAnim.write((char*)(&tmpVectorGMatrixCurrentSize),sizeof(tmpVectorGMatrixCurrentSize));
 
 			for (size_t tmpVectorGMatrixCurrentIndex=0;tmpVectorGMatrixCurrentIndex<tmpVectorGMatrixCurrent.size();tmpVectorGMatrixCurrentIndex++)
 			{
@@ -618,13 +624,13 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 				tmpMat4x4BoneGMatrix[2][0]=tmpGMatrixNodeBone[2][0];tmpMat4x4BoneGMatrix[2][1]=tmpGMatrixNodeBone[2][1];tmpMat4x4BoneGMatrix[2][2]=tmpGMatrixNodeBone[2][2];tmpMat4x4BoneGMatrix[2][3]=tmpGMatrixNodeBone[2][3];
 				tmpMat4x4BoneGMatrix[3][0]=tmpGMatrixNodeBone[3][0];tmpMat4x4BoneGMatrix[3][1]=tmpGMatrixNodeBone[3][1];tmpMat4x4BoneGMatrix[3][2]=tmpGMatrixNodeBone[3][2];tmpMat4x4BoneGMatrix[3][3]=tmpGMatrixNodeBone[3][3];
 
-				fout.write((char*)(&tmpMat4x4BoneGMatrix),sizeof(tmpMat4x4BoneGMatrix));
+				tmpOfStreamAnim.write((char*)(&tmpMat4x4BoneGMatrix),sizeof(tmpMat4x4BoneGMatrix));
 			}
 		}
 
 		//顶点权重信息
 		int tmpVectorVertexSize=tmpVectorVertex.size();
-		fout.write((char*)(&tmpVectorVertexSize),sizeof(tmpVectorVertexSize));
+		tmpOfStreamAnim.write((char*)(&tmpVectorVertexSize),sizeof(tmpVectorVertexSize));
 
 		for (size_t vertexindex = 0; vertexindex < tmpVectorVertex.size(); vertexindex++)
 		{
@@ -633,20 +639,21 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 			map<unsigned short,float> tmpMapWeightOneVertex=tmpVectorWeight[vertexindex];
 
 			int tmpMapWeightOneVertexSize=tmpMapWeightOneVertex.size();
-			fout.write((char*)(&tmpMapWeightOneVertexSize),sizeof(tmpMapWeightOneVertexSize));
+			tmpOfStreamAnim.write((char*)(&tmpMapWeightOneVertexSize),sizeof(tmpMapWeightOneVertexSize));
 
 			for (map<unsigned short,float>::iterator tmpIterBegin=tmpMapWeightOneVertex.begin();tmpIterBegin!=tmpMapWeightOneVertex.end();tmpIterBegin++)
 			{
 				foutLog<<" "<<tmpIterBegin->first<<":"<<tmpIterBegin->second;
 
-				fout.write((char*)(&tmpIterBegin->first),sizeof(tmpIterBegin->first));
-				fout.write((char*)(&tmpIterBegin->second),sizeof(tmpIterBegin->second));
+				tmpOfStreamAnim.write((char*)(&tmpIterBegin->first),sizeof(tmpIterBegin->first));
+				tmpOfStreamAnim.write((char*)(&tmpIterBegin->second),sizeof(tmpIterBegin->second));
 			}
 			foutLog<<endl;
 		}
 	}
 
-	fout.close();
+	tmpOfStreamMesh.close();
+	tmpOfStreamAnim.close();
 	foutLog.close();
 
 	tmpGameScene->ReleaseIGame();
