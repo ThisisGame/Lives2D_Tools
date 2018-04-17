@@ -1,4 +1,4 @@
-﻿生成启动时间为 2018/4/17 11:56:15。
+﻿生成启动时间为 2018/4/18 0:16:47。
      1>项目“E:\360MoveData\Users\Administrator\Documents\GitHub\Lives2D_Tools\maxProject1\maxProject1\maxProject1.vcxproj”在节点 2 上(build 个目标)。
      1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(298,5): warning MSB8004: Intermediate 目录未以斜杠结尾。此生成实例将添加斜杠，因为必须有这个斜杠才能正确计算 Intermediate 目录。
      1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(299,5): warning MSB8004: Output 目录未以斜杠结尾。此生成实例将添加斜杠，因为必须有这个斜杠才能正确计算 Output 目录。
@@ -56,14 +56,10 @@
                已找到 "__declspec(dllimport) public: float & __cdecl Point4::operator[](int)" (__imp_??APoint4@@QEAAAEAMH@Z)
                  已在 maxProject1.obj 中引用
                  已加载 geom.lib(geom.dll)
-               已找到 "__declspec(dllimport) public: void __cdecl Matrix3::Invert(void)" (__imp_?Invert@Matrix3@@QEAAXXZ)
-                 已在 maxProject1.obj 中引用
-                 已加载 geom.lib(geom.dll)
                已找到 "__declspec(dllimport) public: __cdecl Point3::Point3(class Point3 const &)" (__imp_??0Point3@@QEAA@AEBV0@@Z)
                  已在 MeshEnumProc.obj 中引用
                  已加载 geom.lib(geom.dll)
                已找到 __IMPORT_DESCRIPTOR_geom
-                 已在 geom.lib(geom.dll) 中引用
                  已在 geom.lib(geom.dll) 中引用
                  已在 geom.lib(geom.dll) 中引用
                  已加载 geom.lib(geom.dll)
@@ -190,6 +186,12 @@
                  已加载 paramblk2.lib(ParamBlk2.dll)
              正在搜索 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\lib\x64\msxml2.lib:
              正在搜索 ..\..\3ds Max 2014 SDK\maxsdk\lib\x64\Release\igame.lib:
+               已找到 "public: class GMatrix __cdecl GMatrix::operator*(class GMatrix const &)const " (??DGMatrix@@QEBA?AV0@AEBV0@@Z)
+                 已在 maxProject1.obj 中引用
+                 已加载 igame.lib(IGame.dll)
+               已找到 "public: class GMatrix __cdecl GMatrix::Inverse(void)" (?Inverse@GMatrix@@QEAA?AV1@XZ)
+                 已在 maxProject1.obj 中引用
+                 已加载 igame.lib(IGame.dll)
                已找到 "public: __cdecl GMatrix::GMatrix(class Matrix3)" (??0GMatrix@@QEAA@VMatrix3@@@Z)
                  已在 maxProject1.obj 中引用
                  已加载 igame.lib(IGame.dll)
@@ -206,6 +208,8 @@
                  已在 maxProject1.obj 中引用
                  已加载 igame.lib(IGame.dll)
                已找到 __IMPORT_DESCRIPTOR_IGame
+                 已在 igame.lib(IGame.dll) 中引用
+                 已在 igame.lib(IGame.dll) 中引用
                  已在 igame.lib(IGame.dll) 中引用
                  已在 igame.lib(IGame.dll) 中引用
                  已在 igame.lib(IGame.dll) 中引用
@@ -1143,7 +1147,7 @@
          正在调用 CVTRES.EXE:
           /machine:amd64
           /verbose
-          /out:"C:\Users\captain\AppData\Local\Temp\lnkF162.tmp"
+          /out:"C:\Users\captain\AppData\Local\Temp\lnk5E72.tmp"
           /readonly
           ".\obj\maxProject1.res"
          Microsoft (R) Windows Resource To Object Converter Version 12.00.52512.0
@@ -1169,7 +1173,6 @@
               geom.lib(geom.dll)
               geom.lib(geom.dll)
               geom.lib(geom.dll)
-              geom.lib(geom.dll)
               mesh.lib(mesh.dll)
               mesh.lib(mesh.dll)
               mesh.lib(mesh.dll)
@@ -1200,6 +1203,8 @@
               paramblk2.lib(ParamBlk2.dll)
               paramblk2.lib(ParamBlk2.dll)
               paramblk2.lib(ParamBlk2.dll)
+              igame.lib(IGame.dll)
+              igame.lib(IGame.dll)
               igame.lib(IGame.dll)
               igame.lib(IGame.dll)
               igame.lib(IGame.dll)
@@ -1428,4 +1433,4 @@
 
 生成成功。
 
-已用时间 00:00:04.40
+已用时间 00:00:04.26

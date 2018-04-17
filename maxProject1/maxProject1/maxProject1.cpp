@@ -258,6 +258,7 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 	vector<IGameNode*> tmpVectorGameNodeBones;
 	vector<map<unsigned short,float>> tmpVectorWeight;
 
+	vector<GMatrix> tmpVectorBoneGMatrixZeroFrame;
 	vector<GMatrix> tmpVectorBoneGMatrixInvert;//´æ´¢µÚ0Ö¡Äæ¾ØÕó
 	map<TimeValue,vector<GMatrix>> tmpMapBoneGMatrix;//´æ´¢Ã¿Ò»Ö¡µÄ¾ØÕó
 
@@ -405,10 +406,22 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 				{
 					INode* tmpNodeBone=tmpVectorGameNodeBones[tmpGameNodeBoneIndex]->GetMaxNode();
 					Matrix3 tmpMatrix3NodeBone=tmpNodeBone->GetObjTMAfterWSM(0);
-					tmpMatrix3NodeBone.Invert();
-					GMatrix tmpGMatrixNodeBoneInvert(tmpMatrix3NodeBone);
 
-					tmpVectorBoneGMatrixInvert.push_back(tmpGMatrixNodeBoneInvert);
+					tmpVectorBoneGMatrixZeroFrame.push_back(tmpMatrix3NodeBone);
+
+					//tmpMatrix3NodeBone.Invert();
+					GMatrix tmpGMatrixNodeBone(tmpMatrix3NodeBone);
+					GMatrix tmpGMatrixNodeBoneInverse=tmpGMatrixNodeBone.Inverse();
+
+					tmpVectorBoneGMatrixInvert.push_back(tmpGMatrixNodeBoneInverse);
+
+					//test
+					//Matrix3 tmpTestMatrix3=tmpNodeBone->GetObjTMAfterWSM(0) * tmpMatrix3NodeBone;
+
+					GMatrix tmpGMatrixNodeBoneTest(tmpMatrix3NodeBone);
+					GMatrix tmpTest=tmpGMatrixNodeBoneTest*tmpGMatrixNodeBoneInverse;
+
+					int a=0;
 				}
 
 				//»ñÈ¡¹Ç÷À¾ØÕó
@@ -545,6 +558,15 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 
 
 		//Ð´Èë¹Ç÷ÀÊý¾Ý
+		TimeValue tmpTimeValueBegin=tmpGameScene->GetSceneStartTime();
+		TimeValue tmpTimeValueEnd=tmpGameScene->GetSceneEndTime();
+		TimeValue tmpTimeValueTicks=tmpGameScene->GetSceneTicks();
+		int tmpFrameCount=(tmpTimeValueEnd-tmpTimeValueBegin)/tmpTimeValueTicks;
+		tmpOfStreamAnim.write((char*)(&tmpFrameCount),sizeof(tmpFrameCount));
+
+		tmpOfStreamAnim.write((char*)(&tmpTimeValueTicks),sizeof(tmpTimeValueTicks));
+
+
 		int tmpGameNodeBoneSize=tmpVectorGameNodeBones.size();
 		tmpOfStreamAnim.write((char*)(&tmpGameNodeBoneSize),sizeof(tmpGameNodeBoneSize));
 
@@ -558,6 +580,22 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 			int tmpGameNodeBoneNameStringSize=tmpGameNodeBoneNameString.size()+1;
 			tmpOfStreamAnim.write((char*)(&tmpGameNodeBoneNameStringSize),sizeof(tmpGameNodeBoneNameStringSize));
 			tmpOfStreamAnim.write(tmpGameNodeBoneNameString.c_str(),tmpGameNodeBoneNameStringSize);
+		}
+
+		//LogÊä³öµÚ0Ö¡¾ØÕó
+		foutLog<<"Zero Frame GMatrix:"<<endl;
+		for (size_t tmpBoneGMatrixZeroFrameIndex=0;tmpBoneGMatrixZeroFrameIndex<tmpVectorBoneGMatrixZeroFrame.size();tmpBoneGMatrixZeroFrameIndex++)
+		{
+			const wchar_t* tmpGameNodeBoneName=tmpVectorGameNodeBones[tmpBoneGMatrixZeroFrameIndex]->GetName();
+			std::wstring tmpGameNodeBoneNameWString(tmpGameNodeBoneName);
+			std::string tmpGameNodeBoneNameString=ws2s(tmpGameNodeBoneNameWString);
+			foutLog<<tmpGameNodeBoneNameString<<endl;
+
+			GMatrix tmpBoneGMatrixZeroFrame=tmpVectorBoneGMatrixZeroFrame[tmpBoneGMatrixZeroFrameIndex];
+			foutLog<<tmpBoneGMatrixZeroFrame[0][0]<<" "<<tmpBoneGMatrixZeroFrame[0][1]<<" "<<tmpBoneGMatrixZeroFrame[0][2]<<" "<<tmpBoneGMatrixZeroFrame[0][3]<<endl;
+			foutLog<<tmpBoneGMatrixZeroFrame[1][0]<<" "<<tmpBoneGMatrixZeroFrame[1][1]<<" "<<tmpBoneGMatrixZeroFrame[1][2]<<" "<<tmpBoneGMatrixZeroFrame[1][3]<<endl;
+			foutLog<<tmpBoneGMatrixZeroFrame[2][0]<<" "<<tmpBoneGMatrixZeroFrame[2][1]<<" "<<tmpBoneGMatrixZeroFrame[2][2]<<" "<<tmpBoneGMatrixZeroFrame[2][3]<<endl;
+			foutLog<<tmpBoneGMatrixZeroFrame[3][0]<<" "<<tmpBoneGMatrixZeroFrame[3][1]<<" "<<tmpBoneGMatrixZeroFrame[3][2]<<" "<<tmpBoneGMatrixZeroFrame[3][3]<<endl;
 		}
 
 		//Ð´ÈëµÚ0Ö¡Äæ¾ØÕó
