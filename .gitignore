@@ -1,2 +1,9 @@
 /maxProject1/maxProject1/maxProject1.sdf
 /maxProject1/maxProject1/obj
+*.pdb
+*.pdb
+*.tlog
+*.sdf
+*.exp
+*.lastbuildstate
+*.obj

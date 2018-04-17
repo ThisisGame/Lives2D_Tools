@@ -389,7 +389,6 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 						if(tmpContais==false)
 						{
 							tmpVectorGameNodeBones.push_back(tmpGameNodeBone);
-							tmpGameNodeBoneIndex++;
 						}
 						
 
@@ -563,7 +562,7 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 
 		//Ð´ÈëµÚ0Ö¡Äæ¾ØÕó
 		int tmpVectorBoneGMatrixInvertSize=tmpVectorBoneGMatrixInvert.size();
-		tmpOfStreamMesh.write((char*)(&tmpVectorBoneGMatrixInvertSize),sizeof(tmpVectorBoneGMatrixInvertSize));
+		tmpOfStreamAnim.write((char*)(&tmpVectorBoneGMatrixInvertSize),sizeof(tmpVectorBoneGMatrixInvertSize));
 
 		foutLog<<"Invert GMatrix:"<<endl;
 		for (size_t tmpBoneGMatrixInvertIndex=0;tmpBoneGMatrixInvertIndex<tmpVectorBoneGMatrixInvert.size();tmpBoneGMatrixInvertIndex++)
