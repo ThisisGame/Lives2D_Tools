@@ -355,8 +355,6 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 				TimeValue tmpTimeValueEnd=tmpGameScene->GetSceneEndTime();
 				TimeValue tmpTimeValueTicks=tmpGameScene->GetSceneTicks();
 
-				int tmpFrameCount=(tmpTimeValueEnd-tmpTimeValueBegin)/tmpTimeValueTicks;
-
 				IGameSkin* tmpGameSkin=(IGameSkin*)tmpGameModifier;
 				int tmpNumOfSkinnedVerts=tmpGameSkin->GetNumOfSkinnedVerts();
 
@@ -409,23 +407,23 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 
 					tmpVectorBoneGMatrixZeroFrame.push_back(tmpMatrix3NodeBone);
 
-					//tmpMatrix3NodeBone.Invert();
-					GMatrix tmpGMatrixNodeBone(tmpMatrix3NodeBone);
-					GMatrix tmpGMatrixNodeBoneInverse=tmpGMatrixNodeBone.Inverse();
+					tmpMatrix3NodeBone.Invert();
+					//GMatrix tmpGMatrixNodeBone(tmpMatrix3NodeBone);
+					GMatrix tmpGMatrixNodeBoneInvert(tmpMatrix3NodeBone);
 
-					tmpVectorBoneGMatrixInvert.push_back(tmpGMatrixNodeBoneInverse);
+					tmpVectorBoneGMatrixInvert.push_back(tmpGMatrixNodeBoneInvert);
 
 					//test
 					//Matrix3 tmpTestMatrix3=tmpNodeBone->GetObjTMAfterWSM(0) * tmpMatrix3NodeBone;
 
 					GMatrix tmpGMatrixNodeBoneTest(tmpMatrix3NodeBone);
-					GMatrix tmpTest=tmpGMatrixNodeBoneTest*tmpGMatrixNodeBoneInverse;
+					GMatrix tmpTest=tmpGMatrixNodeBoneTest*tmpGMatrixNodeBoneInvert;
 
 					int a=0;
 				}
 
 				//»ñÈ¡¹Ç÷À¾ØÕó
-				for (;tmpTimeValueBegin<tmpTimeValueEnd;tmpTimeValueBegin+=tmpTimeValueTicks)
+				for (;tmpTimeValueBegin<=tmpTimeValueEnd;tmpTimeValueBegin+=tmpTimeValueTicks)
 				{
 					vector<GMatrix> tmpVectorBoneGMatrix;
 					for (int tmpGameNodeBoneIndex=0;tmpGameNodeBoneIndex<tmpVectorGameNodeBones.size();tmpGameNodeBoneIndex++)
@@ -562,6 +560,7 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 		TimeValue tmpTimeValueEnd=tmpGameScene->GetSceneEndTime();
 		TimeValue tmpTimeValueTicks=tmpGameScene->GetSceneTicks();
 		int tmpFrameCount=(tmpTimeValueEnd-tmpTimeValueBegin)/tmpTimeValueTicks;
+		tmpFrameCount=tmpFrameCount+1;
 		tmpOfStreamAnim.write((char*)(&tmpFrameCount),sizeof(tmpFrameCount));
 
 		tmpOfStreamAnim.write((char*)(&tmpTimeValueTicks),sizeof(tmpTimeValueTicks));
