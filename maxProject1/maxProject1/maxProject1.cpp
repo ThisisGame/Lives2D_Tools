@@ -336,6 +336,8 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 				{
 					tmpVectorIndices.push_back((short)tmpVetexIndex);
 				}
+
+				i=9999;
 			}
 			break;
 		default:
