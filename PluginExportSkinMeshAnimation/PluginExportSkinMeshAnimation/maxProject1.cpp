@@ -708,6 +708,29 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 		}
 	}
 
+	//Materials
+	foutLog<<"Materials:"<<endl;
+	for (std::map<IGameMaterial*,vector<int>>::iterator tmpIterBegin=tmpMapMaterial.begin();tmpIterBegin!=tmpMapMaterial.end();tmpIterBegin++)
+	{
+		IGameMaterial* tmpGameMaterial=tmpIterBegin->first;
+		string tmpMaterialName=WChar2Ansi( tmpGameMaterial->GetMaterialName());
+
+		foutLog<<tmpMaterialName<<endl;
+
+		int tmpNumberOfTextureMaps = tmpGameMaterial->GetNumberOfTextureMaps();		//how many texture of the material
+		foutLog<<"Texture Count:"<<tmpNumberOfTextureMaps<<endl;
+
+		for (int tmpTextureMapIndex=0;tmpTextureMapIndex<tmpNumberOfTextureMaps;tmpTextureMapIndex++)
+		{
+			IGameTextureMap* tmpGameTextureMap=tmpGameMaterial->GetIGameTextureMap(tmpTextureMapIndex);
+			if(tmpGameTextureMap!=NULL)
+			{
+				string tmpBitmapName= WChar2Ansi( tmpGameTextureMap->GetBitmapFileName());
+				foutLog<<"Texture BitmapName:"<<tmpBitmapName<<endl;
+			}
+		}
+	}
+
 	tmpOfStreamMesh.close();
 	tmpOfStreamAnim.close();
 	foutLog.close();
