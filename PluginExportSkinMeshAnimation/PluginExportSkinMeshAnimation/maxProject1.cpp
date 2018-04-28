@@ -262,7 +262,7 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 	vector<GMatrix> tmpVectorBoneGMatrixInvert;//存储第0帧逆矩阵
 	map<TimeValue,vector<GMatrix>> tmpMapBoneGMatrix;//存储每一帧的矩阵
 
-	map<IGameMaterial*,vector<int>> tmpMapMaterial;//存储材质与面的关系
+	map<IGameMaterial*,vector<int>> tmpMapMaterial;//存储材质与顶点的关系
 
 	//得到第一级
 	int tmpSize=tmpGameScene->GetTopLevelNodeCount();
@@ -335,7 +335,9 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 							if(tmpIterBegin->first==tmpGameMaterial)
 							{
 								tmpFind=true;
-								tmpIterBegin->second.push_back(tmpFaceIndex);
+								tmpIterBegin->second.push_back(tmpVectorVertex.size()-3);
+								tmpIterBegin->second.push_back(tmpVectorVertex.size()-2);
+								tmpIterBegin->second.push_back(tmpVectorVertex.size()-1);
 								break;
 							}
 						}
@@ -343,7 +345,9 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 						if(tmpFind==false)
 						{
 							vector<int> tmpVectorFaceIndex;
-							tmpVectorFaceIndex.push_back(tmpFaceIndex);
+							tmpVectorFaceIndex.push_back(tmpVectorVertex.size()-3);
+							tmpVectorFaceIndex.push_back(tmpVectorVertex.size()-2);
+							tmpVectorFaceIndex.push_back(tmpVectorVertex.size()-1);
 							tmpMapMaterial.insert(std::pair<IGameMaterial*,std::vector<int>>(tmpGameMaterial,tmpVectorFaceIndex));
 						}
 					}
