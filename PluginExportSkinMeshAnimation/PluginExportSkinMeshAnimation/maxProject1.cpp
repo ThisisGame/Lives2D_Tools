@@ -250,7 +250,6 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 
 	vector<Vertex> tmpVectorVertex;
 	vector<unsigned short> tmpVectorIndices;
-	vector<unsigned short> tmpVectorIndicesSrc;//顶点索引，复用的顶点被拆分，所以在新的顶点数据里面，顶点索引是1-n自动生成的，这里要存储对应的真实的顶点索引，后面动画数据中会用到
 	vector<glm::vec2> tmpVectorTexCoords;
 	vector<Texture> tmpVectorTexture;
 	int tmpTextureSize=0;
@@ -286,6 +285,13 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 					return FALSE;
 				}
 
+				int tmpVertexCount=tmpGameMesh->GetNumberOfVerts();
+				for (int tmpVertexIndex=0;tmpVertexIndex<tmpVertexCount;tmpVertexIndex++)
+				{
+					Vertex tmpVertex;
+					tmpVectorVertex.push_back(tmpVertex);
+				}
+
 				int tmpFaceCount=tmpGameMesh->GetNumberOfFaces();
 
 				for (int tmpFaceIndex=0;tmpFaceIndex<tmpFaceCount;tmpFaceIndex++)
@@ -315,10 +321,10 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 						glm::vec2 tmpTexCoord=glm::vec2(tmpPoint2TexVertex.x,tmpPoint2TexVertex.y);
 						tmpVertex.TexCoords=tmpTexCoord;
 
-						tmpVectorVertex.push_back(tmpVertex);
 
-						//存储新旧顶点索引关系
-						tmpVectorIndicesSrc.push_back((unsigned short)tmpVertexIndex);
+						tmpVectorIndices.push_back(tmpVertexIndex);
+
+						tmpVectorVertex[tmpVertexIndex]=tmpVertex;
 					}
 
 					//获取当前面的材质
@@ -353,12 +359,6 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 					}
 				}
 
-				//写入索引
-				for (int tmpVetexIndex=0;tmpVetexIndex<tmpVectorVertex.size();tmpVetexIndex++)
-				{
-					tmpVectorIndices.push_back((short)tmpVetexIndex);
-				}
-
 				i=9999;
 			}
 			break;
@@ -385,16 +385,14 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 				//获取顶点受骨骼影响数
 				for (int tmpVertexIndex=0;tmpVertexIndex<tmpVectorVertex.size();tmpVertexIndex++)
 				{
-					int tmpVertexIndexSrc=tmpVectorIndicesSrc[tmpVertexIndex];
-
-					int tmpNumberOfBoneOnVertex=tmpGameSkin->GetNumberOfBones(tmpVertexIndexSrc);
+					int tmpNumberOfBoneOnVertex=tmpGameSkin->GetNumberOfBones(tmpVertexIndex);
 
 
 					map<unsigned short,float> tmpMapWeightOneVertex;
 					for (int tmpBoneIndexOnVertex=0;tmpBoneIndexOnVertex<tmpNumberOfBoneOnVertex;tmpBoneIndexOnVertex++)
 					{
 						//获取当前顶点的骨骼
-						IGameNode* tmpGameNodeBone=tmpGameSkin->GetIGameBone(tmpVertexIndexSrc,tmpBoneIndexOnVertex);
+						IGameNode* tmpGameNodeBone=tmpGameSkin->GetIGameBone(tmpVertexIndex,tmpBoneIndexOnVertex);
 						if(tmpGameNodeBone==nullptr)
 						{
 							continue;
@@ -415,7 +413,7 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 						}
 						
 
-						float tmpWeight=tmpGameSkin->GetWeight(tmpVertexIndexSrc,tmpBoneIndexOnVertex);
+						float tmpWeight=tmpGameSkin->GetWeight(tmpVertexIndex,tmpBoneIndexOnVertex);
 
 						tmpMapWeightOneVertex.insert(pair<unsigned short,float>((unsigned short)tmpGameNodeBoneIndex,tmpWeight));
 					}
