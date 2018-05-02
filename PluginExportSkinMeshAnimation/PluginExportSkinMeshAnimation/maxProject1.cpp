@@ -519,7 +519,6 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 		//写入vertexsize;
 		tmpOfStreamMesh.write((char*)(&vertexsize), sizeof(vertexsize));
 
-
 		//写入vertex数据;
 		for (size_t vertexindex = 0; vertexindex < tmpVectorVertex.size(); vertexindex++)
 		{
@@ -708,6 +707,44 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 			}
 			foutLog<<endl;
 		}
+
+
+		//计算顶点初始位置 并存储
+		foutLog<<"Write Vertex Position No Bone"<<endl;
+		for (size_t vertexindex = 0; vertexindex < tmpVectorWeight.size(); vertexindex++)
+		{
+			map<unsigned short,float> tmpMapWeightOneVertex=tmpVectorWeight[vertexindex];
+
+			//写入当前顶点受影响的骨骼数
+			unsigned short tmpMapWeightOneVertexSize=tmpMapWeightOneVertex.size();
+			tmpOfStreamAnim.write((char*)(&tmpMapWeightOneVertexSize),sizeof(tmpMapWeightOneVertexSize));
+
+			std::vector<glm::vec3> tmpVectorOneVertexPositionNoBone;
+			for (map<unsigned short,float>::iterator tmpIterBegin=tmpMapWeightOneVertex.begin();tmpIterBegin!=tmpMapWeightOneVertex.end();tmpIterBegin++)
+			{
+				GMatrix tmpBoneGMatrixInvert=tmpVectorBoneGMatrixInvert[tmpIterBegin->first];
+
+				glm::mat4x4 tmpMat4x4BoneGMatrixInvert;
+				tmpMat4x4BoneGMatrixInvert[0][0]=tmpBoneGMatrixInvert[0][0];tmpMat4x4BoneGMatrixInvert[0][1]=tmpBoneGMatrixInvert[0][1];tmpMat4x4BoneGMatrixInvert[0][2]=tmpBoneGMatrixInvert[0][2];tmpMat4x4BoneGMatrixInvert[0][3]=tmpBoneGMatrixInvert[0][3];
+				tmpMat4x4BoneGMatrixInvert[1][0]=tmpBoneGMatrixInvert[1][0];tmpMat4x4BoneGMatrixInvert[1][1]=tmpBoneGMatrixInvert[1][1];tmpMat4x4BoneGMatrixInvert[1][2]=tmpBoneGMatrixInvert[1][2];tmpMat4x4BoneGMatrixInvert[1][3]=tmpBoneGMatrixInvert[1][3];
+				tmpMat4x4BoneGMatrixInvert[2][0]=tmpBoneGMatrixInvert[2][0];tmpMat4x4BoneGMatrixInvert[2][1]=tmpBoneGMatrixInvert[2][1];tmpMat4x4BoneGMatrixInvert[2][2]=tmpBoneGMatrixInvert[2][2];tmpMat4x4BoneGMatrixInvert[2][3]=tmpBoneGMatrixInvert[2][3];
+				tmpMat4x4BoneGMatrixInvert[3][0]=tmpBoneGMatrixInvert[3][0];tmpMat4x4BoneGMatrixInvert[3][1]=tmpBoneGMatrixInvert[3][1];tmpMat4x4BoneGMatrixInvert[3][2]=tmpBoneGMatrixInvert[3][2];tmpMat4x4BoneGMatrixInvert[3][3]=tmpBoneGMatrixInvert[3][3];
+
+				glm::vec3& tmpVec3PositionZeroFrame=tmpVectorVertex[vertexindex].Position;
+
+				glm::vec4 tmpVec4PositionZeroFrame;
+				tmpVec4PositionZeroFrame.x = tmpVec3PositionZeroFrame.x;
+				tmpVec4PositionZeroFrame.y = -tmpVec3PositionZeroFrame.z;
+				tmpVec4PositionZeroFrame.z = tmpVec3PositionZeroFrame.y;
+				tmpVec4PositionZeroFrame.w = 1;
+
+				glm::vec4 tmpPositionNoBone = tmpMat4x4BoneGMatrixInvert * tmpVec4PositionZeroFrame;
+
+				tmpOfStreamAnim.write((char*)(&tmpPositionNoBone),sizeof(tmpPositionNoBone));
+			}
+		}
+
+
 	}
 
 	//Materials
