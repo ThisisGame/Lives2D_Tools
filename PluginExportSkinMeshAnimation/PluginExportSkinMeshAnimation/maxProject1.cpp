@@ -335,15 +335,16 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 					}
 					else
 					{
+
 						bool tmpFind=false;
 						for (std::map<IGameMaterial*,vector<int>>::iterator tmpIterBegin=tmpMapMaterial.begin();tmpIterBegin!=tmpMapMaterial.end();tmpIterBegin++)
 						{
 							if(tmpIterBegin->first==tmpGameMaterial)
 							{
 								tmpFind=true;
-								tmpIterBegin->second.push_back(tmpVectorVertex.size()-3);
-								tmpIterBegin->second.push_back(tmpVectorVertex.size()-2);
-								tmpIterBegin->second.push_back(tmpVectorVertex.size()-1);
+								tmpIterBegin->second.push_back(tmpFaceEx->vert[0]);
+								tmpIterBegin->second.push_back(tmpFaceEx->vert[1]);
+								tmpIterBegin->second.push_back(tmpFaceEx->vert[2]);
 								break;
 							}
 						}
@@ -351,9 +352,9 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 						if(tmpFind==false)
 						{
 							vector<int> tmpVectorFaceIndex;
-							tmpVectorFaceIndex.push_back(tmpVectorVertex.size()-3);
-							tmpVectorFaceIndex.push_back(tmpVectorVertex.size()-2);
-							tmpVectorFaceIndex.push_back(tmpVectorVertex.size()-1);
+							tmpVectorFaceIndex.push_back(tmpFaceEx->vert[0]);
+							tmpVectorFaceIndex.push_back(tmpFaceEx->vert[1]);
+							tmpVectorFaceIndex.push_back(tmpFaceEx->vert[2]);
 							tmpMapMaterial.insert(std::pair<IGameMaterial*,std::vector<int>>(tmpGameMaterial,tmpVectorFaceIndex));
 						}
 					}
@@ -576,6 +577,66 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 		}
 
 
+
+
+		//Materials
+		foutLog<<"Materials:"<<endl;
+
+		int tmpMaterialCount=tmpMapMaterial.size();
+		tmpOfStreamMesh.write((char*)(&tmpMaterialCount), sizeof(tmpMaterialCount));
+
+		for (std::map<IGameMaterial*,vector<int>>::iterator tmpIterBegin=tmpMapMaterial.begin();tmpIterBegin!=tmpMapMaterial.end();tmpIterBegin++)
+		{
+			IGameMaterial* tmpGameMaterial=tmpIterBegin->first;
+			string tmpMaterialName=WChar2Ansi( tmpGameMaterial->GetMaterialName());
+
+			foutLog<<tmpMaterialName<<endl;
+
+			int tmpNumberOfTextureMaps = tmpGameMaterial->GetNumberOfTextureMaps();		//how many texture of the material
+			foutLog<<"Texture Count:"<<tmpNumberOfTextureMaps<<endl;
+
+			for (int tmpTextureMapIndex=0;tmpTextureMapIndex<tmpNumberOfTextureMaps;tmpTextureMapIndex++)
+			{
+				IGameTextureMap* tmpGameTextureMap=tmpGameMaterial->GetIGameTextureMap(tmpTextureMapIndex);
+				if(tmpGameTextureMap!=NULL)
+				{
+					string tmpBitmapName= WChar2Ansi( tmpGameTextureMap->GetBitmapFileName());
+					foutLog<<"Texture BitmapName:"<<tmpBitmapName<<endl;
+				}
+			}
+
+			std::vector<int> tmpVectorVertexIndex;
+			for (size_t tmpVectorVertexInMaterialIndex=0;tmpVectorVertexInMaterialIndex<tmpIterBegin->second.size();tmpVectorVertexInMaterialIndex++)
+			{
+				/*bool tmpFind=false;
+				for (size_t tmpVectorIndex=0;tmpVectorIndex<tmpVectorVertexIndex.size();tmpVectorIndex++)
+				{
+					if(tmpVectorVertexIndex[tmpVectorIndex]==tmpIterBegin->second[tmpVectorVertexInMaterialIndex])
+					{
+						tmpFind=true;
+						break;
+					}
+				}
+
+				if(tmpFind==false)*/
+				{
+					tmpVectorVertexIndex.push_back(tmpIterBegin->second[tmpVectorVertexInMaterialIndex]);
+				}
+			}
+
+			int tmpVertexSizeInMaterial=tmpVectorVertexIndex.size();
+			tmpOfStreamMesh.write((char*)(&tmpVertexSizeInMaterial), sizeof(tmpVertexSizeInMaterial));
+
+			for (size_t tmpVectorIndex=0;tmpVectorIndex<tmpVectorVertexIndex.size();tmpVectorIndex++)
+			{
+				int tmpVertexIndex= tmpVectorVertexIndex[tmpVectorIndex];
+				tmpOfStreamMesh.write((char*)(&tmpVertexIndex), sizeof(tmpVertexIndex));
+			}
+		}
+
+		//-----------------------------------------------------------------------------------------------------------------
+
+
 		//Ð´Èë¹Ç÷ÀÊý¾Ý
 		TimeValue tmpTimeValueBegin=tmpGameScene->GetSceneStartTime();
 		TimeValue tmpTimeValueEnd=tmpGameScene->GetSceneEndTime();
@@ -747,28 +808,6 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 
 	}
 
-	//Materials
-	foutLog<<"Materials:"<<endl;
-	for (std::map<IGameMaterial*,vector<int>>::iterator tmpIterBegin=tmpMapMaterial.begin();tmpIterBegin!=tmpMapMaterial.end();tmpIterBegin++)
-	{
-		IGameMaterial* tmpGameMaterial=tmpIterBegin->first;
-		string tmpMaterialName=WChar2Ansi( tmpGameMaterial->GetMaterialName());
-
-		foutLog<<tmpMaterialName<<endl;
-
-		int tmpNumberOfTextureMaps = tmpGameMaterial->GetNumberOfTextureMaps();		//how many texture of the material
-		foutLog<<"Texture Count:"<<tmpNumberOfTextureMaps<<endl;
-
-		for (int tmpTextureMapIndex=0;tmpTextureMapIndex<tmpNumberOfTextureMaps;tmpTextureMapIndex++)
-		{
-			IGameTextureMap* tmpGameTextureMap=tmpGameMaterial->GetIGameTextureMap(tmpTextureMapIndex);
-			if(tmpGameTextureMap!=NULL)
-			{
-				string tmpBitmapName= WChar2Ansi( tmpGameTextureMap->GetBitmapFileName());
-				foutLog<<"Texture BitmapName:"<<tmpBitmapName<<endl;
-			}
-		}
-	}
 
 	tmpOfStreamMesh.close();
 	tmpOfStreamAnim.close();
