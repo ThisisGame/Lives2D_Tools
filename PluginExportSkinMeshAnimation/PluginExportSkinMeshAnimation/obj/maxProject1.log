@@ -1,20 +1,20 @@
-﻿生成启动时间为 2018/5/3 1:31:45。
-     1>项目“E:\360MoveData\Users\Administrator\Documents\GitHub\Lives2D_Tools\PluginExportSkinMeshAnimation\PluginExportSkinMeshAnimation\maxProject1.vcxproj”在节点 2 上(build 个目标)。
+﻿生成启动时间为 2018/5/3 15:44:17。
+     1>项目“G:\Github\Lives2D_Tools\PluginExportSkinMeshAnimation\PluginExportSkinMeshAnimation\maxProject1.vcxproj”在节点 2 上(build 个目标)。
      1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(298,5): warning MSB8004: Intermediate 目录未以斜杠结尾。此生成实例将添加斜杠，因为必须有这个斜杠才能正确计算 Intermediate 目录。
      1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(299,5): warning MSB8004: Output 目录未以斜杠结尾。此生成实例将添加斜杠，因为必须有这个斜杠才能正确计算 Output 目录。
      1>InitializeBuildStatus:
          正在创建“.\obj\PluginExportSkinMeshAnimation.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
        ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\x86_amd64\CL.exe /c /I"E:\360MoveData\Users\Administrator\Documents\GitHub\Lives2D_Tools\3ds Max 2014 SDK\maxsdk\\include" /I".\GLM-0.9.6.3" /Zi /nologo /W0 /WX- /Od /D _ADESK_3DSMAX_WINDOWS_ /D WINVER=0x0502 /D _WIN32_WINNT=0x0502 /D _WIN32_WINDOWS=0x0502 /D _WIN32_IE=0x0800 /D _WINDOWS /D _CRT_SECURE_NO_DEPRECATE /D _CRT_NONSTDC_NO_DEPRECATE /D _SCL_SECURE_NO_DEPRECATE /D ISOLATION_AWARE_ENABLED=1 /D MODULE_NAME=PluginExportSkinMeshAnimation.dle /D _DEBUG /D WIN32 /D WIN64 /D _WINDLL /D _UNICODE /D UNICODE /Gm- /EHa /RTC1 /MDd /GS /fp:fast /Zc:wchar_t /Zc:forScope /GR /Fo".\obj\\" /Fd".\obj\vc100.pdb" /Gd /TP /FC /errorReport:prompt maxProject1.cpp /GR /we4706 /we4390 /we4557 /we4546 /we4545 /we4295 /we4310 /we4130 /we4611 /we4213 /we4121 /we4715 /w34701 /w34265 /wd4244 /wd4018 /wd4819 
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\x86_amd64\CL.exe /c /I"G:\Github\Lives2D_Tools\3ds Max 2014 SDK\maxsdk\\include" /I".\GLM-0.9.6.3" /Zi /nologo /W0 /WX- /Od /D _ADESK_3DSMAX_WINDOWS_ /D WINVER=0x0502 /D _WIN32_WINNT=0x0502 /D _WIN32_WINDOWS=0x0502 /D _WIN32_IE=0x0800 /D _WINDOWS /D _CRT_SECURE_NO_DEPRECATE /D _CRT_NONSTDC_NO_DEPRECATE /D _SCL_SECURE_NO_DEPRECATE /D ISOLATION_AWARE_ENABLED=1 /D MODULE_NAME=PluginExportSkinMeshAnimation.dle /D _DEBUG /D WIN32 /D WIN64 /D _WINDLL /D _UNICODE /D UNICODE /Gm- /EHa /RTC1 /MDd /GS /fp:fast /Zc:wchar_t /Zc:forScope /GR /Fo".\obj\\" /Fd".\obj\vc100.pdb" /Gd /TP /FC /errorReport:prompt maxProject1.cpp /GR /we4706 /we4390 /we4557 /we4546 /we4545 /we4295 /we4310 /we4130 /we4611 /we4213 /we4121 /we4715 /w34701 /w34265 /wd4244 /wd4018 /wd4819 
          maxProject1.cpp
        ResourceCompile:
          所有输出均为最新。
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Program Files\Autodesk\3ds Max 2014\\plugins\PluginExportSkinMeshAnimation.dle" /VERBOSE /NOLOGO /LIBPATH:"..\..\3ds Max 2014 SDK\maxsdk\lib\x64\Release" core.lib geom.lib gfx.lib mesh.lib maxutil.lib maxscrpt.lib paramblk2.lib msxml2.lib igame.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /DEF:"maxProject1.def" /MANIFEST:NO /DEBUG /PDB:"C:\Program Files\Autodesk\3ds Max 2014\\plugins\PluginExportSkinMeshAnimation.dle.pdb" /PDBSTRIPPED:"E:\360MoveData\Users\Administrator\Documents\GitHub\Lives2D_Tools\3ds Max 2014 SDK\maxsdk\\pdb\x64\Debug\PluginExportSkinMeshAnimation.dle.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE:NO /NXCOMPAT /IMPLIB:".\obj\\PluginExportSkinMeshAnimation.lib" /MACHINE:X64 /DLL .\obj\maxProject1.res
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"G:\Program Files\Autodesk\3ds Max 2014\\plugins\PluginExportSkinMeshAnimation.dle" /VERBOSE /NOLOGO /LIBPATH:"..\..\3ds Max 2014 SDK\maxsdk\lib\x64\Release" core.lib geom.lib gfx.lib mesh.lib maxutil.lib maxscrpt.lib paramblk2.lib msxml2.lib igame.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /DEF:"maxProject1.def" /MANIFEST:NO /DEBUG /PDB:"G:\Program Files\Autodesk\3ds Max 2014\\plugins\PluginExportSkinMeshAnimation.dle.pdb" /PDBSTRIPPED:"G:\Github\Lives2D_Tools\3ds Max 2014 SDK\maxsdk\\pdb\x64\Debug\PluginExportSkinMeshAnimation.dle.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE:NO /NXCOMPAT /IMPLIB:".\obj\\PluginExportSkinMeshAnimation.lib" /MACHINE:X64 /DLL .\obj\maxProject1.res
          .\obj\maxProject1.obj
          .\obj\DllEntry.obj
          .\obj\MeshEnumProc.obj
-         LINK : 没有找到 C:\Program Files\Autodesk\3ds Max 2014\\plugins\PluginExportSkinMeshAnimation.dle 或上一个增量链接没有生成它；正在执行完全链接
+         LINK : 没有找到 G:\Program Files\Autodesk\3ds Max 2014\\plugins\PluginExportSkinMeshAnimation.dle 或上一个增量链接没有生成它；正在执行完全链接
          
          正在启动传递 1
          已处理 /DEFAULTLIB: msvcprtd
@@ -482,10 +482,6 @@
                  已在 maxProject1.obj 中引用
                  已在 MeshEnumProc.obj 中引用
                  已加载 msvcprtd.lib(MSVCP100D.dll)
-               已找到 "__declspec(dllimport) struct _iobuf * __cdecl std::_Fiopen(wchar_t const *,int,int)" (__imp_?_Fiopen@std@@YAPEAU_iobuf@@PEB_WHH@Z)
-                 已在 maxProject1.obj 中引用
-                 已在 MeshEnumProc.obj 中引用
-                 已加载 msvcprtd.lib(MSVCP100D.dll)
                已找到 "__declspec(dllimport) protected: void __cdecl std::basic_streambuf<char,struct std::char_traits<char> >::_Init(char * *,char * *,int *,char * *,char * *,int *)" (__imp_?_Init@?$basic_streambuf@DU?$char_traits@D@std@@@std@@IEAAXPEAPEAD0PEAH001@Z)
                  已在 maxProject1.obj 中引用
                  已在 MeshEnumProc.obj 中引用
@@ -591,6 +587,9 @@
                  已加载 msvcprtd.lib(MSVCP100D.dll)
                已找到 "__declspec(dllimport) void __cdecl std::_Xinvalid_argument(char const *)" (__imp_?_Xinvalid_argument@std@@YAXPEBD@Z)
                  已在 maxProject1.obj 中引用
+                 已加载 msvcprtd.lib(MSVCP100D.dll)
+               已找到 "__declspec(dllimport) struct _iobuf * __cdecl std::_Fiopen(wchar_t const *,int,int)" (__imp_?_Fiopen@std@@YAPEAU_iobuf@@PEB_WHH@Z)
+                 已在 MeshEnumProc.obj 中引用
                  已加载 msvcprtd.lib(MSVCP100D.dll)
                已找到 __IMPORT_DESCRIPTOR_MSVCP100D
                  已在 msvcprtd.lib(MSVCP100D.dll) 中引用
@@ -720,6 +719,9 @@
                  已在 MeshEnumProc.obj 中引用
                  已在 msvcprtd.lib(locale0_implib.obj) 中引用
                  已在 MSVCRTD.lib(ti_inst.obj) 中引用
+                 已加载 MSVCRTD.lib(MSVCR100D.dll)
+               已找到 __imp_sprintf
+                 已在 maxProject1.obj 中引用
                  已加载 MSVCRTD.lib(MSVCR100D.dll)
                已找到 _fltused
                  已在 maxProject1.obj 中引用
@@ -878,6 +880,7 @@
                  已在 MSVCRTD.lib(_init_.obj) 中引用
                  已加载 MSVCRTD.lib(MSVCR100D.dll)
                已找到 __IMPORT_DESCRIPTOR_MSVCR100D
+                 已在 MSVCRTD.lib(MSVCR100D.dll) 中引用
                  已在 MSVCRTD.lib(MSVCR100D.dll) 中引用
                  已在 MSVCRTD.lib(MSVCR100D.dll) 中引用
                  已在 MSVCRTD.lib(MSVCR100D.dll) 中引用
@@ -1112,7 +1115,7 @@
             正在创建库 .\obj\\PluginExportSkinMeshAnimation.lib 和对象 .\obj\\PluginExportSkinMeshAnimation.exp
          
          已完成 .exp 文件生成
-     1>PluginExportSkinMeshAnimation.exp : warning LNK4070: .EXP 中的 /OUT:maxProject1.dle 指令与输出文件名“C:\Program Files\Autodesk\3ds Max 2014\\plugins\PluginExportSkinMeshAnimation.dle”不同；忽略指令
+     1>PluginExportSkinMeshAnimation.exp : warning LNK4070: .EXP 中的 /OUT:maxProject1.dle 指令与输出文件名“G:\Program Files\Autodesk\3ds Max 2014\\plugins\PluginExportSkinMeshAnimation.dle”不同；忽略指令
          
          正在搜索库
              正在搜索 ..\..\3ds Max 2014 SDK\maxsdk\lib\x64\Release\core.lib:
@@ -1148,10 +1151,10 @@
          正在调用 CVTRES.EXE:
           /machine:amd64
           /verbose
-          /out:"C:\Users\captain\AppData\Local\Temp\lnkD1BB.tmp"
+          /out:"C:\Users\ADMINI~1\AppData\Local\Temp\lnk6159.tmp"
           /readonly
           ".\obj\maxProject1.res"
-         Microsoft (R) Windows Resource To Object Converter Version 12.00.52512.0
+         Microsoft (R) Windows Resource To Object Converter Version 12.00.52519.0
          Copyright (C) Microsoft Corporation.  All rights reserved.
          
          adding resource. type:DIALOG, name:101, language:0x0409, flags:0x1030, size:476
@@ -1415,23 +1418,24 @@
               MSVCRTD.lib(MSVCR100D.dll)
               MSVCRTD.lib(MSVCR100D.dll)
               MSVCRTD.lib(MSVCR100D.dll)
+              MSVCRTD.lib(MSVCR100D.dll)
          已完成传递 2
-         maxProject1.vcxproj -> C:\Program Files\Autodesk\3ds Max 2014\\plugins\PluginExportSkinMeshAnimation.dle
+         maxProject1.vcxproj -> G:\Program Files\Autodesk\3ds Max 2014\\plugins\PluginExportSkinMeshAnimation.dle
        PostBuildEvent:
-         "E:\360MoveData\Users\Administrator\Documents\GitHub\Lives2D_Tools\3ds Max 2014 SDK\maxsdk\tools\RunMUIRCT.exe" "C:\Program Files\Autodesk\3ds Max 2014\plugins\\" PluginExportSkinMeshAnimation.dle
+         "G:\Github\Lives2D_Tools\3ds Max 2014 SDK\maxsdk\tools\RunMUIRCT.exe" "G:\Program Files\Autodesk\3ds Max 2014\plugins\\" PluginExportSkinMeshAnimation.dle
          :VCEnd
          ==== RunMUIRCT: Start ====
-         RunMUIRCT: WARNING - Could not find version info in file: C:\Program Files\Autodesk\3ds Max 2014\plugins\PluginExportSkinMeshAnimation.dle
+         RunMUIRCT: WARNING - Could not find version info in file: G:\Program Files\Autodesk\3ds Max 2014\plugins\PluginExportSkinMeshAnimation.dle
          
          There is no version resource in the file 
-         Language neutral file (C:\Program Files\Autodesk\3ds Max 2014\plugins\en-US\PluginExportSkinMeshAnimation.dle.ln) successfully created
-         MUI file (C:\Program Files\Autodesk\3ds Max 2014\plugins\en-US\PluginExportSkinMeshAnimation.dle.mui) successfully created 
+         Language neutral file (G:\Program Files\Autodesk\3ds Max 2014\plugins\en-US\PluginExportSkinMeshAnimation.dle.ln) successfully created
+         MUI file (G:\Program Files\Autodesk\3ds Max 2014\plugins\en-US\PluginExportSkinMeshAnimation.dle.mui) successfully created 
          ==== RunMUIRCT: Successs ====
        FinalizeBuildStatus:
          正在删除文件“.\obj\PluginExportSkinMeshAnimation.unsuccessfulbuild”。
          正在对“.\obj\PluginExportSkinMeshAnimation.lastbuildstate”执行 Touch 任务。
-     1>已完成生成项目“E:\360MoveData\Users\Administrator\Documents\GitHub\Lives2D_Tools\PluginExportSkinMeshAnimation\PluginExportSkinMeshAnimation\maxProject1.vcxproj”(build 个目标)的操作。
+     1>已完成生成项目“G:\Github\Lives2D_Tools\PluginExportSkinMeshAnimation\PluginExportSkinMeshAnimation\maxProject1.vcxproj”(build 个目标)的操作。
 
 生成成功。
 
-已用时间 00:00:05.49
+已用时间 00:00:15.88
