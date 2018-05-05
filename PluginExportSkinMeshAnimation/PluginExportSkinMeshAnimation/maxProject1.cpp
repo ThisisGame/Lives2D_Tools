@@ -15,6 +15,7 @@
 #include "maxProject1.h"
 #include <conio.h>  
 #include"MeshEnumProc.h"
+#include <algorithm> 
 
 
 #define maxProject1_CLASS_ID	Class_ID(0x8d231fbc, 0xae14656a)
@@ -251,8 +252,13 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 
 
 	//得到第一级
-	int tmpSize=tmpGameScene->GetTopLevelNodeCount();
-	for (int i=0;i<tmpSize;i++)
+	int tmpTopLevelNodeCount=tmpGameScene->GetTopLevelNodeCount();
+	if(tmpTopLevelNodeCount==0)
+	{
+		tmpGameScene->ReleaseIGame();
+		return TRUE;
+	}
+	for (int i=0;i<tmpTopLevelNodeCount;i++)
 	{
 		vector<Vertex> tmpVectorVertex;
 		vector<unsigned short> tmpVectorIndices;
@@ -480,20 +486,35 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 		//拆分mesh和anim文件
 		wstring tmpExportFullPath(name);
 		std::size_t tmpFind= tmpExportFullPath.find_last_of(L".");
-		std::string tmpExportMeshPath= ws2s(tmpExportFullPath.substr(0,tmpFind)+L"_%d.mesh");
-		std::string tmpExportAnimPath= ws2s(tmpExportFullPath.substr(0,tmpFind)+L"_%d.anim");
 
 		
+		
+		string tmpExportMeshPath;
+		string tmpExportAnimPath;
+		if(tmpTopLevelNodeCount==1)
+		{
+			 tmpExportMeshPath= ws2s(tmpExportFullPath.substr(0,tmpFind)+L".mesh");
+			 tmpExportAnimPath= ws2s(tmpExportFullPath.substr(0,tmpFind)+L".anim");
 
-		char tmpMeshFilePath[100];
-		sprintf(tmpMeshFilePath,tmpExportMeshPath.c_str(),i);
+		}
+		else
+		{
+			char tmpMeshFilePath[100];
+			char tmpAnimFilePath[100];
+			tmpExportMeshPath= ws2s(tmpExportFullPath.substr(0,tmpFind)+L"_%d.mesh");
+			tmpExportAnimPath= ws2s(tmpExportFullPath.substr(0,tmpFind)+L"_%d.anim");
 
-		char tmpAnimFilePath[100];
-		sprintf(tmpAnimFilePath,tmpExportAnimPath.c_str(),i);
+			sprintf(tmpMeshFilePath,tmpExportMeshPath.c_str(),i);
+			tmpExportMeshPath=tmpMeshFilePath;
+			
+			sprintf(tmpAnimFilePath,tmpExportAnimPath.c_str(),i);
+			tmpExportAnimPath=tmpAnimFilePath;
+		}
+
 
 		//写文件
-		ofstream tmpOfStreamMesh(tmpMeshFilePath, ios::binary);
-		ofstream tmpOfStreamAnim(tmpAnimFilePath,ios::binary);
+		ofstream tmpOfStreamMesh(tmpExportMeshPath, ios::binary);
+		ofstream tmpOfStreamAnim(tmpExportAnimPath,ios::binary);
 
 		char tmpLogFilePath[20];
 		sprintf(tmpLogFilePath,"c://log_%d.txt",i);
@@ -601,16 +622,74 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 
 				foutLog<<tmpMaterialName<<endl;
 
-				int tmpNumberOfTextureMaps = tmpGameMaterial->GetNumberOfTextureMaps();		//how many texture of the material
+				unsigned char tmpMaterialNameSize=tmpMaterialName.size()+1;
+				tmpOfStreamMesh.write((char*)(&tmpMaterialNameSize), sizeof(tmpMaterialNameSize));
+				tmpOfStreamMesh.write((char*)(tmpMaterialName.c_str()), tmpMaterialNameSize);
+
+				unsigned char tmpNumberOfTextureMaps = tmpGameMaterial->GetNumberOfTextureMaps();		//how many texture of the material
 				foutLog<<"Texture Count:"<<tmpNumberOfTextureMaps<<endl;
+				tmpOfStreamMesh.write((char*)(&tmpNumberOfTextureMaps), sizeof(tmpNumberOfTextureMaps));
 
 				for (int tmpTextureMapIndex=0;tmpTextureMapIndex<tmpNumberOfTextureMaps;tmpTextureMapIndex++)
 				{
 					IGameTextureMap* tmpGameTextureMap=tmpGameMaterial->GetIGameTextureMap(tmpTextureMapIndex);
 					if(tmpGameTextureMap!=NULL)
 					{
-						string tmpBitmapName= WChar2Ansi( tmpGameTextureMap->GetBitmapFileName());
-						foutLog<<"Texture BitmapName:"<<tmpBitmapName<<endl;
+						//文件路径						
+						string tmpBitmapPath= WChar2Ansi( tmpGameTextureMap->GetBitmapFileName());
+						foutLog<<"Texture BitmapPath:"<<tmpBitmapPath<<endl;
+
+						//拷贝图片到导出目录
+						wstring tmpBitmapPathW=tmpGameTextureMap->GetBitmapFileName();
+						wstring tmpBitmapNameW=tmpBitmapPathW.substr(tmpBitmapPathW.find_last_of('\\')+1);
+						wstring tmpBitmapExportPathW=tmpExportFullPath.substr(0,tmpExportFullPath.find_last_of(L"\\")+1)+tmpBitmapNameW;
+						CopyFile(tmpGameTextureMap->GetBitmapFileName(),tmpBitmapExportPathW.c_str(),FALSE);
+
+						//文件名
+						int tmpLastCharPosition = tmpBitmapPath.find_last_of('\\');
+						string tmpBitmapName(tmpBitmapPath.substr(tmpLastCharPosition + 1) );
+						unsigned char tmpBitmapNameSize=tmpBitmapName.size()+1;
+						tmpOfStreamMesh.write((char*)(&tmpBitmapNameSize), sizeof(tmpBitmapNameSize));
+						tmpOfStreamMesh.write((char*)(tmpBitmapName.c_str()), tmpBitmapNameSize);
+
+						//获取UV的Tilling和Offset值
+						IGameUVGen* tmpGameUVGen=tmpGameTextureMap->GetIGameUVGen();
+						std::string tmpTextureClass=WChar2Ansi(tmpGameTextureMap->GetTextureClass());
+						transform(tmpTextureClass.begin(),tmpTextureClass.end(),tmpTextureClass.begin(),toupper);
+
+						if(strcmp(tmpTextureClass.c_str(),"BITMAP")!=0)
+						{
+							continue;
+						}
+
+						IGameProperty* tmpGamePropertyUTiling=tmpGameUVGen->GetUTilingData();
+						float tmpUTilingValue=0.0f;
+						if(tmpGamePropertyUTiling->GetPropertyValue(tmpUTilingValue))
+						{
+							tmpOfStreamMesh.write((char*)(&tmpUTilingValue), sizeof(tmpUTilingValue));
+						}
+
+						IGameProperty* tmpGamePropertyVTiling=tmpGameUVGen->GetVTilingData();
+						float tmpVTilingValue=0.0f;
+						if(tmpGamePropertyVTiling->GetPropertyValue(tmpVTilingValue))
+						{
+							tmpOfStreamMesh.write((char*)(&tmpVTilingValue), sizeof(tmpVTilingValue));
+						}
+
+						IGameProperty* tmpGamePropertyUOffset=tmpGameUVGen->GetUOffsetData();
+						float tmpUOffsetValue=0.0f;
+						if(tmpGamePropertyUOffset->GetPropertyValue(tmpUOffsetValue))
+						{
+							tmpOfStreamMesh.write((char*)(&tmpUOffsetValue), sizeof(tmpUOffsetValue));
+						}
+
+						IGameProperty* tmpGamePropertyVOffset=tmpGameUVGen->GetVOffsetData();
+						float tmpVOffsetValue=0.0f;
+						if(tmpGamePropertyVOffset->GetPropertyValue(tmpVOffsetValue))
+						{
+							tmpOfStreamMesh.write((char*)(&tmpVOffsetValue), sizeof(tmpVOffsetValue));
+						}
+
 					}
 				}
 
