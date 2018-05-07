@@ -249,7 +249,7 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 	//CreateExportPluginDialog(tmpGameScene,name);
 
 
-
+	int tmpMeshPart=0;
 
 	//得到第一级
 	int tmpTopLevelNodeCount=tmpGameScene->GetTopLevelNodeCount();
@@ -257,6 +257,23 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 	{
 		tmpGameScene->ReleaseIGame();
 		return TRUE;
+	}
+	for (int i=0;i<tmpTopLevelNodeCount;i++)
+	{
+		IGameNode* tmpGameNode=tmpGameScene->GetTopLevelNode(i);
+
+		IGameObject* tmpGameObject=tmpGameNode->GetIGameObject();
+
+		IGameObject::ObjectTypes tmpObjectType=tmpGameObject->GetIGameType();
+
+		if(IGameObject::IGAME_MESH==tmpObjectType)
+		{
+			tmpMeshPart++;
+		}
+	}
+	if(tmpMeshPart==0)
+	{
+		return FALSE;
 	}
 	for (int i=0;i<tmpTopLevelNodeCount;i++)
 	{
@@ -281,96 +298,92 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 
 		IGameObject::ObjectTypes tmpObjectType=tmpGameObject->GetIGameType();
 
-		switch(tmpObjectType)
+		if(IGameObject::IGAME_MESH!=tmpObjectType)
 		{
-		case IGameObject::IGAME_MESH:
+			break;
+		}
+
+		IGameMesh* tmpGameMesh=(IGameMesh*)tmpGameObject;
+		tmpGameMesh->GetMaxMesh()->buildNormals();
+
+		if(!tmpGameMesh->InitializeData())
+		{
+			return FALSE;
+		}
+
+		int tmpVertexCount=tmpGameMesh->GetNumberOfVerts();
+		for (int tmpVertexIndex=0;tmpVertexIndex<tmpVertexCount;tmpVertexIndex++)
+		{
+			Vertex tmpVertex;
+			tmpVectorVertex.push_back(tmpVertex);
+		}
+
+		int tmpFaceCount=tmpGameMesh->GetNumberOfFaces();
+
+		for (int tmpFaceIndex=0;tmpFaceIndex<tmpFaceCount;tmpFaceIndex++)
+		{
+			FaceEx* tmpFaceEx=tmpGameMesh->GetFace(tmpFaceIndex);
+
+			for (int tmpFaceVertexIndex=0;tmpFaceVertexIndex<3;tmpFaceVertexIndex++)
 			{
-				IGameMesh* tmpGameMesh=(IGameMesh*)tmpGameObject;
-				tmpGameMesh->GetMaxMesh()->buildNormals();
+				//顶点
+				Vertex tmpVertex;
 
-				if(!tmpGameMesh->InitializeData())
+				//坐标
+				int tmpVertexIndex=tmpFaceEx->vert[tmpFaceVertexIndex];
+				Point3 tmpPoint3Position=tmpGameMesh->GetVertex(tmpVertexIndex);
+				glm::vec3 tmpPosition(tmpPoint3Position.x,tmpPoint3Position.y,tmpPoint3Position.z);
+				tmpVertex.Position=tmpPosition;
+
+				//Normal
+				int tmpNormalIndex=tmpFaceEx->norm[tmpFaceVertexIndex];
+				Point3 tmpPoint3Normal=tmpGameMesh->GetNormal(tmpNormalIndex);
+				glm::vec3 tmpNormal=glm::vec3(tmpPoint3Normal.x,tmpPoint3Normal.y,tmpPoint3Normal.z);
+				tmpVertex.Normal=tmpNormal;
+
+				//纹理坐标
+				int tmpTexCoordIndex=tmpFaceEx->texCoord[tmpFaceVertexIndex];
+				Point2 tmpPoint2TexVertex= tmpGameMesh->GetTexVertex(tmpTexCoordIndex);
+				glm::vec2 tmpTexCoord=glm::vec2(tmpPoint2TexVertex.x,tmpPoint2TexVertex.y);
+				tmpVertex.TexCoords=tmpTexCoord;
+
+
+				tmpVectorIndices.push_back(tmpVertexIndex);
+
+				tmpVectorVertex[tmpVertexIndex]=tmpVertex;
+			}
+
+			//获取当前面的材质
+			IGameMaterial* tmpGameMaterial=tmpGameMesh->GetMaterialFromFace(tmpFaceEx);
+			if(tmpGameMaterial==NULL)
+			{
+				continue;
+			}
+			else
+			{
+
+				bool tmpFind=false;
+				for (std::map<IGameMaterial*,vector<int>>::iterator tmpIterBegin=tmpMapMaterial.begin();tmpIterBegin!=tmpMapMaterial.end();tmpIterBegin++)
 				{
-					return FALSE;
+					if(tmpIterBegin->first==tmpGameMaterial)
+					{
+						tmpFind=true;
+						tmpIterBegin->second.push_back(tmpFaceEx->vert[0]);
+						tmpIterBegin->second.push_back(tmpFaceEx->vert[1]);
+						tmpIterBegin->second.push_back(tmpFaceEx->vert[2]);
+						break;
+					}
 				}
 
-				int tmpVertexCount=tmpGameMesh->GetNumberOfVerts();
-				for (int tmpVertexIndex=0;tmpVertexIndex<tmpVertexCount;tmpVertexIndex++)
+				if(tmpFind==false)
 				{
-					Vertex tmpVertex;
-					tmpVectorVertex.push_back(tmpVertex);
-				}
-
-				int tmpFaceCount=tmpGameMesh->GetNumberOfFaces();
-
-				for (int tmpFaceIndex=0;tmpFaceIndex<tmpFaceCount;tmpFaceIndex++)
-				{
-					FaceEx* tmpFaceEx=tmpGameMesh->GetFace(tmpFaceIndex);
-
-					for (int tmpFaceVertexIndex=0;tmpFaceVertexIndex<3;tmpFaceVertexIndex++)
-					{
-						//顶点
-						Vertex tmpVertex;
-
-						//坐标
-						int tmpVertexIndex=tmpFaceEx->vert[tmpFaceVertexIndex];
-						Point3 tmpPoint3Position=tmpGameMesh->GetVertex(tmpVertexIndex);
-						glm::vec3 tmpPosition(tmpPoint3Position.x,tmpPoint3Position.y,tmpPoint3Position.z);
-						tmpVertex.Position=tmpPosition;
-
-						//Normal
-						int tmpNormalIndex=tmpFaceEx->norm[tmpFaceVertexIndex];
-						Point3 tmpPoint3Normal=tmpGameMesh->GetNormal(tmpNormalIndex);
-						glm::vec3 tmpNormal=glm::vec3(tmpPoint3Normal.x,tmpPoint3Normal.y,tmpPoint3Normal.z);
-						tmpVertex.Normal=tmpNormal;
-
-						//纹理坐标
-						int tmpTexCoordIndex=tmpFaceEx->texCoord[tmpFaceVertexIndex];
-						Point2 tmpPoint2TexVertex= tmpGameMesh->GetTexVertex(tmpTexCoordIndex);
-						glm::vec2 tmpTexCoord=glm::vec2(tmpPoint2TexVertex.x,tmpPoint2TexVertex.y);
-						tmpVertex.TexCoords=tmpTexCoord;
-
-
-						tmpVectorIndices.push_back(tmpVertexIndex);
-
-						tmpVectorVertex[tmpVertexIndex]=tmpVertex;
-					}
-
-					//获取当前面的材质
-					IGameMaterial* tmpGameMaterial=tmpGameMesh->GetMaterialFromFace(tmpFaceEx);
-					if(tmpGameMaterial==NULL)
-					{
-						continue;
-					}
-					else
-					{
-
-						bool tmpFind=false;
-						for (std::map<IGameMaterial*,vector<int>>::iterator tmpIterBegin=tmpMapMaterial.begin();tmpIterBegin!=tmpMapMaterial.end();tmpIterBegin++)
-						{
-							if(tmpIterBegin->first==tmpGameMaterial)
-							{
-								tmpFind=true;
-								tmpIterBegin->second.push_back(tmpFaceEx->vert[0]);
-								tmpIterBegin->second.push_back(tmpFaceEx->vert[1]);
-								tmpIterBegin->second.push_back(tmpFaceEx->vert[2]);
-								break;
-							}
-						}
-
-						if(tmpFind==false)
-						{
-							vector<int> tmpVectorFaceIndex;
-							tmpVectorFaceIndex.push_back(tmpFaceEx->vert[0]);
-							tmpVectorFaceIndex.push_back(tmpFaceEx->vert[1]);
-							tmpVectorFaceIndex.push_back(tmpFaceEx->vert[2]);
-							tmpMapMaterial.insert(std::pair<IGameMaterial*,std::vector<int>>(tmpGameMaterial,tmpVectorFaceIndex));
-						}
-					}
+					vector<int> tmpVectorFaceIndex;
+					tmpVectorFaceIndex.push_back(tmpFaceEx->vert[0]);
+					tmpVectorFaceIndex.push_back(tmpFaceEx->vert[1]);
+					tmpVectorFaceIndex.push_back(tmpFaceEx->vert[2]);
+					tmpMapMaterial.insert(std::pair<IGameMaterial*,std::vector<int>>(tmpGameMaterial,tmpVectorFaceIndex));
 				}
 			}
-			break;
-		default:
-			break;
 		}
 
 		//判断有没有修改器，有修改器的就是骨骼动画
@@ -491,7 +504,7 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 		
 		string tmpExportMeshPath;
 		string tmpExportAnimPath;
-		if(tmpTopLevelNodeCount==1)
+		if(tmpMeshPart==1)
 		{
 			 tmpExportMeshPath= ws2s(tmpExportFullPath.substr(0,tmpFind)+L".mesh");
 			 tmpExportAnimPath= ws2s(tmpExportFullPath.substr(0,tmpFind)+L".anim");
@@ -519,6 +532,10 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 		char tmpLogFilePath[20];
 		sprintf(tmpLogFilePath,"c://log_%d.txt",i);
 		ofstream foutLog(tmpLogFilePath);
+
+		char tmpLogMaterialFilePath[100];
+		sprintf(tmpLogMaterialFilePath,"c://log_material_%d.txt",i);
+		ofstream foutLogMaterial(tmpLogMaterialFilePath);
 
 		//写入mesh count;
 		int meshcount = 1;
@@ -610,7 +627,7 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 
 
 			//Materials
-			foutLog<<"Materials:"<<endl;
+			foutLogMaterial<<"Materials:"<<endl;
 
 			int tmpMaterialCount=tmpMapMaterial.size();
 			tmpOfStreamMesh.write((char*)(&tmpMaterialCount), sizeof(tmpMaterialCount));
@@ -620,14 +637,14 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 				IGameMaterial* tmpGameMaterial=tmpIterBegin->first;
 				string tmpMaterialName=WChar2Ansi( tmpGameMaterial->GetMaterialName());
 
-				foutLog<<tmpMaterialName<<endl;
+				foutLogMaterial<<tmpMaterialName<<endl;
 
 				unsigned char tmpMaterialNameSize=tmpMaterialName.size()+1;
 				tmpOfStreamMesh.write((char*)(&tmpMaterialNameSize), sizeof(tmpMaterialNameSize));
 				tmpOfStreamMesh.write((char*)(tmpMaterialName.c_str()), tmpMaterialNameSize);
 
 				unsigned char tmpNumberOfTextureMaps = tmpGameMaterial->GetNumberOfTextureMaps();		//how many texture of the material
-				foutLog<<"Texture Count:"<<tmpNumberOfTextureMaps<<endl;
+				foutLogMaterial<<"Texture Count:"<<(int)tmpNumberOfTextureMaps<<endl;
 				tmpOfStreamMesh.write((char*)(&tmpNumberOfTextureMaps), sizeof(tmpNumberOfTextureMaps));
 
 				for (int tmpTextureMapIndex=0;tmpTextureMapIndex<tmpNumberOfTextureMaps;tmpTextureMapIndex++)
@@ -637,7 +654,7 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 					{
 						//文件路径						
 						string tmpBitmapPath= WChar2Ansi( tmpGameTextureMap->GetBitmapFileName());
-						foutLog<<"Texture BitmapPath:"<<tmpBitmapPath<<endl;
+						foutLogMaterial<<"Texture BitmapPath:"<<tmpBitmapPath<<endl;
 
 						//拷贝图片到导出目录
 						wstring tmpBitmapPathW=tmpGameTextureMap->GetBitmapFileName();
@@ -895,6 +912,7 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 		}
 		tmpOfStreamMesh.close();
 		tmpOfStreamAnim.close();
+		foutLogMaterial.close();
 		foutLog.close();
 	}
 
