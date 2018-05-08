@@ -300,7 +300,7 @@ int	maxProject1::DoExport(const TCHAR* name, ExpInterface* ei, Interface* ip, BO
 
 		if(IGameObject::IGAME_MESH!=tmpObjectType)
 		{
-			break;
+			continue;
 		}
 
 		IGameMesh* tmpGameMesh=(IGameMesh*)tmpGameObject;
