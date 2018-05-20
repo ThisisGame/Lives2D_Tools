@@ -1,0 +1,3 @@
+Various projects require third party SDKs to compile.
+See the "Third Party SDKs" section of the SDK Requirements topic in the 3ds Max Developer's Guide for more information.
+http://help.autodesk.com/view/3DSMAX/2019/ENU/?guid=__developer_about_the_3ds_max_sdk_sdk_requirements_html
