@@ -799,33 +799,19 @@ void IGameExporter::ExportMesh(IGameMesh* varGameMesh,const wchar_t* varNodeName
 	ofstream tmpOfStreamMesh(tmpExportMeshPath, ios::binary);
 	ofstream tmpOfStreamAnim(tmpExportAnimPath, ios::binary);
 
-	char tmpLogFilePath[100];
-	sprintf(tmpLogFilePath, ws2s(tmpExportFullPath.substr(0, tmpFind) + L"_%s.log").c_str(), tmpNodeName.c_str());
-	ofstream foutLog(tmpLogFilePath);
 
-	char tmpLogMaterialFilePath[100];
-	sprintf(tmpLogMaterialFilePath, ws2s(tmpExportFullPath.substr(0, tmpFind) + L"_%s.material").c_str(), tmpNodeName.c_str());
-	ofstream foutLogMaterial(tmpLogMaterialFilePath);
+	char tmpMaterialFilePath[100];
+	sprintf(tmpMaterialFilePath, ws2s(tmpExportFullPath.substr(0, tmpFind) + L"_%s.material").c_str(), tmpNodeName.c_str());
+	ofstream foutMaterial(tmpMaterialFilePath);
 
 	//写入mesh count;
 	int meshcount = 1;
 	tmpOfStreamMesh.write((char*)(&meshcount), sizeof(meshcount));
 
-	std::cout << "MeshCount: " << meshcount << std::endl;
-	foutLog << "MeshCount: " << meshcount << endl;
 
 	for (size_t meshindex = 0; meshindex < 1; meshindex++)
 	{
-		std::cout << "Mesh" << meshindex << std::endl;
 
-
-		std::cout << "VertexCount:" << tmpVectorVertex.size() << std::endl;
-		std::cout << "IndicesCount:" << tmpVectorIndices.size() << std::endl;
-		std::cout << "TextureCount:" << tmpTextureSize << std::endl;
-
-		foutLog << "VertexCount:" << tmpVectorVertex.size() << endl;
-		foutLog << "IndicesCount:" << tmpVectorIndices.size() << endl;
-		foutLog << "TextureCount:" << tmpTextureSize << endl;
 
 		int vertexsize = sizeof(Vertex) * tmpVectorVertex.size();
 
@@ -856,12 +842,26 @@ void IGameExporter::ExportMesh(IGameMesh* varGameMesh,const wchar_t* varNodeName
 			vector<unsigned short>& tmpVectorIndicesOnePart = tmpVectorIndicesAllPart[tmpVectorIndicesPartIndex];
 
 			vector<Vertex&> tmpVectorVertexOnePart;
+			vector<unsigned short> tmpVectorIndicesOnePartOnlyOne;
 			for (size_t i = 0; i < tmpVectorIndicesOnePart.size(); i++)
 			{
 				int tmpVertexIndex = tmpVectorIndicesOnePart[i];
 
-				Vertex& tmpVertex = tmpVectorVertex[tmpVertexIndex];
-				tmpVectorVertexOnePart.push_back(tmpVertex);
+				bool tmpFind = false;
+				for (size_t tmpVectorIndicesOnePartOnlyOneIndex = 0; tmpVectorIndicesOnePartOnlyOneIndex < tmpVectorIndicesOnePartOnlyOne.size() ; tmpVectorIndicesOnePartOnlyOneIndex++)
+				{
+					if (tmpVectorIndicesOnePartOnlyOne[tmpVectorIndicesOnePartOnlyOneIndex] == tmpVertexIndex)
+					{
+						tmpFind = true;
+						break;
+					}
+				}
+
+				if (tmpFind == false)
+				{
+					Vertex& tmpVertex = tmpVectorVertex[tmpVertexIndex];
+					tmpVectorVertexOnePart.push_back(tmpVertex);
+				}
 			}
 
 			//写入vertexsize;
@@ -873,114 +873,122 @@ void IGameExporter::ExportMesh(IGameMesh* varGameMesh,const wchar_t* varNodeName
 			{
 				tmpOfStreamMesh.write((char*)(&tmpVectorVertexOnePart[vertexindex]), sizeof(tmpVectorVertexOnePart[vertexindex]));
 			}
+
+			//写入indicessize;
+			int tmpVectorIndicesOnePartMemorySize = sizeof(unsigned short)*tmpVectorIndicesOnePart.size();
+			tmpOfStreamMesh.write((char*)(&tmpVectorIndicesOnePartMemorySize), sizeof(tmpVectorIndicesOnePartMemorySize));
+
+			//写入indicess数据;
+			for (size_t indexindex = 0; indexindex < tmpVectorIndicesOnePart.size(); indexindex++)
+			{
+				tmpOfStreamMesh.write((char*)(&tmpVectorIndicesOnePart[indexindex]), sizeof(tmpVectorIndicesOnePart[indexindex]));
+			}
+
+
+
+
+
+			int tmpMaterialCount = tmpMapMaterial.size();
+			tmpOfStreamMesh.write((char*)(&tmpMaterialCount), sizeof(tmpMaterialCount));
+
+			for (std::map<IGameMaterial*, vector<int>>::iterator tmpIterBegin = tmpMapMaterial.begin(); tmpIterBegin != tmpMapMaterial.end(); tmpIterBegin++)
+			{
+				IGameMaterial* tmpGameMaterial = tmpIterBegin->first;
+				string tmpMaterialName = WChar2Ansi(tmpGameMaterial->GetMaterialName());
+
+				unsigned char tmpMaterialNameSize = tmpMaterialName.size() + 1;
+				tmpOfStreamMesh.write((char*)(&tmpMaterialNameSize), sizeof(tmpMaterialNameSize));
+				tmpOfStreamMesh.write((char*)(tmpMaterialName.c_str()), tmpMaterialNameSize);
+
+				unsigned char tmpNumberOfTextureMaps = tmpGameMaterial->GetNumberOfTextureMaps();		//how many texture of the material
+				tmpOfStreamMesh.write((char*)(&tmpNumberOfTextureMaps), sizeof(tmpNumberOfTextureMaps));
+
+				for (int tmpTextureMapIndex = 0; tmpTextureMapIndex<tmpNumberOfTextureMaps; tmpTextureMapIndex++)
+				{
+					IGameTextureMap* tmpGameTextureMap = tmpGameMaterial->GetIGameTextureMap(tmpTextureMapIndex);
+					if (tmpGameTextureMap != NULL)
+					{
+						//文件路径						
+						string tmpBitmapPath = WChar2Ansi(tmpGameTextureMap->GetBitmapFileName());
+
+						//文件名
+						int tmpLastCharPosition = tmpBitmapPath.find_last_of('\\');
+						string tmpBitmapName(tmpBitmapPath.substr(tmpLastCharPosition + 1));
+						unsigned char tmpBitmapNameSize = tmpBitmapName.size() + 1;
+						tmpOfStreamMesh.write((char*)(&tmpBitmapNameSize), sizeof(tmpBitmapNameSize));
+						tmpOfStreamMesh.write((char*)(tmpBitmapName.c_str()), tmpBitmapNameSize);
+
+						//获取UV的Tilling和Offset值
+						IGameUVGen* tmpGameUVGen = tmpGameTextureMap->GetIGameUVGen();
+						std::string tmpTextureClass = WChar2Ansi(tmpGameTextureMap->GetTextureClass());
+						transform(tmpTextureClass.begin(), tmpTextureClass.end(), tmpTextureClass.begin(), toupper);
+
+						if (strcmp(tmpTextureClass.c_str(), "BITMAP") != 0)
+						{
+							continue;
+						}
+
+						IGameProperty* tmpGamePropertyUTiling = tmpGameUVGen->GetUTilingData();
+						float tmpUTilingValue = 0.0f;
+						if (tmpGamePropertyUTiling->GetPropertyValue(tmpUTilingValue))
+						{
+							tmpOfStreamMesh.write((char*)(&tmpUTilingValue), sizeof(tmpUTilingValue));
+						}
+
+						IGameProperty* tmpGamePropertyVTiling = tmpGameUVGen->GetVTilingData();
+						float tmpVTilingValue = 0.0f;
+						if (tmpGamePropertyVTiling->GetPropertyValue(tmpVTilingValue))
+						{
+							tmpOfStreamMesh.write((char*)(&tmpVTilingValue), sizeof(tmpVTilingValue));
+						}
+
+						IGameProperty* tmpGamePropertyUOffset = tmpGameUVGen->GetUOffsetData();
+						float tmpUOffsetValue = 0.0f;
+						if (tmpGamePropertyUOffset->GetPropertyValue(tmpUOffsetValue))
+						{
+							tmpOfStreamMesh.write((char*)(&tmpUOffsetValue), sizeof(tmpUOffsetValue));
+						}
+
+						IGameProperty* tmpGamePropertyVOffset = tmpGameUVGen->GetVOffsetData();
+						float tmpVOffsetValue = 0.0f;
+						if (tmpGamePropertyVOffset->GetPropertyValue(tmpVOffsetValue))
+						{
+							tmpOfStreamMesh.write((char*)(&tmpVOffsetValue), sizeof(tmpVOffsetValue));
+						}
+
+					}
+				}
+
+				std::vector<int> tmpVectorVertexIndex;
+				for (size_t tmpVectorVertexInMaterialIndex = 0; tmpVectorVertexInMaterialIndex<tmpIterBegin->second.size(); tmpVectorVertexInMaterialIndex++)
+				{
+					{
+						tmpVectorVertexIndex.push_back(tmpIterBegin->second[tmpVectorVertexInMaterialIndex]);
+					}
+				}
+
+				int tmpVertexSizeInMaterial = tmpVectorVertexIndex.size();
+				tmpOfStreamMesh.write((char*)(&tmpVertexSizeInMaterial), sizeof(tmpVertexSizeInMaterial));
+
+				for (size_t tmpVectorIndex = 0; tmpVectorIndex<tmpVectorVertexIndex.size(); tmpVectorIndex++)
+				{
+					int tmpVertexIndex = tmpVectorVertexIndex[tmpVectorIndex];
+					tmpOfStreamMesh.write((char*)(&tmpVertexIndex), sizeof(tmpVertexIndex));
+				}
+			}
 		}
-
-		tmpOfStreamMesh.close();
-		tmpOfStreamAnim.close();
-		foutLogMaterial.close();
-		foutLog.close();
-		return;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		//写入vertexsize;
-		tmpOfStreamMesh.write((char*)(&vertexsize), sizeof(vertexsize));
-
-		//写入vertex数据;
-		for (size_t vertexindex = 0; vertexindex < tmpVectorVertex.size(); vertexindex++)
-		{
-			tmpOfStreamMesh.write((char*)(&tmpVectorVertex[vertexindex]), sizeof(tmpVectorVertex[vertexindex]));
-		}
-
-		foutLog << "Vertex:" << tmpVectorVertex.size() << std::endl;
-		for (size_t vertexindex = 0; vertexindex < tmpVectorVertex.size(); vertexindex++)
-		{
-			foutLog << "(" << tmpVectorVertex[vertexindex].Position.x << "," << tmpVectorVertex[vertexindex].Position.y << "," << tmpVectorVertex[vertexindex].Position.z << ")" << std::endl;
-		}
-
-		foutLog << "UV:" << tmpVectorVertex.size() << std::endl;
-		for (size_t vertexindex = 0; vertexindex < tmpVectorVertex.size(); vertexindex++)
-		{
-			foutLog << "(" << tmpVectorVertex[vertexindex].TexCoords.x << "," << tmpVectorVertex[vertexindex].TexCoords.y << ")" << endl;
-		}
-
-		foutLog << "Normal:" << tmpVectorVertex.size() << std::endl;
-		for (size_t vertexindex = 0; vertexindex < tmpVectorVertex.size(); vertexindex++)
-		{
-			foutLog << "(" << tmpVectorVertex[vertexindex].Normal.x << "," << tmpVectorVertex[vertexindex].Normal.y << "," << tmpVectorVertex[vertexindex].Normal.z << ")" << endl;
-		}
-
-
-		//写入indicessize;
-		tmpOfStreamMesh.write((char*)(&indicessize), sizeof(indicessize));
-
-
-
-		//写入indicess数据;
-		for (size_t indexindex = 0; indexindex < tmpVectorIndices.size(); indexindex++)
-		{
-			tmpOfStreamMesh.write((char*)(&tmpVectorIndices[indexindex]), sizeof(tmpVectorIndices[indexindex]));
-		}
-
-
-		foutLog << "Indices:" << tmpVectorIndices.size() << std::endl;
-		for (size_t tmpIndicesIndex = 0; tmpIndicesIndex < tmpVectorIndices.size();)
-		{
-			int tmpIndex0 = tmpIndicesIndex++;
-			int tmpIndex1 = tmpIndicesIndex++;
-			int tmpIndex2 = tmpIndicesIndex++;
-			foutLog << tmpVectorIndices[tmpIndex0] << "," << tmpVectorIndices[tmpIndex1] << "," << tmpVectorIndices[tmpIndex2] << endl;
-		}
-
-
-		//写入texturesize;
-		tmpOfStreamMesh.write((char*)(&texturesize), sizeof(texturesize));
-
-		//写入texture数据;
-		for (size_t textureindex = 0; textureindex < texturesize; textureindex++)
-		{
-			//fout.write((char*)(&mesh.textures[textureindex]), sizeof(mesh.textures[textureindex]));
-		}
-
-
-
 
 		//Materials
-		foutLogMaterial << "Materials:" << endl;
-
-		int tmpMaterialCount = tmpMapMaterial.size();
-		tmpOfStreamMesh.write((char*)(&tmpMaterialCount), sizeof(tmpMaterialCount));
-
+		foutMaterial << "Materials:" << endl;
 		for (std::map<IGameMaterial*, vector<int>>::iterator tmpIterBegin = tmpMapMaterial.begin(); tmpIterBegin != tmpMapMaterial.end(); tmpIterBegin++)
 		{
 			IGameMaterial* tmpGameMaterial = tmpIterBegin->first;
 			string tmpMaterialName = WChar2Ansi(tmpGameMaterial->GetMaterialName());
 
-			foutLogMaterial << tmpMaterialName << endl;
-
-			unsigned char tmpMaterialNameSize = tmpMaterialName.size() + 1;
-			tmpOfStreamMesh.write((char*)(&tmpMaterialNameSize), sizeof(tmpMaterialNameSize));
-			tmpOfStreamMesh.write((char*)(tmpMaterialName.c_str()), tmpMaterialNameSize);
+			foutMaterial << tmpMaterialName << endl;
 
 			unsigned char tmpNumberOfTextureMaps = tmpGameMaterial->GetNumberOfTextureMaps();		//how many texture of the material
-			foutLogMaterial << "Texture Count:" << (int)tmpNumberOfTextureMaps << endl;
-			tmpOfStreamMesh.write((char*)(&tmpNumberOfTextureMaps), sizeof(tmpNumberOfTextureMaps));
+			foutMaterial << "Texture Count:" << (int)tmpNumberOfTextureMaps << endl;
 
 			for (int tmpTextureMapIndex = 0; tmpTextureMapIndex<tmpNumberOfTextureMaps; tmpTextureMapIndex++)
 			{
@@ -989,90 +997,24 @@ void IGameExporter::ExportMesh(IGameMesh* varGameMesh,const wchar_t* varNodeName
 				{
 					//文件路径						
 					string tmpBitmapPath = WChar2Ansi(tmpGameTextureMap->GetBitmapFileName());
-					foutLogMaterial << "Texture BitmapPath:" << tmpBitmapPath << endl;
+					foutMaterial << "Texture BitmapPath:" << tmpBitmapPath << endl;
 
 					//拷贝图片到导出目录
 					wstring tmpBitmapPathW = tmpGameTextureMap->GetBitmapFileName();
 					wstring tmpBitmapNameW = tmpBitmapPathW.substr(tmpBitmapPathW.find_last_of('\\') + 1);
 					wstring tmpBitmapExportPathW = tmpExportFullPath.substr(0, tmpExportFullPath.find_last_of(L"\\") + 1) + tmpBitmapNameW;
 					CopyFile(tmpGameTextureMap->GetBitmapFileName(), tmpBitmapExportPathW.c_str(), FALSE);
-
-					//文件名
-					int tmpLastCharPosition = tmpBitmapPath.find_last_of('\\');
-					string tmpBitmapName(tmpBitmapPath.substr(tmpLastCharPosition + 1));
-					unsigned char tmpBitmapNameSize = tmpBitmapName.size() + 1;
-					tmpOfStreamMesh.write((char*)(&tmpBitmapNameSize), sizeof(tmpBitmapNameSize));
-					tmpOfStreamMesh.write((char*)(tmpBitmapName.c_str()), tmpBitmapNameSize);
-
-					//获取UV的Tilling和Offset值
-					IGameUVGen* tmpGameUVGen = tmpGameTextureMap->GetIGameUVGen();
-					std::string tmpTextureClass = WChar2Ansi(tmpGameTextureMap->GetTextureClass());
-					transform(tmpTextureClass.begin(), tmpTextureClass.end(), tmpTextureClass.begin(), toupper);
-
-					if (strcmp(tmpTextureClass.c_str(), "BITMAP") != 0)
-					{
-						continue;
-					}
-
-					IGameProperty* tmpGamePropertyUTiling = tmpGameUVGen->GetUTilingData();
-					float tmpUTilingValue = 0.0f;
-					if (tmpGamePropertyUTiling->GetPropertyValue(tmpUTilingValue))
-					{
-						tmpOfStreamMesh.write((char*)(&tmpUTilingValue), sizeof(tmpUTilingValue));
-					}
-
-					IGameProperty* tmpGamePropertyVTiling = tmpGameUVGen->GetVTilingData();
-					float tmpVTilingValue = 0.0f;
-					if (tmpGamePropertyVTiling->GetPropertyValue(tmpVTilingValue))
-					{
-						tmpOfStreamMesh.write((char*)(&tmpVTilingValue), sizeof(tmpVTilingValue));
-					}
-
-					IGameProperty* tmpGamePropertyUOffset = tmpGameUVGen->GetUOffsetData();
-					float tmpUOffsetValue = 0.0f;
-					if (tmpGamePropertyUOffset->GetPropertyValue(tmpUOffsetValue))
-					{
-						tmpOfStreamMesh.write((char*)(&tmpUOffsetValue), sizeof(tmpUOffsetValue));
-					}
-
-					IGameProperty* tmpGamePropertyVOffset = tmpGameUVGen->GetVOffsetData();
-					float tmpVOffsetValue = 0.0f;
-					if (tmpGamePropertyVOffset->GetPropertyValue(tmpVOffsetValue))
-					{
-						tmpOfStreamMesh.write((char*)(&tmpVOffsetValue), sizeof(tmpVOffsetValue));
-					}
-
 				}
-			}
-
-			std::vector<int> tmpVectorVertexIndex;
-			for (size_t tmpVectorVertexInMaterialIndex = 0; tmpVectorVertexInMaterialIndex<tmpIterBegin->second.size(); tmpVectorVertexInMaterialIndex++)
-			{
-				/*bool tmpFind=false;
-				for (size_t tmpVectorIndex=0;tmpVectorIndex<tmpVectorVertexIndex.size();tmpVectorIndex++)
-				{
-				if(tmpVectorVertexIndex[tmpVectorIndex]==tmpIterBegin->second[tmpVectorVertexInMaterialIndex])
-				{
-				tmpFind=true;
-				break;
-				}
-				}
-
-				if(tmpFind==false)*/
-				{
-					tmpVectorVertexIndex.push_back(tmpIterBegin->second[tmpVectorVertexInMaterialIndex]);
-				}
-			}
-
-			int tmpVertexSizeInMaterial = tmpVectorVertexIndex.size();
-			tmpOfStreamMesh.write((char*)(&tmpVertexSizeInMaterial), sizeof(tmpVertexSizeInMaterial));
-
-			for (size_t tmpVectorIndex = 0; tmpVectorIndex<tmpVectorVertexIndex.size(); tmpVectorIndex++)
-			{
-				int tmpVertexIndex = tmpVectorVertexIndex[tmpVectorIndex];
-				tmpOfStreamMesh.write((char*)(&tmpVertexIndex), sizeof(tmpVertexIndex));
 			}
 		}
+
+		tmpOfStreamMesh.close();
+		tmpOfStreamAnim.close();
+		foutMaterial.close();
+		return;
+
+
+		
 
 		//-----------------------------------------------------------------------------------------------------------------
 
@@ -1096,46 +1038,25 @@ void IGameExporter::ExportMesh(IGameMesh* varGameMesh,const wchar_t* varNodeName
 			const wchar_t* tmpGameNodeBoneName = tmpVectorGameNodeBones[tmpGameNodeBoneIndex]->GetName();
 			std::wstring tmpGameNodeBoneNameWString(tmpGameNodeBoneName);
 			std::string tmpGameNodeBoneNameString = ws2s(tmpGameNodeBoneNameWString);
-			foutLog << tmpGameNodeBoneNameString << std::endl;
+
 
 			int tmpGameNodeBoneNameStringSize = tmpGameNodeBoneNameString.size() + 1;
 			tmpOfStreamAnim.write((char*)(&tmpGameNodeBoneNameStringSize), sizeof(tmpGameNodeBoneNameStringSize));
 			tmpOfStreamAnim.write(tmpGameNodeBoneNameString.c_str(), tmpGameNodeBoneNameStringSize);
 		}
 
-		//Log输出第0帧矩阵
-		foutLog << "Zero Frame GMatrix:" << endl;
-		for (size_t tmpBoneGMatrixZeroFrameIndex = 0; tmpBoneGMatrixZeroFrameIndex<tmpVectorBoneGMatrixZeroFrame.size(); tmpBoneGMatrixZeroFrameIndex++)
-		{
-			const wchar_t* tmpGameNodeBoneName = tmpVectorGameNodeBones[tmpBoneGMatrixZeroFrameIndex]->GetName();
-			std::wstring tmpGameNodeBoneNameWString(tmpGameNodeBoneName);
-			std::string tmpGameNodeBoneNameString = ws2s(tmpGameNodeBoneNameWString);
-			foutLog << tmpGameNodeBoneNameString << endl;
 
-			GMatrix tmpBoneGMatrixZeroFrame = tmpVectorBoneGMatrixZeroFrame[tmpBoneGMatrixZeroFrameIndex];
-			foutLog << tmpBoneGMatrixZeroFrame[0][0] << " " << tmpBoneGMatrixZeroFrame[0][1] << " " << tmpBoneGMatrixZeroFrame[0][2] << " " << tmpBoneGMatrixZeroFrame[0][3] << endl;
-			foutLog << tmpBoneGMatrixZeroFrame[1][0] << " " << tmpBoneGMatrixZeroFrame[1][1] << " " << tmpBoneGMatrixZeroFrame[1][2] << " " << tmpBoneGMatrixZeroFrame[1][3] << endl;
-			foutLog << tmpBoneGMatrixZeroFrame[2][0] << " " << tmpBoneGMatrixZeroFrame[2][1] << " " << tmpBoneGMatrixZeroFrame[2][2] << " " << tmpBoneGMatrixZeroFrame[2][3] << endl;
-			foutLog << tmpBoneGMatrixZeroFrame[3][0] << " " << tmpBoneGMatrixZeroFrame[3][1] << " " << tmpBoneGMatrixZeroFrame[3][2] << " " << tmpBoneGMatrixZeroFrame[3][3] << endl;
-		}
 
 		//写入第0帧逆矩阵
 		int tmpVectorBoneGMatrixInvertSize = tmpVectorBoneGMatrixInvert.size();
 		tmpOfStreamAnim.write((char*)(&tmpVectorBoneGMatrixInvertSize), sizeof(tmpVectorBoneGMatrixInvertSize));
 
-		foutLog << "Invert GMatrix:" << endl;
+
 		for (size_t tmpBoneGMatrixInvertIndex = 0; tmpBoneGMatrixInvertIndex<tmpVectorBoneGMatrixInvert.size(); tmpBoneGMatrixInvertIndex++)
 		{
-			const wchar_t* tmpGameNodeBoneName = tmpVectorGameNodeBones[tmpBoneGMatrixInvertIndex]->GetName();
-			std::wstring tmpGameNodeBoneNameWString(tmpGameNodeBoneName);
-			std::string tmpGameNodeBoneNameString = ws2s(tmpGameNodeBoneNameWString);
-			foutLog << tmpGameNodeBoneNameString << endl;
 
 			GMatrix tmpBoneGMatrixInvert = tmpVectorBoneGMatrixInvert[tmpBoneGMatrixInvertIndex];
-			foutLog << tmpBoneGMatrixInvert[0][0] << " " << tmpBoneGMatrixInvert[0][1] << " " << tmpBoneGMatrixInvert[0][2] << " " << tmpBoneGMatrixInvert[0][3] << endl;
-			foutLog << tmpBoneGMatrixInvert[1][0] << " " << tmpBoneGMatrixInvert[1][1] << " " << tmpBoneGMatrixInvert[1][2] << " " << tmpBoneGMatrixInvert[1][3] << endl;
-			foutLog << tmpBoneGMatrixInvert[2][0] << " " << tmpBoneGMatrixInvert[2][1] << " " << tmpBoneGMatrixInvert[2][2] << " " << tmpBoneGMatrixInvert[2][3] << endl;
-			foutLog << tmpBoneGMatrixInvert[3][0] << " " << tmpBoneGMatrixInvert[3][1] << " " << tmpBoneGMatrixInvert[3][2] << " " << tmpBoneGMatrixInvert[3][3] << endl;
+
 
 			glm::mat4x4 tmpMat4x4BoneGMatrixInvert;
 			tmpMat4x4BoneGMatrixInvert[0][0] = tmpBoneGMatrixInvert[0][0]; tmpMat4x4BoneGMatrixInvert[0][1] = tmpBoneGMatrixInvert[0][1]; tmpMat4x4BoneGMatrixInvert[0][2] = tmpBoneGMatrixInvert[0][2]; tmpMat4x4BoneGMatrixInvert[0][3] = tmpBoneGMatrixInvert[0][3];
@@ -1150,11 +1071,9 @@ void IGameExporter::ExportMesh(IGameMesh* varGameMesh,const wchar_t* varNodeName
 		int tmpMapBoneGMatrixSize = tmpMapBoneGMatrix.size();
 		tmpOfStreamAnim.write((char*)(&tmpMapBoneGMatrixSize), sizeof(tmpMapBoneGMatrixSize));
 
-		foutLog << "Animation:" << std::endl;
 		for (map<TimeValue, vector<GMatrix>>::iterator tmpIterBegin = tmpMapBoneGMatrix.begin(); tmpIterBegin != tmpMapBoneGMatrix.end(); tmpIterBegin++)
 		{
 			TimeValue tmpTimeValueCurrent = tmpIterBegin->first;
-			foutLog << tmpTimeValueCurrent << std::endl;
 
 			tmpOfStreamAnim.write((char*)(&tmpTimeValueCurrent), sizeof(tmpTimeValueCurrent));
 
@@ -1165,16 +1084,8 @@ void IGameExporter::ExportMesh(IGameMesh* varGameMesh,const wchar_t* varNodeName
 
 			for (size_t tmpVectorGMatrixCurrentIndex = 0; tmpVectorGMatrixCurrentIndex<tmpVectorGMatrixCurrent.size(); tmpVectorGMatrixCurrentIndex++)
 			{
-				const wchar_t* tmpGameNodeBoneName = tmpVectorGameNodeBones[tmpVectorGMatrixCurrentIndex]->GetName();
-				std::wstring tmpGameNodeBoneNameWString(tmpGameNodeBoneName);
-				std::string tmpGameNodeBoneNameString = ws2s(tmpGameNodeBoneNameWString);
-				foutLog << tmpGameNodeBoneNameString << endl;
 
 				GMatrix tmpGMatrixNodeBone = tmpVectorGMatrixCurrent[tmpVectorGMatrixCurrentIndex];
-				foutLog << tmpGMatrixNodeBone[0][0] << " " << tmpGMatrixNodeBone[0][1] << " " << tmpGMatrixNodeBone[0][2] << " " << tmpGMatrixNodeBone[0][3] << endl;
-				foutLog << tmpGMatrixNodeBone[1][0] << " " << tmpGMatrixNodeBone[1][1] << " " << tmpGMatrixNodeBone[1][2] << " " << tmpGMatrixNodeBone[1][3] << endl;
-				foutLog << tmpGMatrixNodeBone[2][0] << " " << tmpGMatrixNodeBone[2][1] << " " << tmpGMatrixNodeBone[2][2] << " " << tmpGMatrixNodeBone[2][3] << endl;
-				foutLog << tmpGMatrixNodeBone[3][0] << " " << tmpGMatrixNodeBone[3][1] << " " << tmpGMatrixNodeBone[3][2] << " " << tmpGMatrixNodeBone[3][3] << endl;
 
 				glm::mat4x4 tmpMat4x4BoneGMatrix;
 				tmpMat4x4BoneGMatrix[0][0] = tmpGMatrixNodeBone[0][0]; tmpMat4x4BoneGMatrix[0][1] = tmpGMatrixNodeBone[0][1]; tmpMat4x4BoneGMatrix[0][2] = tmpGMatrixNodeBone[0][2]; tmpMat4x4BoneGMatrix[0][3] = tmpGMatrixNodeBone[0][3];
@@ -1192,7 +1103,6 @@ void IGameExporter::ExportMesh(IGameMesh* varGameMesh,const wchar_t* varNodeName
 
 		for (size_t vertexindex = 0; vertexindex < tmpVectorWeight.size(); vertexindex++)
 		{
-			foutLog << "(" << tmpVectorVertex[vertexindex].Position.x << "," << tmpVectorVertex[vertexindex].Position.y << "," << tmpVectorVertex[vertexindex].Position.z << ")";
 
 			map<int, float> tmpMapWeightOneVertex = tmpVectorWeight[vertexindex];
 
@@ -1201,17 +1111,14 @@ void IGameExporter::ExportMesh(IGameMesh* varGameMesh,const wchar_t* varNodeName
 
 			for (map<int, float>::iterator tmpIterBegin = tmpMapWeightOneVertex.begin(); tmpIterBegin != tmpMapWeightOneVertex.end(); tmpIterBegin++)
 			{
-				foutLog << " " << tmpIterBegin->first << ":" << tmpIterBegin->second;
 
 				tmpOfStreamAnim.write((char*)(&tmpIterBegin->first), sizeof(tmpIterBegin->first));
 				tmpOfStreamAnim.write((char*)(&tmpIterBegin->second), sizeof(tmpIterBegin->second));
 			}
-			foutLog << endl;
 		}
 
 
 		//计算顶点初始位置 并存储
-		foutLog << "Write Vertex Position No Bone" << endl;
 		for (size_t vertexindex = 0; vertexindex < tmpVectorWeight.size(); vertexindex++)
 		{
 			map<int, float> tmpMapWeightOneVertex = tmpVectorWeight[vertexindex];
@@ -1247,8 +1154,7 @@ void IGameExporter::ExportMesh(IGameMesh* varGameMesh,const wchar_t* varNodeName
 	}
 	tmpOfStreamMesh.close();
 	tmpOfStreamAnim.close();
-	foutLogMaterial.close();
-	foutLog.close();
+	foutMaterial.close();
 }
 
 void IGameExporter::ExportNodeTraverse(IGameNode* varGameNode)
