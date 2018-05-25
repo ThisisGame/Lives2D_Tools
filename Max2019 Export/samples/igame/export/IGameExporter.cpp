@@ -834,6 +834,71 @@ void IGameExporter::ExportMesh(IGameMesh* varGameMesh,const wchar_t* varNodeName
 		int texturesize = (sizeof(Texture))* tmpTextureSize;
 
 
+		/*对高模进行Mesh拆分,以65535为max值,unsigned short作为存储.*/
+		vector<vector<unsigned short>> tmpVectorIndicesAllPart;
+
+		int tmpIndicesWrite = 0;
+		while (tmpIndicesWrite<tmpVectorIndices.size())
+		{
+			vector<unsigned short> tmpVectorIndicesWrite;
+			while (tmpVectorIndicesWrite.size()<65535)
+			{
+				int tmpIndex = tmpVectorIndicesWrite.size();
+				tmpVectorIndicesWrite.push_back((unsigned short)tmpVectorIndices[tmpIndex]);
+			}
+
+			tmpVectorIndicesAllPart.push_back(tmpVectorIndicesWrite);
+		}
+
+
+		for (size_t tmpVectorIndicesPartIndex = 0; tmpVectorIndicesPartIndex < tmpVectorIndicesAllPart.size(); tmpVectorIndicesPartIndex++)
+		{
+			vector<unsigned short>& tmpVectorIndicesOnePart = tmpVectorIndicesAllPart[tmpVectorIndicesPartIndex];
+
+			vector<Vertex&> tmpVectorVertexOnePart;
+			for (size_t i = 0; i < tmpVectorIndicesOnePart.size(); i++)
+			{
+				int tmpVertexIndex = tmpVectorIndicesOnePart[i];
+
+				Vertex& tmpVertex = tmpVectorVertex[tmpVertexIndex];
+				tmpVectorVertexOnePart.push_back(tmpVertex);
+			}
+
+			//写入vertexsize;
+			int tmpVectorVertexOnePartMemorySize= sizeof(Vertex) * tmpVectorVertexOnePart.size();
+			tmpOfStreamMesh.write((char*)(&tmpVectorVertexOnePartMemorySize), sizeof(tmpVectorVertexOnePartMemorySize));
+
+			//写入vertex数据;
+			for (size_t vertexindex = 0; vertexindex < tmpVectorVertexOnePart.size(); vertexindex++)
+			{
+				tmpOfStreamMesh.write((char*)(&tmpVectorVertexOnePart[vertexindex]), sizeof(tmpVectorVertexOnePart[vertexindex]));
+			}
+		}
+
+		tmpOfStreamMesh.close();
+		tmpOfStreamAnim.close();
+		foutLogMaterial.close();
+		foutLog.close();
+		return;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		//写入vertexsize;
 		tmpOfStreamMesh.write((char*)(&vertexsize), sizeof(vertexsize));
 
