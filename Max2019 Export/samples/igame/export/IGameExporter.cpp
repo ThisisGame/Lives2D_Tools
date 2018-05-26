@@ -8,7 +8,7 @@
 
 	TODO: Break the file down into smaller chunks for easier loading.
 
-	CREATED BY:		Neil Hazzard	
+	CREATED BY:		Neil Hazzard
 
 	HISTORY:		parttime coding Summer 2002
 
@@ -49,7 +49,7 @@
 #define LINEAR	2
 #define SAMPLE	3
 
-//corresponds to XML schema
+ //corresponds to XML schema
 TCHAR* mapSlotNames[] = {
 		_T("Diffuse"),
 		_T("Ambient"),
@@ -69,96 +69,91 @@ TCHAR* mapSlotNames[] = {
 
 // XML helper class		
 class CCoInitialize {
-	public:
-		CCoInitialize() : m_hr(CoInitialize(NULL)) { }
-		~CCoInitialize() { if (SUCCEEDED(m_hr)) CoUninitialize(); }
-		operator HRESULT() const { return m_hr; }
-		HRESULT m_hr;
+public:
+	CCoInitialize() : m_hr(CoInitialize(NULL)) { }
+	~CCoInitialize() { if (SUCCEEDED(m_hr)) CoUninitialize(); }
+	operator HRESULT() const { return m_hr; }
+	HRESULT m_hr;
 };
 
 class IGameExporter : public SceneExport {
-	public:
+public:
 
-		IGameScene * pIgame;
+	IGameScene * pIgame;
 
-		CCoInitialize init;              //must be declared before any IXMLDOM objects
-		CComPtr<IXMLDOMDocument>  pXMLDoc;
-		CComPtr<IXMLDOMNode> pRoot;		//this is our root node 	
-		CComPtr<IXMLDOMNode> iGameNode;	//the IGame child - which is the main node
-		CComPtr<IXMLDOMNode> rootNode;
-		static HWND hParams;
-
-		
-		int curNode;
-
-		int staticFrame;
-		int framePerSample;
-		BOOL exportGeom;
-		BOOL exportNormals;
-		BOOL exportVertexColor;
-		BOOL exportControllers;
-		BOOL exportFaceSmgp;
-		BOOL exportTexCoords;
-		BOOL exportMappingChannel;
-		BOOL exportConstraints;
-		BOOL exportMaterials;
-		BOOL exportSplines;
-		BOOL exportModifiers;
-		BOOL exportSkin;
-		BOOL exportGenMod;
-		BOOL forceSample;
-		BOOL splitFile;
-		BOOL exportQuaternions;
-		BOOL exportObjectSpace;
-		BOOL exportRelative;
-		BOOL exportNormalsPerFace;
-		int cS;
-		int exportCoord;
-		bool showPrompts;
-		bool exportSelected;
-
-		TSTR fileName;
-		TSTR splitPath;
-
-		float igameVersion, exporterVersion;
+	CCoInitialize init;              //must be declared before any IXMLDOM objects
+	CComPtr<IXMLDOMDocument>  pXMLDoc;
+	CComPtr<IXMLDOMNode> pRoot;		//this is our root node 	
+	CComPtr<IXMLDOMNode> iGameNode;	//the IGame child - which is the main node
+	CComPtr<IXMLDOMNode> rootNode;
+	static HWND hParams;
 
 
+	int curNode;
 
-		int				ExtCount();					// Number of extensions supported
-		const TCHAR *	Ext(int n);					// Extension #n (i.e. "3DS")
-		const TCHAR *	LongDesc();					// Long ASCII description (i.e. "Autodesk 3D Studio File")
-		const TCHAR *	ShortDesc();				// Short ASCII description (i.e. "3D Studio")
-		const TCHAR *	AuthorName();				// ASCII Author name
-		const TCHAR *	CopyrightMessage();			// ASCII Copyright message
-		const TCHAR *	OtherMessage1();			// Other message #1
-		const TCHAR *	OtherMessage2();			// Other message #2
-		unsigned int	Version();					// Version number * 100 (i.e. v3.01 = 301)
-		void			ShowAbout(HWND hWnd);		// Show DLL's "About..." box
+	int staticFrame;
+	int framePerSample;
+	BOOL exportGeom;
+	BOOL exportNormals;
+	BOOL exportVertexColor;
+	BOOL exportControllers;
+	BOOL exportFaceSmgp;
+	BOOL exportTexCoords;
+	BOOL exportMappingChannel;
+	BOOL exportConstraints;
+	BOOL exportMaterials;
+	BOOL exportSplines;
+	BOOL exportModifiers;
+	BOOL exportSkin;
+	BOOL exportGenMod;
+	BOOL forceSample;
+	BOOL splitFile;
+	BOOL exportQuaternions;
+	BOOL exportObjectSpace;
+	BOOL exportRelative;
+	BOOL exportNormalsPerFace;
+	int cS;
+	int exportCoord;
+	bool showPrompts;
+	bool exportSelected;
 
-		BOOL SupportsOptions(int ext, DWORD options);
-		int	DoExport(const TCHAR *name,ExpInterface *ei,Interface *i, BOOL suppressPrompts=FALSE, DWORD options=0);
+	TSTR fileName;
+	TSTR splitPath;
 
-		void ExportMesh(IGameMesh* varGameMesh, const wchar_t* varNodeName);
-		
-		void ExportNodeTraverse(IGameNode* tmpGameNode);
-
-		void MakeSplitFilename(IGameNode * node, TSTR & buf);
-		void makeValidURIFilename(TSTR&, bool = false);
-		BOOL ReadConfig();
-		void WriteConfig();
-		TSTR GetCfgFilename();
-		IGameExporter();
-		~IGameExporter();		
+	float igameVersion, exporterVersion;
 
 
-		IGameScene* mGameScene;
 
-		const TCHAR* mName;
+	int				ExtCount();					// Number of extensions supported
+	const TCHAR *	Ext(int n);					// Extension #n (i.e. "3DS")
+	const TCHAR *	LongDesc();					// Long ASCII description (i.e. "Autodesk 3D Studio File")
+	const TCHAR *	ShortDesc();				// Short ASCII description (i.e. "3D Studio")
+	const TCHAR *	AuthorName();				// ASCII Author name
+	const TCHAR *	CopyrightMessage();			// ASCII Copyright message
+	const TCHAR *	OtherMessage1();			// Other message #1
+	const TCHAR *	OtherMessage2();			// Other message #2
+	unsigned int	Version();					// Version number * 100 (i.e. v3.01 = 301)
+	void			ShowAbout(HWND hWnd);		// Show DLL's "About..." box
+
+	BOOL SupportsOptions(int ext, DWORD options);
+	int	DoExport(const TCHAR *name, ExpInterface *ei, Interface *i, BOOL suppressPrompts = FALSE, DWORD options = 0);
+
+	void ExportMesh(IGameMesh* varGameMesh, const wchar_t* varNodeName);
+
+	void ExportNodeTraverse(IGameNode* tmpGameNode);
+
+	IGameExporter();
+	~IGameExporter();
+
+
+	IGameScene* mGameScene;
+
+	const TCHAR* mName;
 };
 
 
-class IGameExporterClassDesc:public ClassDesc2 {
-	public:
+class IGameExporterClassDesc :public ClassDesc2 {
+public:
 	int 			IsPublic() { return TRUE; }
 	void *			Create(BOOL loading = FALSE) { return new IGameExporter(); }
 	const TCHAR *	ClassName() { return GetString(IDS_CLASS_NAME); }
@@ -178,8 +173,8 @@ ClassDesc2* GetIGameExporterDesc() { return &IGameExporterDesc; }
 
 static bool IsFloatController(IGameControlType Type)
 {
-	if(Type == IGAME_FLOAT || Type==IGAME_EULER_X || Type == IGAME_EULER_Y || 
-		Type == IGAME_EULER_Z || Type == IGAME_POS_X || Type == IGAME_POS_Y || 
+	if (Type == IGAME_FLOAT || Type == IGAME_EULER_X || Type == IGAME_EULER_Y ||
+		Type == IGAME_EULER_Z || Type == IGAME_POS_X || Type == IGAME_POS_Y ||
 		Type == IGAME_POS_Z)
 		return true;
 
@@ -188,175 +183,175 @@ static bool IsFloatController(IGameControlType Type)
 
 int numVertex;
 
-INT_PTR CALLBACK IGameExporterOptionsDlgProc(HWND hWnd,UINT message,WPARAM wParam,LPARAM lParam) {
-   IGameExporter *exp = DLGetWindowLongPtr<IGameExporter*>(hWnd); 
+INT_PTR CALLBACK IGameExporterOptionsDlgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
+	IGameExporter *exp = DLGetWindowLongPtr<IGameExporter*>(hWnd);
 	ISpinnerControl * spin;
 	int ID;
-	
-	switch(message) {
-		case WM_INITDIALOG:
-			exp = (IGameExporter *)lParam;
-         DLSetWindowLongPtr(hWnd, lParam); 
-			CenterWindow(hWnd,GetParent(hWnd));
-			spin = GetISpinner(GetDlgItem(hWnd, IDC_STATIC_FRAME_SPIN)); 
-			spin->LinkToEdit(GetDlgItem(hWnd,IDC_STATIC_FRAME), EDITTYPE_INT ); 
-			spin->SetLimits(0, 100, TRUE); 
-			spin->SetScale(1.0f);
-			spin->SetValue(exp->staticFrame ,FALSE);
-			ReleaseISpinner(spin);
-						
-			spin = GetISpinner(GetDlgItem(hWnd, IDC_SAMPLE_FRAME_SPIN)); 
-			spin->LinkToEdit(GetDlgItem(hWnd,IDC_SAMPLE_FRAME), EDITTYPE_INT ); 
-			spin->SetLimits(1, 100, TRUE); 
-			spin->SetScale(1.0f);
-			spin->SetValue(exp->framePerSample ,FALSE);
-			ReleaseISpinner(spin);
-			CheckDlgButton(hWnd,IDC_EXP_GEOMETRY,exp->exportGeom);
-			CheckDlgButton(hWnd,IDC_EXP_NORMALS,exp->exportNormals);
-			CheckDlgButton(hWnd,IDC_EXP_CONTROLLERS,exp->exportControllers);
-			CheckDlgButton(hWnd,IDC_EXP_FACESMGRP,exp->exportFaceSmgp);
-			CheckDlgButton(hWnd,IDC_EXP_VCOLORS,exp->exportVertexColor);
-			CheckDlgButton(hWnd,IDC_EXP_TEXCOORD,exp->exportTexCoords);
-			CheckDlgButton(hWnd,IDC_EXP_MAPCHAN,exp->exportMappingChannel);
-			CheckDlgButton(hWnd,IDC_EXP_MATERIAL,exp->exportMaterials);
-			CheckDlgButton(hWnd,IDC_EXP_SPLINES,exp->exportSplines);
-			CheckDlgButton(hWnd,IDC_EXP_MODIFIERS,exp->exportModifiers);
-			CheckDlgButton(hWnd,IDC_EXP_SAMPLECONT,exp->forceSample);
-			CheckDlgButton(hWnd,IDC_EXP_CONSTRAINTS,exp->exportConstraints);
-			CheckDlgButton(hWnd,IDC_EXP_SKIN,exp->exportSkin);
-			CheckDlgButton(hWnd,IDC_EXP_GENMOD,exp->exportGenMod);
-			CheckDlgButton(hWnd,IDC_SPLITFILE,exp->splitFile);
-			CheckDlgButton(hWnd,IDC_EXP_OBJECTSPACE,exp->exportObjectSpace);
-			CheckDlgButton(hWnd,IDC_EXP_QUATERNIONS,exp->exportQuaternions);
-			CheckDlgButton(hWnd,IDC_EXP_RELATIVE,exp->exportRelative);
-			
 
-			ID = IDC_COORD_MAX + exp->cS;
-			CheckRadioButton(hWnd,IDC_COORD_MAX,IDC_COORD_OGL,ID);
+	switch (message) {
+	case WM_INITDIALOG:
+		exp = (IGameExporter *)lParam;
+		DLSetWindowLongPtr(hWnd, lParam);
+		CenterWindow(hWnd, GetParent(hWnd));
+		spin = GetISpinner(GetDlgItem(hWnd, IDC_STATIC_FRAME_SPIN));
+		spin->LinkToEdit(GetDlgItem(hWnd, IDC_STATIC_FRAME), EDITTYPE_INT);
+		spin->SetLimits(0, 100, TRUE);
+		spin->SetScale(1.0f);
+		spin->SetValue(exp->staticFrame, FALSE);
+		ReleaseISpinner(spin);
 
-			ID = IDC_NORMALS_LIST + exp->exportNormalsPerFace;
-			CheckRadioButton(hWnd,IDC_NORMALS_LIST,IDC_NORMALS_FACE,ID);
-
-			EnableWindow(GetDlgItem(hWnd, IDC_EXP_NORMALS), exp->exportGeom);
-			EnableWindow(GetDlgItem(hWnd, IDC_EXP_FACESMGRP), exp->exportGeom);
-			EnableWindow(GetDlgItem(hWnd, IDC_EXP_VCOLORS),  exp->exportGeom);
-			EnableWindow(GetDlgItem(hWnd, IDC_EXP_TEXCOORD),  exp->exportGeom);
-			EnableWindow(GetDlgItem(hWnd, IDC_EXP_MAPCHAN),  exp->exportGeom);
-			EnableWindow(GetDlgItem(hWnd, IDC_EXP_OBJECTSPACE),  exp->exportGeom);
-			
-			EnableWindow(GetDlgItem(hWnd, IDC_EXP_CONSTRAINTS),  exp->exportControllers);
-			EnableWindow(GetDlgItem(hWnd, IDC_EXP_SAMPLECONT),  exp->exportControllers);
-			EnableWindow(GetDlgItem(hWnd, IDC_EXP_QUATERNIONS), exp->exportControllers);
-			EnableWindow(GetDlgItem(hWnd, IDC_EXP_RELATIVE), exp->exportControllers);
-	
-			EnableWindow(GetDlgItem(hWnd, IDC_EXP_SKIN),  exp->exportModifiers);
-			EnableWindow(GetDlgItem(hWnd, IDC_EXP_GENMOD),  exp->exportModifiers);
-
-			EnableWindow(GetDlgItem(hWnd, IDC_NORMALS_LIST),exp->exportNormals);
-			EnableWindow(GetDlgItem(hWnd, IDC_NORMALS_FACE),exp->exportNormals);
-
-			//Versioning
-			TCHAR Title [256];
-            _stprintf(Title,_T("IGame Exporter version %.3f; IGame version %.3f"),
-				exp->exporterVersion, exp->igameVersion);
-			SetWindowText(hWnd,Title);
-			return TRUE;
-
-		case WM_COMMAND:
-			switch (LOWORD(wParam)) {
-
-				case IDC_EXP_GEOMETRY:
-					EnableWindow(GetDlgItem(hWnd, IDC_EXP_NORMALS), IsDlgButtonChecked(hWnd, IDC_EXP_GEOMETRY));
-					EnableWindow(GetDlgItem(hWnd, IDC_EXP_FACESMGRP), IsDlgButtonChecked(hWnd, IDC_EXP_GEOMETRY));
-					EnableWindow(GetDlgItem(hWnd, IDC_EXP_VCOLORS),  IsDlgButtonChecked(hWnd, IDC_EXP_GEOMETRY));
-					EnableWindow(GetDlgItem(hWnd, IDC_EXP_TEXCOORD),  IsDlgButtonChecked(hWnd, IDC_EXP_GEOMETRY));
-					EnableWindow(GetDlgItem(hWnd, IDC_EXP_MAPCHAN),  IsDlgButtonChecked(hWnd, IDC_EXP_GEOMETRY));
-					EnableWindow(GetDlgItem(hWnd, IDC_EXP_OBJECTSPACE),  IsDlgButtonChecked(hWnd, IDC_EXP_GEOMETRY));
-					break;
-				case IDC_EXP_CONTROLLERS:
-					EnableWindow(GetDlgItem(hWnd, IDC_EXP_CONSTRAINTS), IsDlgButtonChecked(hWnd, IDC_EXP_CONTROLLERS));
-					EnableWindow(GetDlgItem(hWnd, IDC_EXP_SAMPLECONT),  IsDlgButtonChecked(hWnd, IDC_EXP_CONTROLLERS));
-					EnableWindow(GetDlgItem(hWnd, IDC_EXP_QUATERNIONS), IsDlgButtonChecked(hWnd, IDC_EXP_CONTROLLERS));
-					EnableWindow(GetDlgItem(hWnd, IDC_EXP_RELATIVE), IsDlgButtonChecked(hWnd, IDC_EXP_CONTROLLERS));
-					break;
-				case IDC_EXP_MODIFIERS:
-					EnableWindow(GetDlgItem(hWnd, IDC_EXP_SKIN), IsDlgButtonChecked(hWnd, IDC_EXP_MODIFIERS));
-					EnableWindow(GetDlgItem(hWnd, IDC_EXP_GENMOD),  IsDlgButtonChecked(hWnd, IDC_EXP_MODIFIERS));
-
-					break;
-
-				case IDC_EXP_NORMALS:
-					if(exp->igameVersion >= 1.12)
-					{
-						EnableWindow(GetDlgItem(hWnd, IDC_NORMALS_FACE), IsDlgButtonChecked(hWnd, IDC_EXP_NORMALS));
-					}
-					EnableWindow(GetDlgItem(hWnd, IDC_NORMALS_LIST), IsDlgButtonChecked(hWnd, IDC_EXP_NORMALS));
-					break;
-
-				case IDOK:
-					exp->exportGeom = IsDlgButtonChecked(hWnd, IDC_EXP_GEOMETRY);
-					exp->exportNormals = IsDlgButtonChecked(hWnd, IDC_EXP_NORMALS);
-					exp->exportControllers = IsDlgButtonChecked(hWnd, IDC_EXP_CONTROLLERS);
-					exp->exportFaceSmgp = IsDlgButtonChecked(hWnd, IDC_EXP_FACESMGRP);
-					exp->exportVertexColor = IsDlgButtonChecked(hWnd, IDC_EXP_VCOLORS);
-					exp->exportTexCoords = IsDlgButtonChecked(hWnd, IDC_EXP_TEXCOORD);
-					exp->exportMappingChannel = IsDlgButtonChecked(hWnd, IDC_EXP_MAPCHAN);
-					exp->exportMaterials = IsDlgButtonChecked(hWnd, IDC_EXP_MATERIAL);
-					exp->exportSplines = IsDlgButtonChecked(hWnd, IDC_EXP_SPLINES);
-					exp->exportModifiers = IsDlgButtonChecked(hWnd, IDC_EXP_MODIFIERS);
-					exp->forceSample = IsDlgButtonChecked(hWnd, IDC_EXP_SAMPLECONT);
-					exp->exportConstraints = IsDlgButtonChecked(hWnd, IDC_EXP_CONSTRAINTS);
-					exp->exportSkin = IsDlgButtonChecked(hWnd, IDC_EXP_SKIN);
-					exp->exportGenMod = IsDlgButtonChecked(hWnd, IDC_EXP_GENMOD);
-					exp->splitFile = IsDlgButtonChecked(hWnd,IDC_SPLITFILE);
-					exp->exportQuaternions = IsDlgButtonChecked(hWnd,IDC_EXP_QUATERNIONS);
-					exp->exportObjectSpace = IsDlgButtonChecked(hWnd,IDC_EXP_OBJECTSPACE);
-					exp->exportRelative = IsDlgButtonChecked(hWnd,IDC_EXP_RELATIVE);
-					if (IsDlgButtonChecked(hWnd, IDC_COORD_MAX))
-						exp->cS = IGameConversionManager::IGAME_MAX;
-					else if (IsDlgButtonChecked(hWnd, IDC_COORD_OGL))
-						exp->cS = IGameConversionManager::IGAME_OGL;
-					else
-						exp->cS = IGameConversionManager::IGAME_D3D;
+		spin = GetISpinner(GetDlgItem(hWnd, IDC_SAMPLE_FRAME_SPIN));
+		spin->LinkToEdit(GetDlgItem(hWnd, IDC_SAMPLE_FRAME), EDITTYPE_INT);
+		spin->SetLimits(1, 100, TRUE);
+		spin->SetScale(1.0f);
+		spin->SetValue(exp->framePerSample, FALSE);
+		ReleaseISpinner(spin);
+		CheckDlgButton(hWnd, IDC_EXP_GEOMETRY, exp->exportGeom);
+		CheckDlgButton(hWnd, IDC_EXP_NORMALS, exp->exportNormals);
+		CheckDlgButton(hWnd, IDC_EXP_CONTROLLERS, exp->exportControllers);
+		CheckDlgButton(hWnd, IDC_EXP_FACESMGRP, exp->exportFaceSmgp);
+		CheckDlgButton(hWnd, IDC_EXP_VCOLORS, exp->exportVertexColor);
+		CheckDlgButton(hWnd, IDC_EXP_TEXCOORD, exp->exportTexCoords);
+		CheckDlgButton(hWnd, IDC_EXP_MAPCHAN, exp->exportMappingChannel);
+		CheckDlgButton(hWnd, IDC_EXP_MATERIAL, exp->exportMaterials);
+		CheckDlgButton(hWnd, IDC_EXP_SPLINES, exp->exportSplines);
+		CheckDlgButton(hWnd, IDC_EXP_MODIFIERS, exp->exportModifiers);
+		CheckDlgButton(hWnd, IDC_EXP_SAMPLECONT, exp->forceSample);
+		CheckDlgButton(hWnd, IDC_EXP_CONSTRAINTS, exp->exportConstraints);
+		CheckDlgButton(hWnd, IDC_EXP_SKIN, exp->exportSkin);
+		CheckDlgButton(hWnd, IDC_EXP_GENMOD, exp->exportGenMod);
+		CheckDlgButton(hWnd, IDC_SPLITFILE, exp->splitFile);
+		CheckDlgButton(hWnd, IDC_EXP_OBJECTSPACE, exp->exportObjectSpace);
+		CheckDlgButton(hWnd, IDC_EXP_QUATERNIONS, exp->exportQuaternions);
+		CheckDlgButton(hWnd, IDC_EXP_RELATIVE, exp->exportRelative);
 
 
-					exp->exportNormalsPerFace = (IsDlgButtonChecked(hWnd,IDC_NORMALS_LIST))? FALSE : TRUE ;
+		ID = IDC_COORD_MAX + exp->cS;
+		CheckRadioButton(hWnd, IDC_COORD_MAX, IDC_COORD_OGL, ID);
 
-					spin = GetISpinner(GetDlgItem(hWnd, IDC_STATIC_FRAME_SPIN)); 
-					exp->staticFrame = spin->GetIVal(); 
-					ReleaseISpinner(spin);
-					spin = GetISpinner(GetDlgItem(hWnd, IDC_SAMPLE_FRAME_SPIN)); 
-					exp->framePerSample = spin->GetIVal(); 
-					ReleaseISpinner(spin);
-					EndDialog(hWnd, 1);
-					break;
-				case IDCANCEL:
-					EndDialog(hWnd,0);
-					break;
+		ID = IDC_NORMALS_LIST + exp->exportNormalsPerFace;
+		CheckRadioButton(hWnd, IDC_NORMALS_LIST, IDC_NORMALS_FACE, ID);
+
+		EnableWindow(GetDlgItem(hWnd, IDC_EXP_NORMALS), exp->exportGeom);
+		EnableWindow(GetDlgItem(hWnd, IDC_EXP_FACESMGRP), exp->exportGeom);
+		EnableWindow(GetDlgItem(hWnd, IDC_EXP_VCOLORS), exp->exportGeom);
+		EnableWindow(GetDlgItem(hWnd, IDC_EXP_TEXCOORD), exp->exportGeom);
+		EnableWindow(GetDlgItem(hWnd, IDC_EXP_MAPCHAN), exp->exportGeom);
+		EnableWindow(GetDlgItem(hWnd, IDC_EXP_OBJECTSPACE), exp->exportGeom);
+
+		EnableWindow(GetDlgItem(hWnd, IDC_EXP_CONSTRAINTS), exp->exportControllers);
+		EnableWindow(GetDlgItem(hWnd, IDC_EXP_SAMPLECONT), exp->exportControllers);
+		EnableWindow(GetDlgItem(hWnd, IDC_EXP_QUATERNIONS), exp->exportControllers);
+		EnableWindow(GetDlgItem(hWnd, IDC_EXP_RELATIVE), exp->exportControllers);
+
+		EnableWindow(GetDlgItem(hWnd, IDC_EXP_SKIN), exp->exportModifiers);
+		EnableWindow(GetDlgItem(hWnd, IDC_EXP_GENMOD), exp->exportModifiers);
+
+		EnableWindow(GetDlgItem(hWnd, IDC_NORMALS_LIST), exp->exportNormals);
+		EnableWindow(GetDlgItem(hWnd, IDC_NORMALS_FACE), exp->exportNormals);
+
+		//Versioning
+		TCHAR Title[256];
+		_stprintf(Title, _T("IGame Exporter version %.3f; IGame version %.3f"),
+			exp->exporterVersion, exp->igameVersion);
+		SetWindowText(hWnd, Title);
+		return TRUE;
+
+	case WM_COMMAND:
+		switch (LOWORD(wParam)) {
+
+		case IDC_EXP_GEOMETRY:
+			EnableWindow(GetDlgItem(hWnd, IDC_EXP_NORMALS), IsDlgButtonChecked(hWnd, IDC_EXP_GEOMETRY));
+			EnableWindow(GetDlgItem(hWnd, IDC_EXP_FACESMGRP), IsDlgButtonChecked(hWnd, IDC_EXP_GEOMETRY));
+			EnableWindow(GetDlgItem(hWnd, IDC_EXP_VCOLORS), IsDlgButtonChecked(hWnd, IDC_EXP_GEOMETRY));
+			EnableWindow(GetDlgItem(hWnd, IDC_EXP_TEXCOORD), IsDlgButtonChecked(hWnd, IDC_EXP_GEOMETRY));
+			EnableWindow(GetDlgItem(hWnd, IDC_EXP_MAPCHAN), IsDlgButtonChecked(hWnd, IDC_EXP_GEOMETRY));
+			EnableWindow(GetDlgItem(hWnd, IDC_EXP_OBJECTSPACE), IsDlgButtonChecked(hWnd, IDC_EXP_GEOMETRY));
+			break;
+		case IDC_EXP_CONTROLLERS:
+			EnableWindow(GetDlgItem(hWnd, IDC_EXP_CONSTRAINTS), IsDlgButtonChecked(hWnd, IDC_EXP_CONTROLLERS));
+			EnableWindow(GetDlgItem(hWnd, IDC_EXP_SAMPLECONT), IsDlgButtonChecked(hWnd, IDC_EXP_CONTROLLERS));
+			EnableWindow(GetDlgItem(hWnd, IDC_EXP_QUATERNIONS), IsDlgButtonChecked(hWnd, IDC_EXP_CONTROLLERS));
+			EnableWindow(GetDlgItem(hWnd, IDC_EXP_RELATIVE), IsDlgButtonChecked(hWnd, IDC_EXP_CONTROLLERS));
+			break;
+		case IDC_EXP_MODIFIERS:
+			EnableWindow(GetDlgItem(hWnd, IDC_EXP_SKIN), IsDlgButtonChecked(hWnd, IDC_EXP_MODIFIERS));
+			EnableWindow(GetDlgItem(hWnd, IDC_EXP_GENMOD), IsDlgButtonChecked(hWnd, IDC_EXP_MODIFIERS));
+
+			break;
+
+		case IDC_EXP_NORMALS:
+			if (exp->igameVersion >= 1.12)
+			{
+				EnableWindow(GetDlgItem(hWnd, IDC_NORMALS_FACE), IsDlgButtonChecked(hWnd, IDC_EXP_NORMALS));
 			}
-		
-		default:
-			return FALSE;
-	
+			EnableWindow(GetDlgItem(hWnd, IDC_NORMALS_LIST), IsDlgButtonChecked(hWnd, IDC_EXP_NORMALS));
+			break;
+
+		case IDOK:
+			exp->exportGeom = IsDlgButtonChecked(hWnd, IDC_EXP_GEOMETRY);
+			exp->exportNormals = IsDlgButtonChecked(hWnd, IDC_EXP_NORMALS);
+			exp->exportControllers = IsDlgButtonChecked(hWnd, IDC_EXP_CONTROLLERS);
+			exp->exportFaceSmgp = IsDlgButtonChecked(hWnd, IDC_EXP_FACESMGRP);
+			exp->exportVertexColor = IsDlgButtonChecked(hWnd, IDC_EXP_VCOLORS);
+			exp->exportTexCoords = IsDlgButtonChecked(hWnd, IDC_EXP_TEXCOORD);
+			exp->exportMappingChannel = IsDlgButtonChecked(hWnd, IDC_EXP_MAPCHAN);
+			exp->exportMaterials = IsDlgButtonChecked(hWnd, IDC_EXP_MATERIAL);
+			exp->exportSplines = IsDlgButtonChecked(hWnd, IDC_EXP_SPLINES);
+			exp->exportModifiers = IsDlgButtonChecked(hWnd, IDC_EXP_MODIFIERS);
+			exp->forceSample = IsDlgButtonChecked(hWnd, IDC_EXP_SAMPLECONT);
+			exp->exportConstraints = IsDlgButtonChecked(hWnd, IDC_EXP_CONSTRAINTS);
+			exp->exportSkin = IsDlgButtonChecked(hWnd, IDC_EXP_SKIN);
+			exp->exportGenMod = IsDlgButtonChecked(hWnd, IDC_EXP_GENMOD);
+			exp->splitFile = IsDlgButtonChecked(hWnd, IDC_SPLITFILE);
+			exp->exportQuaternions = IsDlgButtonChecked(hWnd, IDC_EXP_QUATERNIONS);
+			exp->exportObjectSpace = IsDlgButtonChecked(hWnd, IDC_EXP_OBJECTSPACE);
+			exp->exportRelative = IsDlgButtonChecked(hWnd, IDC_EXP_RELATIVE);
+			if (IsDlgButtonChecked(hWnd, IDC_COORD_MAX))
+				exp->cS = IGameConversionManager::IGAME_MAX;
+			else if (IsDlgButtonChecked(hWnd, IDC_COORD_OGL))
+				exp->cS = IGameConversionManager::IGAME_OGL;
+			else
+				exp->cS = IGameConversionManager::IGAME_D3D;
+
+
+			exp->exportNormalsPerFace = (IsDlgButtonChecked(hWnd, IDC_NORMALS_LIST)) ? FALSE : TRUE;
+
+			spin = GetISpinner(GetDlgItem(hWnd, IDC_STATIC_FRAME_SPIN));
+			exp->staticFrame = spin->GetIVal();
+			ReleaseISpinner(spin);
+			spin = GetISpinner(GetDlgItem(hWnd, IDC_SAMPLE_FRAME_SPIN));
+			exp->framePerSample = spin->GetIVal();
+			ReleaseISpinner(spin);
+			EndDialog(hWnd, 1);
+			break;
+		case IDCANCEL:
+			EndDialog(hWnd, 0);
+			break;
+		}
+
+	default:
+		return FALSE;
+
 	}
 	return TRUE;
-	
+
 }
 
 // Replace some characters we don't care for.
-TCHAR *FixupName (TCHAR *buf)
+TCHAR *FixupName(TCHAR *buf)
 {
 	static TCHAR buffer[256];
 	TCHAR* cPtr;
 
-    _tcscpy(buffer, buf);
-    cPtr = buffer;
+	_tcscpy(buffer, buf);
+	cPtr = buffer;
 
-    while(*cPtr) {
+	while (*cPtr) {
 		if (*cPtr == _T('"')) *cPtr = 39;	// Replace double-quote with single quote.
-        else if (*cPtr <= 31) *cPtr = _T('_');	// Replace control characters with underscore
-        cPtr++;
-    }
+		else if (*cPtr <= 31) *cPtr = _T('_');	// Replace control characters with underscore
+		cPtr++;
+	}
 
 	return buffer;
 }
@@ -409,14 +404,14 @@ IGameExporter::IGameExporter()
 	exportRelative = FALSE;
 	exportNormalsPerFace = FALSE;
 	exporterVersion = 2.0f;
-	
+
 }
 
-IGameExporter::~IGameExporter() 
+IGameExporter::~IGameExporter()
 {
 	rootNode.Release();
 	iGameNode.Release();
-    pRoot.Release(); 
+	pRoot.Release();
 	pXMLDoc.Release();
 }
 
@@ -427,7 +422,7 @@ int IGameExporter::ExtCount()
 }
 
 const TCHAR *IGameExporter::Ext(int n)
-{		
+{
 	//TODO: Return the 'i-th' file name extension (i.e. "3DS").
 	return _T("model");
 }
@@ -437,45 +432,45 @@ const TCHAR *IGameExporter::LongDesc()
 	//TODO: Return long ASCII description (i.e. "Targa 2.0 Image File")
 	return _T("lives2d anim model file");
 }
-	
-const TCHAR *IGameExporter::ShortDesc() 
-{			
+
+const TCHAR *IGameExporter::ShortDesc()
+{
 	//TODO: Return short ASCII description (i.e. "Targa")
 	return _T("lives2d anim model file");
 }
 
 const TCHAR *IGameExporter::AuthorName()
-{			
+{
 	//TODO: Return ASCII Author name
 	return _T("Neil Hazzard");
 }
 
-const TCHAR *IGameExporter::CopyrightMessage() 
-{	
+const TCHAR *IGameExporter::CopyrightMessage()
+{
 	// Return ASCII Copyright message
 	return _T("");
 }
 
-const TCHAR *IGameExporter::OtherMessage1() 
-{		
+const TCHAR *IGameExporter::OtherMessage1()
+{
 	//TODO: Return Other message #1 if any
 	return _T("");
 }
 
-const TCHAR *IGameExporter::OtherMessage2() 
-{		
+const TCHAR *IGameExporter::OtherMessage2()
+{
 	//TODO: Return other message #2 in any
 	return _T("");
 }
 
 unsigned int IGameExporter::Version()
-{				
+{
 	//TODO: Return Version number * 100 (i.e. v3.01 = 301)
-	return exporterVersion*100;
+	return exporterVersion * 100;
 }
 
 void IGameExporter::ShowAbout(HWND hWnd)
-{			
+{
 	// Optional
 }
 
@@ -486,15 +481,6 @@ BOOL IGameExporter::SupportsOptions(int ext, DWORD options)
 	// the exporter supports.
 
 	return TRUE;
-}
-
-
-void IGameExporter::MakeSplitFilename(IGameNode * node, TSTR & buf)
-{
-	buf =  splitPath;
-	buf += _T("\\");
-	buf += fileName + _T("_") + node->GetName() + _T(".xml");
-	
 }
 
 
@@ -513,7 +499,7 @@ public:
 	void ErrorProc(IGameError error)
 	{
 		const TCHAR * buf = GetLastIGameErrorText();
-		DebugPrint(_T("ErrorCode = %d ErrorText = %s\n"), error,buf);
+		DebugPrint(_T("ErrorCode = %d ErrorText = %s\n"), error, buf);
 	}
 };
 
@@ -566,7 +552,7 @@ std::wstring Ansi2WChar(LPCSTR pszSrc, int nLen)
 
 std::wstring s2ws(const string& s) { return Ansi2WChar(s.c_str(), s.size()); }
 
-void IGameExporter::ExportMesh(IGameMesh* varGameMesh,const wchar_t* varNodeName)
+void IGameExporter::ExportMesh(IGameMesh* varGameMesh, const wchar_t* varNodeName)
 {
 	vector<Vertex> tmpVectorVertex;
 	vector<int> tmpVectorIndices;
@@ -583,11 +569,6 @@ void IGameExporter::ExportMesh(IGameMesh* varGameMesh,const wchar_t* varNodeName
 
 	map<IGameMaterial*, vector<int>> tmpMapMaterial;//存储材质与顶点的关系
 
-	
-
-	
-
-
 	IGameMesh* tmpGameMesh = varGameMesh;
 	tmpGameMesh->GetMaxMesh()->buildNormals();
 
@@ -597,7 +578,7 @@ void IGameExporter::ExportMesh(IGameMesh* varGameMesh,const wchar_t* varNodeName
 	}
 
 	int tmpVertexCount = tmpGameMesh->GetNumberOfVerts();
-	for (int tmpVertexIndex = 0; tmpVertexIndex<tmpVertexCount; tmpVertexIndex++)
+	for (int tmpVertexIndex = 0; tmpVertexIndex < tmpVertexCount; tmpVertexIndex++)
 	{
 		Vertex tmpVertex;
 		tmpVectorVertex.push_back(tmpVertex);
@@ -605,11 +586,11 @@ void IGameExporter::ExportMesh(IGameMesh* varGameMesh,const wchar_t* varNodeName
 
 	int tmpFaceCount = tmpGameMesh->GetNumberOfFaces();
 
-	for (int tmpFaceIndex = 0; tmpFaceIndex<tmpFaceCount; tmpFaceIndex++)
+	for (int tmpFaceIndex = 0; tmpFaceIndex < tmpFaceCount; tmpFaceIndex++)
 	{
 		FaceEx* tmpFaceEx = tmpGameMesh->GetFace(tmpFaceIndex);
 
-		for (int tmpFaceVertexIndex = 0; tmpFaceVertexIndex<3; tmpFaceVertexIndex++)
+		for (int tmpFaceVertexIndex = 0; tmpFaceVertexIndex < 3; tmpFaceVertexIndex++)
 		{
 			//顶点
 			Vertex tmpVertex;
@@ -673,7 +654,7 @@ void IGameExporter::ExportMesh(IGameMesh* varGameMesh,const wchar_t* varNodeName
 
 	//判断有没有修改器，有修改器的就是骨骼动画
 	int tmpModifiersNum = tmpGameMesh->GetNumModifiers();
-	for (int tmpModifierIndex = 0; tmpModifierIndex<tmpModifiersNum; tmpModifierIndex++)
+	for (int tmpModifierIndex = 0; tmpModifierIndex < tmpModifiersNum; tmpModifierIndex++)
 	{
 		IGameModifier* tmpGameModifier = tmpGameMesh->GetIGameModifier(tmpModifierIndex);
 
@@ -688,13 +669,13 @@ void IGameExporter::ExportMesh(IGameMesh* varGameMesh,const wchar_t* varNodeName
 			int tmpNumOfSkinnedVerts = tmpGameSkin->GetNumOfSkinnedVerts();
 
 			//获取顶点受骨骼影响数
-			for (int tmpVertexIndex = 0; tmpVertexIndex<tmpVectorVertex.size(); tmpVertexIndex++)
+			for (int tmpVertexIndex = 0; tmpVertexIndex < tmpVectorVertex.size(); tmpVertexIndex++)
 			{
 				int tmpNumberOfBoneOnVertex = tmpGameSkin->GetNumberOfBones(tmpVertexIndex);
 
 
 				map<int, float> tmpMapWeightOneVertex;
-				for (int tmpBoneIndexOnVertex = 0; tmpBoneIndexOnVertex<tmpNumberOfBoneOnVertex; tmpBoneIndexOnVertex++)
+				for (int tmpBoneIndexOnVertex = 0; tmpBoneIndexOnVertex < tmpNumberOfBoneOnVertex; tmpBoneIndexOnVertex++)
 				{
 					//获取当前顶点的骨骼
 					IGameNode* tmpGameNodeBone = tmpGameSkin->GetIGameBone(tmpVertexIndex, tmpBoneIndexOnVertex);
@@ -704,7 +685,7 @@ void IGameExporter::ExportMesh(IGameMesh* varGameMesh,const wchar_t* varNodeName
 					}
 					bool tmpContais = false;
 					int tmpGameNodeBoneIndex = 0;
-					for (tmpGameNodeBoneIndex = 0; tmpGameNodeBoneIndex<tmpVectorGameNodeBones.size(); tmpGameNodeBoneIndex++)
+					for (tmpGameNodeBoneIndex = 0; tmpGameNodeBoneIndex < tmpVectorGameNodeBones.size(); tmpGameNodeBoneIndex++)
 					{
 						if (tmpVectorGameNodeBones[tmpGameNodeBoneIndex] == tmpGameNodeBone)
 						{
@@ -727,7 +708,7 @@ void IGameExporter::ExportMesh(IGameMesh* varGameMesh,const wchar_t* varNodeName
 			}
 
 			//获取第0帧骨骼逆矩阵
-			for (int tmpGameNodeBoneIndex = 0; tmpGameNodeBoneIndex<tmpVectorGameNodeBones.size(); tmpGameNodeBoneIndex++)
+			for (int tmpGameNodeBoneIndex = 0; tmpGameNodeBoneIndex < tmpVectorGameNodeBones.size(); tmpGameNodeBoneIndex++)
 			{
 				INode* tmpNodeBone = tmpVectorGameNodeBones[tmpGameNodeBoneIndex]->GetMaxNode();
 				Matrix3 tmpMatrix3NodeBone = tmpNodeBone->GetObjTMAfterWSM(0);
@@ -753,7 +734,7 @@ void IGameExporter::ExportMesh(IGameMesh* varGameMesh,const wchar_t* varNodeName
 			for (; tmpTimeValueBegin <= tmpTimeValueEnd; tmpTimeValueBegin += tmpTimeValueTicks)
 			{
 				vector<GMatrix> tmpVectorBoneGMatrix;
-				for (int tmpGameNodeBoneIndex = 0; tmpGameNodeBoneIndex<tmpVectorGameNodeBones.size(); tmpGameNodeBoneIndex++)
+				for (int tmpGameNodeBoneIndex = 0; tmpGameNodeBoneIndex < tmpVectorGameNodeBones.size(); tmpGameNodeBoneIndex++)
 				{
 					INode* tmpNodeBone = tmpVectorGameNodeBones[tmpGameNodeBoneIndex]->GetMaxNode();
 					Matrix3 tmpMatrix3NodeBone = tmpNodeBone->GetObjTMAfterWSM(tmpTimeValueBegin);
@@ -769,294 +750,351 @@ void IGameExporter::ExportMesh(IGameMesh* varGameMesh,const wchar_t* varNodeName
 	}
 
 
-	//拆分mesh和anim文件
+	//Export
 	wstring tmpExportFullPath(mName);
 	std::size_t tmpFind = tmpExportFullPath.find_last_of(L".");
 
-
-
-	string tmpExportMeshPath;
-	string tmpExportAnimPath;
-
-
-	char tmpMeshFilePath[100];
-	char tmpAnimFilePath[100];
-	tmpExportMeshPath = ws2s(tmpExportFullPath.substr(0, tmpFind) + L"_%s.mesh");
-	tmpExportAnimPath = ws2s(tmpExportFullPath.substr(0, tmpFind) + L"_%s.anim");
-
-	const wchar_t* tmpNodeName_w= varNodeName;
+	const wchar_t* tmpNodeName_w = varNodeName;
 	wstring tmpNodeName_wstr(tmpNodeName_w);
 	std::string tmpNodeName = ws2s(tmpNodeName_wstr);
 
-	sprintf(tmpMeshFilePath, tmpExportMeshPath.c_str(), tmpNodeName.c_str());
-	tmpExportMeshPath = tmpMeshFilePath;
+	/*Split Mesh 65535*/
+	vector<vector<int>> tmpVectorIndicesAllPart;
+	vector<vector<unsigned short>> tmpVectorIndicesAllPartNew;
 
-	sprintf(tmpAnimFilePath, tmpExportAnimPath.c_str(), tmpNodeName.c_str());
-	tmpExportAnimPath = tmpAnimFilePath;
-
-
-	//写文件
-	ofstream tmpOfStreamMesh(tmpExportMeshPath, ios::binary);
-	ofstream tmpOfStreamAnim(tmpExportAnimPath, ios::binary);
-
-
-	char tmpMaterialFilePath[100];
-	sprintf(tmpMaterialFilePath, ws2s(tmpExportFullPath.substr(0, tmpFind) + L"_%s.material").c_str(), tmpNodeName.c_str());
-	ofstream foutMaterial(tmpMaterialFilePath);
-
-	//写入mesh count;
-	int meshcount = 1;
-	tmpOfStreamMesh.write((char*)(&meshcount), sizeof(meshcount));
-
-
-	for (size_t meshindex = 0; meshindex < 1; meshindex++)
+	//原始Indices 可能>65535
+	int tmpIndicesWrite = 0;
+	while (tmpIndicesWrite < tmpVectorIndices.size())
 	{
-
-
-		int vertexsize = sizeof(Vertex) * tmpVectorVertex.size();
-
-		int indicessize = sizeof(int)* tmpVectorIndices.size();
-
-		int texturesize = (sizeof(Texture))* tmpTextureSize;
-
-
-		/*对高模进行Mesh拆分,以65535为max值,unsigned short作为存储.*/
-		vector<vector<unsigned short>> tmpVectorIndicesAllPart;
-
-		int tmpIndicesWrite = 0;
-		while (tmpIndicesWrite<tmpVectorIndices.size())
+		vector<int> tmpVectorIndicesWrite;
+		while (tmpVectorIndicesWrite.size() < 65535)
 		{
-			vector<unsigned short> tmpVectorIndicesWrite;
-			while (tmpVectorIndicesWrite.size()<65535)
+			tmpVectorIndicesWrite.push_back(tmpVectorIndices[tmpIndicesWrite]);
+
+			tmpIndicesWrite++;
+
+			if (tmpIndicesWrite >= tmpVectorIndices.size())
 			{
-				int tmpIndex = tmpVectorIndicesWrite.size();
-				tmpVectorIndicesWrite.push_back((unsigned short)tmpVectorIndices[tmpIndex]);
-			}
-
-			tmpVectorIndicesAllPart.push_back(tmpVectorIndicesWrite);
-		}
-
-
-		for (size_t tmpVectorIndicesPartIndex = 0; tmpVectorIndicesPartIndex < tmpVectorIndicesAllPart.size(); tmpVectorIndicesPartIndex++)
-		{
-			vector<unsigned short>& tmpVectorIndicesOnePart = tmpVectorIndicesAllPart[tmpVectorIndicesPartIndex];
-
-			vector<Vertex&> tmpVectorVertexOnePart;
-			vector<unsigned short> tmpVectorIndicesOnePartOnlyOne;
-			for (size_t i = 0; i < tmpVectorIndicesOnePart.size(); i++)
-			{
-				int tmpVertexIndex = tmpVectorIndicesOnePart[i];
-
-				bool tmpFind = false;
-				for (size_t tmpVectorIndicesOnePartOnlyOneIndex = 0; tmpVectorIndicesOnePartOnlyOneIndex < tmpVectorIndicesOnePartOnlyOne.size() ; tmpVectorIndicesOnePartOnlyOneIndex++)
-				{
-					if (tmpVectorIndicesOnePartOnlyOne[tmpVectorIndicesOnePartOnlyOneIndex] == tmpVertexIndex)
-					{
-						tmpFind = true;
-						break;
-					}
-				}
-
-				if (tmpFind == false)
-				{
-					Vertex& tmpVertex = tmpVectorVertex[tmpVertexIndex];
-					tmpVectorVertexOnePart.push_back(tmpVertex);
-				}
-			}
-
-			//写入vertexsize;
-			int tmpVectorVertexOnePartMemorySize= sizeof(Vertex) * tmpVectorVertexOnePart.size();
-			tmpOfStreamMesh.write((char*)(&tmpVectorVertexOnePartMemorySize), sizeof(tmpVectorVertexOnePartMemorySize));
-
-			//写入vertex数据;
-			for (size_t vertexindex = 0; vertexindex < tmpVectorVertexOnePart.size(); vertexindex++)
-			{
-				tmpOfStreamMesh.write((char*)(&tmpVectorVertexOnePart[vertexindex]), sizeof(tmpVectorVertexOnePart[vertexindex]));
-			}
-
-			//写入indicessize;
-			int tmpVectorIndicesOnePartMemorySize = sizeof(unsigned short)*tmpVectorIndicesOnePart.size();
-			tmpOfStreamMesh.write((char*)(&tmpVectorIndicesOnePartMemorySize), sizeof(tmpVectorIndicesOnePartMemorySize));
-
-			//写入indicess数据;
-			for (size_t indexindex = 0; indexindex < tmpVectorIndicesOnePart.size(); indexindex++)
-			{
-				tmpOfStreamMesh.write((char*)(&tmpVectorIndicesOnePart[indexindex]), sizeof(tmpVectorIndicesOnePart[indexindex]));
-			}
-
-
-
-
-
-			int tmpMaterialCount = tmpMapMaterial.size();
-			tmpOfStreamMesh.write((char*)(&tmpMaterialCount), sizeof(tmpMaterialCount));
-
-			for (std::map<IGameMaterial*, vector<int>>::iterator tmpIterBegin = tmpMapMaterial.begin(); tmpIterBegin != tmpMapMaterial.end(); tmpIterBegin++)
-			{
-				IGameMaterial* tmpGameMaterial = tmpIterBegin->first;
-				string tmpMaterialName = WChar2Ansi(tmpGameMaterial->GetMaterialName());
-
-				unsigned char tmpMaterialNameSize = tmpMaterialName.size() + 1;
-				tmpOfStreamMesh.write((char*)(&tmpMaterialNameSize), sizeof(tmpMaterialNameSize));
-				tmpOfStreamMesh.write((char*)(tmpMaterialName.c_str()), tmpMaterialNameSize);
-
-				unsigned char tmpNumberOfTextureMaps = tmpGameMaterial->GetNumberOfTextureMaps();		//how many texture of the material
-				tmpOfStreamMesh.write((char*)(&tmpNumberOfTextureMaps), sizeof(tmpNumberOfTextureMaps));
-
-				for (int tmpTextureMapIndex = 0; tmpTextureMapIndex<tmpNumberOfTextureMaps; tmpTextureMapIndex++)
-				{
-					IGameTextureMap* tmpGameTextureMap = tmpGameMaterial->GetIGameTextureMap(tmpTextureMapIndex);
-					if (tmpGameTextureMap != NULL)
-					{
-						//文件路径						
-						string tmpBitmapPath = WChar2Ansi(tmpGameTextureMap->GetBitmapFileName());
-
-						//文件名
-						int tmpLastCharPosition = tmpBitmapPath.find_last_of('\\');
-						string tmpBitmapName(tmpBitmapPath.substr(tmpLastCharPosition + 1));
-						unsigned char tmpBitmapNameSize = tmpBitmapName.size() + 1;
-						tmpOfStreamMesh.write((char*)(&tmpBitmapNameSize), sizeof(tmpBitmapNameSize));
-						tmpOfStreamMesh.write((char*)(tmpBitmapName.c_str()), tmpBitmapNameSize);
-
-						//获取UV的Tilling和Offset值
-						IGameUVGen* tmpGameUVGen = tmpGameTextureMap->GetIGameUVGen();
-						std::string tmpTextureClass = WChar2Ansi(tmpGameTextureMap->GetTextureClass());
-						transform(tmpTextureClass.begin(), tmpTextureClass.end(), tmpTextureClass.begin(), toupper);
-
-						if (strcmp(tmpTextureClass.c_str(), "BITMAP") != 0)
-						{
-							continue;
-						}
-
-						IGameProperty* tmpGamePropertyUTiling = tmpGameUVGen->GetUTilingData();
-						float tmpUTilingValue = 0.0f;
-						if (tmpGamePropertyUTiling->GetPropertyValue(tmpUTilingValue))
-						{
-							tmpOfStreamMesh.write((char*)(&tmpUTilingValue), sizeof(tmpUTilingValue));
-						}
-
-						IGameProperty* tmpGamePropertyVTiling = tmpGameUVGen->GetVTilingData();
-						float tmpVTilingValue = 0.0f;
-						if (tmpGamePropertyVTiling->GetPropertyValue(tmpVTilingValue))
-						{
-							tmpOfStreamMesh.write((char*)(&tmpVTilingValue), sizeof(tmpVTilingValue));
-						}
-
-						IGameProperty* tmpGamePropertyUOffset = tmpGameUVGen->GetUOffsetData();
-						float tmpUOffsetValue = 0.0f;
-						if (tmpGamePropertyUOffset->GetPropertyValue(tmpUOffsetValue))
-						{
-							tmpOfStreamMesh.write((char*)(&tmpUOffsetValue), sizeof(tmpUOffsetValue));
-						}
-
-						IGameProperty* tmpGamePropertyVOffset = tmpGameUVGen->GetVOffsetData();
-						float tmpVOffsetValue = 0.0f;
-						if (tmpGamePropertyVOffset->GetPropertyValue(tmpVOffsetValue))
-						{
-							tmpOfStreamMesh.write((char*)(&tmpVOffsetValue), sizeof(tmpVOffsetValue));
-						}
-
-					}
-				}
-
-				std::vector<int> tmpVectorVertexIndex;
-				for (size_t tmpVectorVertexInMaterialIndex = 0; tmpVectorVertexInMaterialIndex<tmpIterBegin->second.size(); tmpVectorVertexInMaterialIndex++)
-				{
-					{
-						tmpVectorVertexIndex.push_back(tmpIterBegin->second[tmpVectorVertexInMaterialIndex]);
-					}
-				}
-
-				int tmpVertexSizeInMaterial = tmpVectorVertexIndex.size();
-				tmpOfStreamMesh.write((char*)(&tmpVertexSizeInMaterial), sizeof(tmpVertexSizeInMaterial));
-
-				for (size_t tmpVectorIndex = 0; tmpVectorIndex<tmpVectorVertexIndex.size(); tmpVectorIndex++)
-				{
-					int tmpVertexIndex = tmpVectorVertexIndex[tmpVectorIndex];
-					tmpOfStreamMesh.write((char*)(&tmpVertexIndex), sizeof(tmpVertexIndex));
-				}
+				break;
 			}
 		}
 
-		//Materials
-		foutMaterial << "Materials:" << endl;
+		tmpVectorIndicesAllPart.push_back(tmpVectorIndicesWrite);
+	}
+
+
+	for (size_t tmpVectorIndicesPartIndex = 0; tmpVectorIndicesPartIndex < tmpVectorIndicesAllPart.size(); tmpVectorIndicesPartIndex++)
+	{
+		wstring tmpExportFullPath(mName);
+		std::size_t tmpFind = tmpExportFullPath.find_last_of(L".");
+
+		string tmpExportMeshPath;
+
+		char tmpMeshFilePath[100];
+		tmpExportMeshPath = ws2s(tmpExportFullPath.substr(0, tmpFind) + L"_%s_%d.mesh");
+
+
+		sprintf(tmpMeshFilePath, tmpExportMeshPath.c_str(), tmpNodeName.c_str(), tmpVectorIndicesPartIndex);
+		tmpExportMeshPath = tmpMeshFilePath;
+
+		//写文件
+		ofstream tmpOfStreamMesh(tmpExportMeshPath, ios::binary);
+
+		vector<int>& tmpVectorIndicesOnePart = tmpVectorIndicesAllPart[tmpVectorIndicesPartIndex];
+
+		vector<Vertex> tmpVectorVertexOnePart;
+		vector<int> tmpVectorIndicesOnePartOnlyOne;
+
+		std::map<int, unsigned short> tmpMapIndicesOldToNew;
+
+		for (size_t i = 0; i < tmpVectorIndicesOnePart.size(); i++)
+		{
+			int tmpVertexIndex = tmpVectorIndicesOnePart[i];
+
+			auto tmpIter = std::find(tmpVectorIndicesOnePartOnlyOne.begin(), tmpVectorIndicesOnePartOnlyOne.end(), tmpVertexIndex);
+			if (tmpIter == tmpVectorIndicesOnePartOnlyOne.end())
+			{
+				tmpVectorIndicesOnePartOnlyOne.push_back(tmpVertexIndex);
+
+				Vertex& tmpVertex = tmpVectorVertex[tmpVertexIndex];
+				tmpVectorVertexOnePart.push_back(tmpVertex);
+
+				tmpMapIndicesOldToNew[tmpVertexIndex]= tmpVectorVertexOnePart.size() - 1;
+			}
+		}
+
+		vector<unsigned short> tmpVectorIndicesOnePartNew;
+		for (size_t i = 0; i < tmpVectorIndicesOnePart.size(); i++)
+		{
+			int tmpVertexIndex = tmpVectorIndicesOnePart[i];
+
+			auto tmpIter = tmpMapIndicesOldToNew.find(tmpVertexIndex);
+			if (tmpIter != tmpMapIndicesOldToNew.end())
+			{
+				int tmpVertexIndexNew = tmpMapIndicesOldToNew[tmpVertexIndex];
+				tmpVectorIndicesOnePartNew.push_back(tmpVertexIndexNew);
+			}
+		}
+
+		//写入vertexsize;
+		int tmpVectorVertexOnePartMemorySize = sizeof(Vertex) * tmpVectorVertexOnePart.size();
+		tmpOfStreamMesh.write((char*)(&tmpVectorVertexOnePartMemorySize), sizeof(tmpVectorVertexOnePartMemorySize));
+
+		//写入vertex数据;
+		for (size_t vertexindex = 0; vertexindex < tmpVectorVertexOnePart.size(); vertexindex++)
+		{
+			tmpOfStreamMesh.write((char*)(&tmpVectorVertexOnePart[vertexindex]), sizeof(tmpVectorVertexOnePart[vertexindex]));
+		}
+
+		//写入indicessize;
+		int tmpVectorIndicesOnePartMemorySize = sizeof(unsigned short)*tmpVectorIndicesOnePartNew.size();
+		tmpOfStreamMesh.write((char*)(&tmpVectorIndicesOnePartMemorySize), sizeof(tmpVectorIndicesOnePartMemorySize));
+
+		//写入indicess数据;
+		for (size_t indexindex = 0; indexindex < tmpVectorIndicesOnePartNew.size(); indexindex++)
+		{
+			tmpOfStreamMesh.write((char*)(&tmpVectorIndicesOnePartNew[indexindex]), sizeof(tmpVectorIndicesOnePartNew[indexindex]));
+		}
+
+		int tmpMaterialCount = tmpMapMaterial.size();
+		tmpOfStreamMesh.write((char*)(&tmpMaterialCount), sizeof(tmpMaterialCount));
+
 		for (std::map<IGameMaterial*, vector<int>>::iterator tmpIterBegin = tmpMapMaterial.begin(); tmpIterBegin != tmpMapMaterial.end(); tmpIterBegin++)
 		{
 			IGameMaterial* tmpGameMaterial = tmpIterBegin->first;
 			string tmpMaterialName = WChar2Ansi(tmpGameMaterial->GetMaterialName());
 
-			foutMaterial << tmpMaterialName << endl;
+			unsigned char tmpMaterialNameSize = tmpMaterialName.size() + 1;
+			tmpOfStreamMesh.write((char*)(&tmpMaterialNameSize), sizeof(tmpMaterialNameSize));
+			tmpOfStreamMesh.write((char*)(tmpMaterialName.c_str()), tmpMaterialNameSize);
 
 			unsigned char tmpNumberOfTextureMaps = tmpGameMaterial->GetNumberOfTextureMaps();		//how many texture of the material
-			foutMaterial << "Texture Count:" << (int)tmpNumberOfTextureMaps << endl;
+			tmpOfStreamMesh.write((char*)(&tmpNumberOfTextureMaps), sizeof(tmpNumberOfTextureMaps));
 
-			for (int tmpTextureMapIndex = 0; tmpTextureMapIndex<tmpNumberOfTextureMaps; tmpTextureMapIndex++)
+			for (int tmpTextureMapIndex = 0; tmpTextureMapIndex < tmpNumberOfTextureMaps; tmpTextureMapIndex++)
 			{
 				IGameTextureMap* tmpGameTextureMap = tmpGameMaterial->GetIGameTextureMap(tmpTextureMapIndex);
 				if (tmpGameTextureMap != NULL)
 				{
 					//文件路径						
 					string tmpBitmapPath = WChar2Ansi(tmpGameTextureMap->GetBitmapFileName());
-					foutMaterial << "Texture BitmapPath:" << tmpBitmapPath << endl;
 
-					//拷贝图片到导出目录
-					wstring tmpBitmapPathW = tmpGameTextureMap->GetBitmapFileName();
-					wstring tmpBitmapNameW = tmpBitmapPathW.substr(tmpBitmapPathW.find_last_of('\\') + 1);
-					wstring tmpBitmapExportPathW = tmpExportFullPath.substr(0, tmpExportFullPath.find_last_of(L"\\") + 1) + tmpBitmapNameW;
-					CopyFile(tmpGameTextureMap->GetBitmapFileName(), tmpBitmapExportPathW.c_str(), FALSE);
+					//文件名
+					int tmpLastCharPosition = tmpBitmapPath.find_last_of('\\');
+					string tmpBitmapName(tmpBitmapPath.substr(tmpLastCharPosition + 1));
+					unsigned char tmpBitmapNameSize = tmpBitmapName.size() + 1;
+					tmpOfStreamMesh.write((char*)(&tmpBitmapNameSize), sizeof(tmpBitmapNameSize));
+					tmpOfStreamMesh.write((char*)(tmpBitmapName.c_str()), tmpBitmapNameSize);
+
+					//获取UV的Tilling和Offset值
+					IGameUVGen* tmpGameUVGen = tmpGameTextureMap->GetIGameUVGen();
+					std::string tmpTextureClass = WChar2Ansi(tmpGameTextureMap->GetTextureClass());
+					transform(tmpTextureClass.begin(), tmpTextureClass.end(), tmpTextureClass.begin(), toupper);
+
+					if (strcmp(tmpTextureClass.c_str(), "BITMAP") != 0)
+					{
+						continue;
+					}
+
+					IGameProperty* tmpGamePropertyUTiling = tmpGameUVGen->GetUTilingData();
+					float tmpUTilingValue = 0.0f;
+					if (tmpGamePropertyUTiling->GetPropertyValue(tmpUTilingValue))
+					{
+						tmpOfStreamMesh.write((char*)(&tmpUTilingValue), sizeof(tmpUTilingValue));
+					}
+
+					IGameProperty* tmpGamePropertyVTiling = tmpGameUVGen->GetVTilingData();
+					float tmpVTilingValue = 0.0f;
+					if (tmpGamePropertyVTiling->GetPropertyValue(tmpVTilingValue))
+					{
+						tmpOfStreamMesh.write((char*)(&tmpVTilingValue), sizeof(tmpVTilingValue));
+					}
+
+					IGameProperty* tmpGamePropertyUOffset = tmpGameUVGen->GetUOffsetData();
+					float tmpUOffsetValue = 0.0f;
+					if (tmpGamePropertyUOffset->GetPropertyValue(tmpUOffsetValue))
+					{
+						tmpOfStreamMesh.write((char*)(&tmpUOffsetValue), sizeof(tmpUOffsetValue));
+					}
+
+					IGameProperty* tmpGamePropertyVOffset = tmpGameUVGen->GetVOffsetData();
+					float tmpVOffsetValue = 0.0f;
+					if (tmpGamePropertyVOffset->GetPropertyValue(tmpVOffsetValue))
+					{
+						tmpOfStreamMesh.write((char*)(&tmpVOffsetValue), sizeof(tmpVOffsetValue));
+					}
 				}
 			}
 		}
+	}
 
-		tmpOfStreamMesh.close();
-		tmpOfStreamAnim.close();
-		foutMaterial.close();
-		return;
+	/*Material*/
+	char tmpMaterialFilePath[100];
+	sprintf(tmpMaterialFilePath, ws2s(tmpExportFullPath.substr(0, tmpFind) + L"_%s.material").c_str(), tmpNodeName.c_str());
+	ofstream foutMaterial(tmpMaterialFilePath);
 
+	foutMaterial << "Materials:" << endl;
+	for (std::map<IGameMaterial*, vector<int>>::iterator tmpIterBegin = tmpMapMaterial.begin(); tmpIterBegin != tmpMapMaterial.end(); tmpIterBegin++)
+	{
+		IGameMaterial* tmpGameMaterial = tmpIterBegin->first;
+		string tmpMaterialName = WChar2Ansi(tmpGameMaterial->GetMaterialName());
 
-		
+		foutMaterial << tmpMaterialName << endl;
 
-		//-----------------------------------------------------------------------------------------------------------------
+		unsigned char tmpNumberOfTextureMaps = tmpGameMaterial->GetNumberOfTextureMaps();		//how many texture of the material
+		foutMaterial << "Texture Count:" << (int)tmpNumberOfTextureMaps << endl;
 
-
-		//写入骨骼数据
-		TimeValue tmpTimeValueBegin = mGameScene->GetSceneStartTime();
-		TimeValue tmpTimeValueEnd = mGameScene->GetSceneEndTime();
-		TimeValue tmpTimeValueTicks = mGameScene->GetSceneTicks();
-		int tmpFrameCount = (tmpTimeValueEnd - tmpTimeValueBegin) / tmpTimeValueTicks;
-		tmpFrameCount = tmpFrameCount + 1;
-		tmpOfStreamAnim.write((char*)(&tmpFrameCount), sizeof(tmpFrameCount));
-
-		tmpOfStreamAnim.write((char*)(&tmpTimeValueTicks), sizeof(tmpTimeValueTicks));
-
-
-		int tmpGameNodeBoneSize = tmpVectorGameNodeBones.size();
-		tmpOfStreamAnim.write((char*)(&tmpGameNodeBoneSize), sizeof(tmpGameNodeBoneSize));
-
-		for (size_t tmpGameNodeBoneIndex = 0; tmpGameNodeBoneIndex<tmpVectorGameNodeBones.size(); tmpGameNodeBoneIndex++)
+		for (int tmpTextureMapIndex = 0; tmpTextureMapIndex < tmpNumberOfTextureMaps; tmpTextureMapIndex++)
 		{
-			const wchar_t* tmpGameNodeBoneName = tmpVectorGameNodeBones[tmpGameNodeBoneIndex]->GetName();
-			std::wstring tmpGameNodeBoneNameWString(tmpGameNodeBoneName);
-			std::string tmpGameNodeBoneNameString = ws2s(tmpGameNodeBoneNameWString);
+			IGameTextureMap* tmpGameTextureMap = tmpGameMaterial->GetIGameTextureMap(tmpTextureMapIndex);
+			if (tmpGameTextureMap != NULL)
+			{
+				//文件路径						
+				string tmpBitmapPath = WChar2Ansi(tmpGameTextureMap->GetBitmapFileName());
+				foutMaterial << "Texture BitmapPath:" << tmpBitmapPath << endl;
 
-
-			int tmpGameNodeBoneNameStringSize = tmpGameNodeBoneNameString.size() + 1;
-			tmpOfStreamAnim.write((char*)(&tmpGameNodeBoneNameStringSize), sizeof(tmpGameNodeBoneNameStringSize));
-			tmpOfStreamAnim.write(tmpGameNodeBoneNameString.c_str(), tmpGameNodeBoneNameStringSize);
+				//拷贝图片到导出目录
+				wstring tmpBitmapPathW = tmpGameTextureMap->GetBitmapFileName();
+				wstring tmpBitmapNameW = tmpBitmapPathW.substr(tmpBitmapPathW.find_last_of('\\') + 1);
+				wstring tmpBitmapExportPathW = tmpExportFullPath.substr(0, tmpExportFullPath.find_last_of(L"\\") + 1) + tmpBitmapNameW;
+				CopyFile(tmpGameTextureMap->GetBitmapFileName(), tmpBitmapExportPathW.c_str(), FALSE);
+			}
 		}
+	}
+	foutMaterial.close();
 
 
 
-		//写入第0帧逆矩阵
-		int tmpVectorBoneGMatrixInvertSize = tmpVectorBoneGMatrixInvert.size();
-		tmpOfStreamAnim.write((char*)(&tmpVectorBoneGMatrixInvertSize), sizeof(tmpVectorBoneGMatrixInvertSize));
+
+	/*Animation*/
+	if (tmpVectorGameNodeBones.size() == 0)
+	{
+		return;
+	}
+	string tmpExportAnimPath;
+
+	char tmpAnimFilePath[100];
+	tmpExportAnimPath = ws2s(tmpExportFullPath.substr(0, tmpFind) + L"_%s.anim");
 
 
-		for (size_t tmpBoneGMatrixInvertIndex = 0; tmpBoneGMatrixInvertIndex<tmpVectorBoneGMatrixInvert.size(); tmpBoneGMatrixInvertIndex++)
+	sprintf(tmpAnimFilePath, tmpExportAnimPath.c_str(), tmpNodeName.c_str());
+	tmpExportAnimPath = tmpAnimFilePath;
+
+	//写文件
+	ofstream tmpOfStreamAnim(tmpExportAnimPath, ios::binary);
+
+	//写入骨骼数据
+	TimeValue tmpTimeValueBegin = mGameScene->GetSceneStartTime();
+	TimeValue tmpTimeValueEnd = mGameScene->GetSceneEndTime();
+	TimeValue tmpTimeValueTicks = mGameScene->GetSceneTicks();
+	int tmpFrameCount = (tmpTimeValueEnd - tmpTimeValueBegin) / tmpTimeValueTicks;
+	tmpFrameCount = tmpFrameCount + 1;
+	tmpOfStreamAnim.write((char*)(&tmpFrameCount), sizeof(tmpFrameCount));
+
+	tmpOfStreamAnim.write((char*)(&tmpTimeValueTicks), sizeof(tmpTimeValueTicks));
+
+
+	int tmpGameNodeBoneSize = tmpVectorGameNodeBones.size();
+	tmpOfStreamAnim.write((char*)(&tmpGameNodeBoneSize), sizeof(tmpGameNodeBoneSize));
+
+	for (size_t tmpGameNodeBoneIndex = 0; tmpGameNodeBoneIndex < tmpVectorGameNodeBones.size(); tmpGameNodeBoneIndex++)
+	{
+		const wchar_t* tmpGameNodeBoneName = tmpVectorGameNodeBones[tmpGameNodeBoneIndex]->GetName();
+		std::wstring tmpGameNodeBoneNameWString(tmpGameNodeBoneName);
+		std::string tmpGameNodeBoneNameString = ws2s(tmpGameNodeBoneNameWString);
+
+
+		int tmpGameNodeBoneNameStringSize = tmpGameNodeBoneNameString.size() + 1;
+		tmpOfStreamAnim.write((char*)(&tmpGameNodeBoneNameStringSize), sizeof(tmpGameNodeBoneNameStringSize));
+		tmpOfStreamAnim.write(tmpGameNodeBoneNameString.c_str(), tmpGameNodeBoneNameStringSize);
+	}
+
+
+
+	//写入第0帧逆矩阵
+	int tmpVectorBoneGMatrixInvertSize = tmpVectorBoneGMatrixInvert.size();
+	tmpOfStreamAnim.write((char*)(&tmpVectorBoneGMatrixInvertSize), sizeof(tmpVectorBoneGMatrixInvertSize));
+
+
+	for (size_t tmpBoneGMatrixInvertIndex = 0; tmpBoneGMatrixInvertIndex < tmpVectorBoneGMatrixInvert.size(); tmpBoneGMatrixInvertIndex++)
+	{
+
+		GMatrix tmpBoneGMatrixInvert = tmpVectorBoneGMatrixInvert[tmpBoneGMatrixInvertIndex];
+
+
+		glm::mat4x4 tmpMat4x4BoneGMatrixInvert;
+		tmpMat4x4BoneGMatrixInvert[0][0] = tmpBoneGMatrixInvert[0][0]; tmpMat4x4BoneGMatrixInvert[0][1] = tmpBoneGMatrixInvert[0][1]; tmpMat4x4BoneGMatrixInvert[0][2] = tmpBoneGMatrixInvert[0][2]; tmpMat4x4BoneGMatrixInvert[0][3] = tmpBoneGMatrixInvert[0][3];
+		tmpMat4x4BoneGMatrixInvert[1][0] = tmpBoneGMatrixInvert[1][0]; tmpMat4x4BoneGMatrixInvert[1][1] = tmpBoneGMatrixInvert[1][1]; tmpMat4x4BoneGMatrixInvert[1][2] = tmpBoneGMatrixInvert[1][2]; tmpMat4x4BoneGMatrixInvert[1][3] = tmpBoneGMatrixInvert[1][3];
+		tmpMat4x4BoneGMatrixInvert[2][0] = tmpBoneGMatrixInvert[2][0]; tmpMat4x4BoneGMatrixInvert[2][1] = tmpBoneGMatrixInvert[2][1]; tmpMat4x4BoneGMatrixInvert[2][2] = tmpBoneGMatrixInvert[2][2]; tmpMat4x4BoneGMatrixInvert[2][3] = tmpBoneGMatrixInvert[2][3];
+		tmpMat4x4BoneGMatrixInvert[3][0] = tmpBoneGMatrixInvert[3][0]; tmpMat4x4BoneGMatrixInvert[3][1] = tmpBoneGMatrixInvert[3][1]; tmpMat4x4BoneGMatrixInvert[3][2] = tmpBoneGMatrixInvert[3][2]; tmpMat4x4BoneGMatrixInvert[3][3] = tmpBoneGMatrixInvert[3][3];
+
+		tmpOfStreamAnim.write((char*)(&tmpMat4x4BoneGMatrixInvert), sizeof(tmpMat4x4BoneGMatrixInvert));
+	}
+
+	//写入骨骼时间轴矩阵
+	int tmpMapBoneGMatrixSize = tmpMapBoneGMatrix.size();
+	tmpOfStreamAnim.write((char*)(&tmpMapBoneGMatrixSize), sizeof(tmpMapBoneGMatrixSize));
+
+	for (map<TimeValue, vector<GMatrix>>::iterator tmpIterBegin = tmpMapBoneGMatrix.begin(); tmpIterBegin != tmpMapBoneGMatrix.end(); tmpIterBegin++)
+	{
+		TimeValue tmpTimeValueCurrent = tmpIterBegin->first;
+
+		tmpOfStreamAnim.write((char*)(&tmpTimeValueCurrent), sizeof(tmpTimeValueCurrent));
+
+		vector<GMatrix> tmpVectorGMatrixCurrent = tmpIterBegin->second;
+
+		int tmpVectorGMatrixCurrentSize = tmpVectorGMatrixCurrent.size();
+		tmpOfStreamAnim.write((char*)(&tmpVectorGMatrixCurrentSize), sizeof(tmpVectorGMatrixCurrentSize));
+
+		for (size_t tmpVectorGMatrixCurrentIndex = 0; tmpVectorGMatrixCurrentIndex < tmpVectorGMatrixCurrent.size(); tmpVectorGMatrixCurrentIndex++)
 		{
 
-			GMatrix tmpBoneGMatrixInvert = tmpVectorBoneGMatrixInvert[tmpBoneGMatrixInvertIndex];
+			GMatrix tmpGMatrixNodeBone = tmpVectorGMatrixCurrent[tmpVectorGMatrixCurrentIndex];
 
+			glm::mat4x4 tmpMat4x4BoneGMatrix;
+			tmpMat4x4BoneGMatrix[0][0] = tmpGMatrixNodeBone[0][0]; tmpMat4x4BoneGMatrix[0][1] = tmpGMatrixNodeBone[0][1]; tmpMat4x4BoneGMatrix[0][2] = tmpGMatrixNodeBone[0][2]; tmpMat4x4BoneGMatrix[0][3] = tmpGMatrixNodeBone[0][3];
+			tmpMat4x4BoneGMatrix[1][0] = tmpGMatrixNodeBone[1][0]; tmpMat4x4BoneGMatrix[1][1] = tmpGMatrixNodeBone[1][1]; tmpMat4x4BoneGMatrix[1][2] = tmpGMatrixNodeBone[1][2]; tmpMat4x4BoneGMatrix[1][3] = tmpGMatrixNodeBone[1][3];
+			tmpMat4x4BoneGMatrix[2][0] = tmpGMatrixNodeBone[2][0]; tmpMat4x4BoneGMatrix[2][1] = tmpGMatrixNodeBone[2][1]; tmpMat4x4BoneGMatrix[2][2] = tmpGMatrixNodeBone[2][2]; tmpMat4x4BoneGMatrix[2][3] = tmpGMatrixNodeBone[2][3];
+			tmpMat4x4BoneGMatrix[3][0] = tmpGMatrixNodeBone[3][0]; tmpMat4x4BoneGMatrix[3][1] = tmpGMatrixNodeBone[3][1]; tmpMat4x4BoneGMatrix[3][2] = tmpGMatrixNodeBone[3][2]; tmpMat4x4BoneGMatrix[3][3] = tmpGMatrixNodeBone[3][3];
+
+			tmpOfStreamAnim.write((char*)(&tmpMat4x4BoneGMatrix), sizeof(tmpMat4x4BoneGMatrix));
+		}
+	}
+
+	//顶点权重信息
+	int tmpVectorVertexSize = tmpVectorVertex.size();
+	tmpOfStreamAnim.write((char*)(&tmpVectorVertexSize), sizeof(tmpVectorVertexSize));
+
+	for (size_t vertexindex = 0; vertexindex < tmpVectorWeight.size(); vertexindex++)
+	{
+
+		map<int, float> tmpMapWeightOneVertex = tmpVectorWeight[vertexindex];
+
+		int tmpMapWeightOneVertexSize = tmpMapWeightOneVertex.size();
+		tmpOfStreamAnim.write((char*)(&tmpMapWeightOneVertexSize), sizeof(tmpMapWeightOneVertexSize));
+
+		for (map<int, float>::iterator tmpIterBegin = tmpMapWeightOneVertex.begin(); tmpIterBegin != tmpMapWeightOneVertex.end(); tmpIterBegin++)
+		{
+
+			tmpOfStreamAnim.write((char*)(&tmpIterBegin->first), sizeof(tmpIterBegin->first));
+			tmpOfStreamAnim.write((char*)(&tmpIterBegin->second), sizeof(tmpIterBegin->second));
+		}
+	}
+
+
+	//计算顶点初始位置 并存储
+	for (size_t vertexindex = 0; vertexindex < tmpVectorWeight.size(); vertexindex++)
+	{
+		map<int, float> tmpMapWeightOneVertex = tmpVectorWeight[vertexindex];
+
+		//写入当前顶点受影响的骨骼数
+		int tmpMapWeightOneVertexSize = tmpMapWeightOneVertex.size();
+		tmpOfStreamAnim.write((char*)(&tmpMapWeightOneVertexSize), sizeof(tmpMapWeightOneVertexSize));
+
+		std::vector<glm::vec3> tmpVectorOneVertexPositionNoBone;
+		for (map<int, float>::iterator tmpIterBegin = tmpMapWeightOneVertex.begin(); tmpIterBegin != tmpMapWeightOneVertex.end(); tmpIterBegin++)
+		{
+			GMatrix tmpBoneGMatrixInvert = tmpVectorBoneGMatrixInvert[tmpIterBegin->first];
 
 			glm::mat4x4 tmpMat4x4BoneGMatrixInvert;
 			tmpMat4x4BoneGMatrixInvert[0][0] = tmpBoneGMatrixInvert[0][0]; tmpMat4x4BoneGMatrixInvert[0][1] = tmpBoneGMatrixInvert[0][1]; tmpMat4x4BoneGMatrixInvert[0][2] = tmpBoneGMatrixInvert[0][2]; tmpMat4x4BoneGMatrixInvert[0][3] = tmpBoneGMatrixInvert[0][3];
@@ -1064,97 +1102,20 @@ void IGameExporter::ExportMesh(IGameMesh* varGameMesh,const wchar_t* varNodeName
 			tmpMat4x4BoneGMatrixInvert[2][0] = tmpBoneGMatrixInvert[2][0]; tmpMat4x4BoneGMatrixInvert[2][1] = tmpBoneGMatrixInvert[2][1]; tmpMat4x4BoneGMatrixInvert[2][2] = tmpBoneGMatrixInvert[2][2]; tmpMat4x4BoneGMatrixInvert[2][3] = tmpBoneGMatrixInvert[2][3];
 			tmpMat4x4BoneGMatrixInvert[3][0] = tmpBoneGMatrixInvert[3][0]; tmpMat4x4BoneGMatrixInvert[3][1] = tmpBoneGMatrixInvert[3][1]; tmpMat4x4BoneGMatrixInvert[3][2] = tmpBoneGMatrixInvert[3][2]; tmpMat4x4BoneGMatrixInvert[3][3] = tmpBoneGMatrixInvert[3][3];
 
-			tmpOfStreamAnim.write((char*)(&tmpMat4x4BoneGMatrixInvert), sizeof(tmpMat4x4BoneGMatrixInvert));
-		}
+			glm::vec3& tmpVec3PositionZeroFrame = tmpVectorVertex[vertexindex].Position;
 
-		//写入骨骼时间轴矩阵
-		int tmpMapBoneGMatrixSize = tmpMapBoneGMatrix.size();
-		tmpOfStreamAnim.write((char*)(&tmpMapBoneGMatrixSize), sizeof(tmpMapBoneGMatrixSize));
+			glm::vec4 tmpVec4PositionZeroFrame;
+			tmpVec4PositionZeroFrame.x = tmpVec3PositionZeroFrame.x;
+			tmpVec4PositionZeroFrame.y = -tmpVec3PositionZeroFrame.z;
+			tmpVec4PositionZeroFrame.z = tmpVec3PositionZeroFrame.y;
+			tmpVec4PositionZeroFrame.w = 1;
 
-		for (map<TimeValue, vector<GMatrix>>::iterator tmpIterBegin = tmpMapBoneGMatrix.begin(); tmpIterBegin != tmpMapBoneGMatrix.end(); tmpIterBegin++)
-		{
-			TimeValue tmpTimeValueCurrent = tmpIterBegin->first;
+			glm::vec4 tmpPositionNoBone = tmpMat4x4BoneGMatrixInvert * tmpVec4PositionZeroFrame;
 
-			tmpOfStreamAnim.write((char*)(&tmpTimeValueCurrent), sizeof(tmpTimeValueCurrent));
-
-			vector<GMatrix> tmpVectorGMatrixCurrent = tmpIterBegin->second;
-
-			int tmpVectorGMatrixCurrentSize = tmpVectorGMatrixCurrent.size();
-			tmpOfStreamAnim.write((char*)(&tmpVectorGMatrixCurrentSize), sizeof(tmpVectorGMatrixCurrentSize));
-
-			for (size_t tmpVectorGMatrixCurrentIndex = 0; tmpVectorGMatrixCurrentIndex<tmpVectorGMatrixCurrent.size(); tmpVectorGMatrixCurrentIndex++)
-			{
-
-				GMatrix tmpGMatrixNodeBone = tmpVectorGMatrixCurrent[tmpVectorGMatrixCurrentIndex];
-
-				glm::mat4x4 tmpMat4x4BoneGMatrix;
-				tmpMat4x4BoneGMatrix[0][0] = tmpGMatrixNodeBone[0][0]; tmpMat4x4BoneGMatrix[0][1] = tmpGMatrixNodeBone[0][1]; tmpMat4x4BoneGMatrix[0][2] = tmpGMatrixNodeBone[0][2]; tmpMat4x4BoneGMatrix[0][3] = tmpGMatrixNodeBone[0][3];
-				tmpMat4x4BoneGMatrix[1][0] = tmpGMatrixNodeBone[1][0]; tmpMat4x4BoneGMatrix[1][1] = tmpGMatrixNodeBone[1][1]; tmpMat4x4BoneGMatrix[1][2] = tmpGMatrixNodeBone[1][2]; tmpMat4x4BoneGMatrix[1][3] = tmpGMatrixNodeBone[1][3];
-				tmpMat4x4BoneGMatrix[2][0] = tmpGMatrixNodeBone[2][0]; tmpMat4x4BoneGMatrix[2][1] = tmpGMatrixNodeBone[2][1]; tmpMat4x4BoneGMatrix[2][2] = tmpGMatrixNodeBone[2][2]; tmpMat4x4BoneGMatrix[2][3] = tmpGMatrixNodeBone[2][3];
-				tmpMat4x4BoneGMatrix[3][0] = tmpGMatrixNodeBone[3][0]; tmpMat4x4BoneGMatrix[3][1] = tmpGMatrixNodeBone[3][1]; tmpMat4x4BoneGMatrix[3][2] = tmpGMatrixNodeBone[3][2]; tmpMat4x4BoneGMatrix[3][3] = tmpGMatrixNodeBone[3][3];
-
-				tmpOfStreamAnim.write((char*)(&tmpMat4x4BoneGMatrix), sizeof(tmpMat4x4BoneGMatrix));
-			}
-		}
-
-		//顶点权重信息
-		int tmpVectorVertexSize = tmpVectorVertex.size();
-		tmpOfStreamAnim.write((char*)(&tmpVectorVertexSize), sizeof(tmpVectorVertexSize));
-
-		for (size_t vertexindex = 0; vertexindex < tmpVectorWeight.size(); vertexindex++)
-		{
-
-			map<int, float> tmpMapWeightOneVertex = tmpVectorWeight[vertexindex];
-
-			int tmpMapWeightOneVertexSize = tmpMapWeightOneVertex.size();
-			tmpOfStreamAnim.write((char*)(&tmpMapWeightOneVertexSize), sizeof(tmpMapWeightOneVertexSize));
-
-			for (map<int, float>::iterator tmpIterBegin = tmpMapWeightOneVertex.begin(); tmpIterBegin != tmpMapWeightOneVertex.end(); tmpIterBegin++)
-			{
-
-				tmpOfStreamAnim.write((char*)(&tmpIterBegin->first), sizeof(tmpIterBegin->first));
-				tmpOfStreamAnim.write((char*)(&tmpIterBegin->second), sizeof(tmpIterBegin->second));
-			}
-		}
-
-
-		//计算顶点初始位置 并存储
-		for (size_t vertexindex = 0; vertexindex < tmpVectorWeight.size(); vertexindex++)
-		{
-			map<int, float> tmpMapWeightOneVertex = tmpVectorWeight[vertexindex];
-
-			//写入当前顶点受影响的骨骼数
-			int tmpMapWeightOneVertexSize = tmpMapWeightOneVertex.size();
-			tmpOfStreamAnim.write((char*)(&tmpMapWeightOneVertexSize), sizeof(tmpMapWeightOneVertexSize));
-
-			std::vector<glm::vec3> tmpVectorOneVertexPositionNoBone;
-			for (map<int, float>::iterator tmpIterBegin = tmpMapWeightOneVertex.begin(); tmpIterBegin != tmpMapWeightOneVertex.end(); tmpIterBegin++)
-			{
-				GMatrix tmpBoneGMatrixInvert = tmpVectorBoneGMatrixInvert[tmpIterBegin->first];
-
-				glm::mat4x4 tmpMat4x4BoneGMatrixInvert;
-				tmpMat4x4BoneGMatrixInvert[0][0] = tmpBoneGMatrixInvert[0][0]; tmpMat4x4BoneGMatrixInvert[0][1] = tmpBoneGMatrixInvert[0][1]; tmpMat4x4BoneGMatrixInvert[0][2] = tmpBoneGMatrixInvert[0][2]; tmpMat4x4BoneGMatrixInvert[0][3] = tmpBoneGMatrixInvert[0][3];
-				tmpMat4x4BoneGMatrixInvert[1][0] = tmpBoneGMatrixInvert[1][0]; tmpMat4x4BoneGMatrixInvert[1][1] = tmpBoneGMatrixInvert[1][1]; tmpMat4x4BoneGMatrixInvert[1][2] = tmpBoneGMatrixInvert[1][2]; tmpMat4x4BoneGMatrixInvert[1][3] = tmpBoneGMatrixInvert[1][3];
-				tmpMat4x4BoneGMatrixInvert[2][0] = tmpBoneGMatrixInvert[2][0]; tmpMat4x4BoneGMatrixInvert[2][1] = tmpBoneGMatrixInvert[2][1]; tmpMat4x4BoneGMatrixInvert[2][2] = tmpBoneGMatrixInvert[2][2]; tmpMat4x4BoneGMatrixInvert[2][3] = tmpBoneGMatrixInvert[2][3];
-				tmpMat4x4BoneGMatrixInvert[3][0] = tmpBoneGMatrixInvert[3][0]; tmpMat4x4BoneGMatrixInvert[3][1] = tmpBoneGMatrixInvert[3][1]; tmpMat4x4BoneGMatrixInvert[3][2] = tmpBoneGMatrixInvert[3][2]; tmpMat4x4BoneGMatrixInvert[3][3] = tmpBoneGMatrixInvert[3][3];
-
-				glm::vec3& tmpVec3PositionZeroFrame = tmpVectorVertex[vertexindex].Position;
-
-				glm::vec4 tmpVec4PositionZeroFrame;
-				tmpVec4PositionZeroFrame.x = tmpVec3PositionZeroFrame.x;
-				tmpVec4PositionZeroFrame.y = -tmpVec3PositionZeroFrame.z;
-				tmpVec4PositionZeroFrame.z = tmpVec3PositionZeroFrame.y;
-				tmpVec4PositionZeroFrame.w = 1;
-
-				glm::vec4 tmpPositionNoBone = tmpMat4x4BoneGMatrixInvert * tmpVec4PositionZeroFrame;
-
-				tmpOfStreamAnim.write((char*)(&tmpPositionNoBone), sizeof(tmpPositionNoBone));
-			}
+			tmpOfStreamAnim.write((char*)(&tmpPositionNoBone), sizeof(tmpPositionNoBone));
 		}
 	}
-	tmpOfStreamMesh.close();
 	tmpOfStreamAnim.close();
-	foutMaterial.close();
 }
 
 void IGameExporter::ExportNodeTraverse(IGameNode* varGameNode)
@@ -1172,13 +1133,13 @@ void IGameExporter::ExportNodeTraverse(IGameNode* varGameNode)
 	case IGameObject::IGAME_LIGHT:
 		break;
 	case IGameObject::IGAME_MESH:
-		{
-			IGameMesh* tmpGameMesh = (IGameMesh*)tmpGameObject;
-			
-			ExportMesh(tmpGameMesh, tmpNodeName);
-		}
-		
-		break;
+	{
+		IGameMesh* tmpGameMesh = (IGameMesh*)tmpGameObject;
+
+		ExportMesh(tmpGameMesh, tmpNodeName);
+	}
+
+	break;
 	case IGameObject::IGAME_SPLINE:
 		break;
 	case IGameObject::IGAME_CAMERA:
@@ -1213,7 +1174,7 @@ void IGameExporter::ExportNodeTraverse(IGameNode* varGameNode)
 }
 
 #include "utilapi.h"
-int	IGameExporter::DoExport(const TCHAR *name,ExpInterface *ei,Interface *i, BOOL suppressPrompts, DWORD options)
+int	IGameExporter::DoExport(const TCHAR *name, ExpInterface *ei, Interface *i, BOOL suppressPrompts, DWORD options)
 {
 	//#pragma message(TODO("Implement the actual file Export here and"))
 
@@ -1246,7 +1207,7 @@ int	IGameExporter::DoExport(const TCHAR *name,ExpInterface *ei,Interface *i, BOO
 	}
 
 
-	for (int i = 0; i<tmpTopLevelNodeCount; i++)
+	for (int i = 0; i < tmpTopLevelNodeCount; i++)
 	{
 		IGameNode* tmpGameNode = tmpGameScene->GetTopLevelNode(i);
 		ExportNodeTraverse(tmpGameNode);
@@ -1257,122 +1218,5 @@ int	IGameExporter::DoExport(const TCHAR *name,ExpInterface *ei,Interface *i, BOO
 	return TRUE;
 }
 
-
-TSTR IGameExporter::GetCfgFilename()
-{
-	TSTR filename;
-	
-	filename += GetCOREInterface()->GetDir(APP_PLUGCFG_DIR);
-	filename += _T("\\");
-	filename += _T("IgameExport.cfg");
-	return filename;
-}
-
-// NOTE: Update anytime the CFG file changes
-#define CFG_VERSION 0x03
-
-BOOL IGameExporter::ReadConfig()
-{
-	TSTR filename = GetCfgFilename();
-	FILE* cfgStream;
-
-	cfgStream = _tfopen(filename, _T("rb"));
-	if (!cfgStream)
-		return FALSE;
-	
-	exportGeom = fgetc(cfgStream);
-	exportNormals = fgetc(cfgStream);
-	exportControllers = fgetc(cfgStream);
-	exportFaceSmgp = fgetc(cfgStream);
-	exportVertexColor = fgetc(cfgStream);
-	exportTexCoords = fgetc(cfgStream);
-	staticFrame = _getw(cfgStream);
-	framePerSample = _getw(cfgStream);
-	exportMappingChannel = fgetc(cfgStream);
-	exportMaterials = fgetc(cfgStream);
-	exportSplines = fgetc(cfgStream);
-	exportModifiers = fgetc(cfgStream);
-	forceSample = fgetc(cfgStream);
-	exportConstraints = fgetc(cfgStream);
-	exportSkin = fgetc(cfgStream);
-	exportGenMod = fgetc(cfgStream);
-	cS = fgetc(cfgStream);
-	splitFile = fgetc(cfgStream);
-	exportQuaternions = fgetc(cfgStream);
-	exportObjectSpace = fgetc(cfgStream);
-	exportRelative = fgetc(cfgStream);
-	exportNormalsPerFace = fgetc(cfgStream);
-	fclose(cfgStream);
-	return TRUE;
-}
-
-void IGameExporter::WriteConfig()
-{
-	TSTR filename = GetCfgFilename();
-	FILE* cfgStream;
-
-	cfgStream = _tfopen(filename, _T("wb"));
-	if (!cfgStream)
-		return;
-
-	
-	fputc(exportGeom,cfgStream);
-	fputc(exportNormals,cfgStream);
-	fputc(exportControllers,cfgStream);
-	fputc(exportFaceSmgp,cfgStream);
-	fputc(exportVertexColor,cfgStream);
-	fputc(exportTexCoords,cfgStream);
-	_putw(staticFrame,cfgStream);
-	_putw(framePerSample,cfgStream);
-	fputc(exportMappingChannel,cfgStream);
-	fputc(exportMaterials,cfgStream);
-	fputc(exportSplines,cfgStream);
-	fputc(exportModifiers,cfgStream);
-	fputc(forceSample,cfgStream);
-	fputc(exportConstraints,cfgStream);
-	fputc(exportSkin,cfgStream);
-	fputc(exportGenMod,cfgStream);
-	fputc(cS,cfgStream);
-	fputc(splitFile,cfgStream);
-	fputc(exportQuaternions,cfgStream);
-	fputc(exportObjectSpace,cfgStream);
-	fputc(exportRelative,cfgStream);
-	fputc(exportNormalsPerFace, cfgStream);
-	fclose(cfgStream);
-}
-
-
-void IGameExporter::makeValidURIFilename(TSTR& fn, bool stripMapPaths)
-{
-	// massage external filenames into valid URI: strip any prefix matching any declared map path,
-	//
-	/*map \ -> /, sp -> _, : -> $
-	if (stripMapPaths) {
-		int matchLen = 0, matchI;
-		for (int i = 0; i < TheManager->GetMapDirCount(); i++) {
-			TSTR dir = TheManager->GetMapDir(i);
-			if (MatchPattern(fn, dir + TSTR("*"))) {
-				if (dir.length() > matchLen) {
-					matchLen = dir.length();
-					matchI = i;
-				}
-			}
-		}
-		if (matchLen > 0) {
-			// found map path prefix, strip it 
-			TSTR dir = TheManager->GetMapDir(matchI);
-			fn.remove(0, dir.length());
-			if (fn[0] = _T('\\')) fn.remove(0, 1); // strip any dangling path-sep
-		}
-	}
-	*/
-
-	// map funny chars
-	for (int i = 0; i < fn.length(); i++) {
-		if (fn[i] == _T(':')) fn.dataForWrite()[i] = _T('$');
-		else if (fn[i] == _T(' ')) fn.dataForWrite()[i] = _T('_');
-		else if (fn[i] == _T('\\')) fn.dataForWrite()[i] = _T('/');
-	}
-}
 
 
