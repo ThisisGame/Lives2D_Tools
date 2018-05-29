@@ -561,7 +561,7 @@ void IGameExporter::ExportMesh(IGameMesh* varGameMesh, const wchar_t* varNodeNam
 	int tmpTextureSize = 0;
 
 	vector<IGameNode*> tmpVectorGameNodeBones;
-	vector<map<int, float>> tmpVectorWeight;
+	vector<map<unsigned short, float>> tmpVectorWeight;
 
 	vector<GMatrix> tmpVectorBoneGMatrixZeroFrame;
 	vector<GMatrix> tmpVectorBoneGMatrixInvert;//存储第0帧逆矩阵
@@ -674,7 +674,7 @@ void IGameExporter::ExportMesh(IGameMesh* varGameMesh, const wchar_t* varNodeNam
 				int tmpNumberOfBoneOnVertex = tmpGameSkin->GetNumberOfBones(tmpVertexIndex);
 
 
-				map<int, float> tmpMapWeightOneVertex;
+				map<unsigned short, float> tmpMapWeightOneVertex;
 				for (int tmpBoneIndexOnVertex = 0; tmpBoneIndexOnVertex < tmpNumberOfBoneOnVertex; tmpBoneIndexOnVertex++)
 				{
 					//获取当前顶点的骨骼
@@ -701,7 +701,7 @@ void IGameExporter::ExportMesh(IGameMesh* varGameMesh, const wchar_t* varNodeNam
 
 					float tmpWeight = tmpGameSkin->GetWeight(tmpVertexIndex, tmpBoneIndexOnVertex);
 
-					tmpMapWeightOneVertex.insert(pair<int, float>((int)tmpGameNodeBoneIndex, tmpWeight));
+					tmpMapWeightOneVertex.insert(pair<unsigned short, float>((unsigned short)tmpGameNodeBoneIndex, tmpWeight));
 				}
 
 				tmpVectorWeight.push_back(tmpMapWeightOneVertex);
@@ -926,6 +926,179 @@ void IGameExporter::ExportMesh(IGameMesh* varGameMesh, const wchar_t* varNodeNam
 				}
 			}
 		}
+
+
+		/*Animation*/
+		if (tmpVectorGameNodeBones.size() == 0)
+		{
+			return;
+		}
+		string tmpExportAnimPath;
+
+		char tmpAnimFilePath[100];
+		tmpExportAnimPath = ws2s(tmpExportFullPath.substr(0, tmpFind) + L"_%s_%d.anim");
+
+
+		sprintf(tmpAnimFilePath, tmpExportAnimPath.c_str(), tmpNodeName.c_str(), tmpVectorIndicesPartIndex);
+		tmpExportAnimPath = tmpAnimFilePath;
+
+		//写文件
+		ofstream tmpOfStreamAnim(tmpExportAnimPath, ios::binary);
+
+		//写入骨骼数据
+		TimeValue tmpTimeValueBegin = mGameScene->GetSceneStartTime();
+		TimeValue tmpTimeValueEnd = mGameScene->GetSceneEndTime();
+		TimeValue tmpTimeValueTicks = mGameScene->GetSceneTicks();
+		int tmpFrameCount = (tmpTimeValueEnd - tmpTimeValueBegin) / tmpTimeValueTicks;
+		tmpFrameCount = tmpFrameCount + 1;
+		tmpOfStreamAnim.write((char*)(&tmpFrameCount), sizeof(tmpFrameCount));
+
+		tmpOfStreamAnim.write((char*)(&tmpTimeValueTicks), sizeof(tmpTimeValueTicks));
+
+
+		int tmpGameNodeBoneSize = tmpVectorGameNodeBones.size();
+		tmpOfStreamAnim.write((char*)(&tmpGameNodeBoneSize), sizeof(tmpGameNodeBoneSize));
+
+		for (size_t tmpGameNodeBoneIndex = 0; tmpGameNodeBoneIndex < tmpVectorGameNodeBones.size(); tmpGameNodeBoneIndex++)
+		{
+			const wchar_t* tmpGameNodeBoneName = tmpVectorGameNodeBones[tmpGameNodeBoneIndex]->GetName();
+			std::wstring tmpGameNodeBoneNameWString(tmpGameNodeBoneName);
+			std::string tmpGameNodeBoneNameString = ws2s(tmpGameNodeBoneNameWString);
+
+
+			int tmpGameNodeBoneNameStringSize = tmpGameNodeBoneNameString.size() + 1;
+			tmpOfStreamAnim.write((char*)(&tmpGameNodeBoneNameStringSize), sizeof(tmpGameNodeBoneNameStringSize));
+			tmpOfStreamAnim.write(tmpGameNodeBoneNameString.c_str(), tmpGameNodeBoneNameStringSize);
+		}
+
+
+		//写入第0帧逆矩阵
+		int tmpVectorBoneGMatrixInvertSize = tmpVectorBoneGMatrixInvert.size();
+		tmpOfStreamAnim.write((char*)(&tmpVectorBoneGMatrixInvertSize), sizeof(tmpVectorBoneGMatrixInvertSize));
+
+
+		for (size_t tmpBoneGMatrixInvertIndex = 0; tmpBoneGMatrixInvertIndex < tmpVectorBoneGMatrixInvert.size(); tmpBoneGMatrixInvertIndex++)
+		{
+
+			GMatrix tmpBoneGMatrixInvert = tmpVectorBoneGMatrixInvert[tmpBoneGMatrixInvertIndex];
+
+
+			glm::mat4x4 tmpMat4x4BoneGMatrixInvert;
+			tmpMat4x4BoneGMatrixInvert[0][0] = tmpBoneGMatrixInvert[0][0]; tmpMat4x4BoneGMatrixInvert[0][1] = tmpBoneGMatrixInvert[0][1]; tmpMat4x4BoneGMatrixInvert[0][2] = tmpBoneGMatrixInvert[0][2]; tmpMat4x4BoneGMatrixInvert[0][3] = tmpBoneGMatrixInvert[0][3];
+			tmpMat4x4BoneGMatrixInvert[1][0] = tmpBoneGMatrixInvert[1][0]; tmpMat4x4BoneGMatrixInvert[1][1] = tmpBoneGMatrixInvert[1][1]; tmpMat4x4BoneGMatrixInvert[1][2] = tmpBoneGMatrixInvert[1][2]; tmpMat4x4BoneGMatrixInvert[1][3] = tmpBoneGMatrixInvert[1][3];
+			tmpMat4x4BoneGMatrixInvert[2][0] = tmpBoneGMatrixInvert[2][0]; tmpMat4x4BoneGMatrixInvert[2][1] = tmpBoneGMatrixInvert[2][1]; tmpMat4x4BoneGMatrixInvert[2][2] = tmpBoneGMatrixInvert[2][2]; tmpMat4x4BoneGMatrixInvert[2][3] = tmpBoneGMatrixInvert[2][3];
+			tmpMat4x4BoneGMatrixInvert[3][0] = tmpBoneGMatrixInvert[3][0]; tmpMat4x4BoneGMatrixInvert[3][1] = tmpBoneGMatrixInvert[3][1]; tmpMat4x4BoneGMatrixInvert[3][2] = tmpBoneGMatrixInvert[3][2]; tmpMat4x4BoneGMatrixInvert[3][3] = tmpBoneGMatrixInvert[3][3];
+
+			tmpOfStreamAnim.write((char*)(&tmpMat4x4BoneGMatrixInvert), sizeof(tmpMat4x4BoneGMatrixInvert));
+		}
+
+		//写入骨骼时间轴矩阵
+		int tmpMapBoneGMatrixSize = tmpMapBoneGMatrix.size();
+		tmpOfStreamAnim.write((char*)(&tmpMapBoneGMatrixSize), sizeof(tmpMapBoneGMatrixSize));
+
+		for (map<TimeValue, vector<GMatrix>>::iterator tmpIterBegin = tmpMapBoneGMatrix.begin(); tmpIterBegin != tmpMapBoneGMatrix.end(); tmpIterBegin++)
+		{
+			TimeValue tmpTimeValueCurrent = tmpIterBegin->first;
+
+			tmpOfStreamAnim.write((char*)(&tmpTimeValueCurrent), sizeof(tmpTimeValueCurrent));
+
+			vector<GMatrix> tmpVectorGMatrixCurrent = tmpIterBegin->second;
+
+			int tmpVectorGMatrixCurrentSize = tmpVectorGMatrixCurrent.size();
+			tmpOfStreamAnim.write((char*)(&tmpVectorGMatrixCurrentSize), sizeof(tmpVectorGMatrixCurrentSize));
+
+			for (size_t tmpVectorGMatrixCurrentIndex = 0; tmpVectorGMatrixCurrentIndex < tmpVectorGMatrixCurrent.size(); tmpVectorGMatrixCurrentIndex++)
+			{
+
+				GMatrix tmpGMatrixNodeBone = tmpVectorGMatrixCurrent[tmpVectorGMatrixCurrentIndex];
+
+				glm::mat4x4 tmpMat4x4BoneGMatrix;
+				tmpMat4x4BoneGMatrix[0][0] = tmpGMatrixNodeBone[0][0]; tmpMat4x4BoneGMatrix[0][1] = tmpGMatrixNodeBone[0][1]; tmpMat4x4BoneGMatrix[0][2] = tmpGMatrixNodeBone[0][2]; tmpMat4x4BoneGMatrix[0][3] = tmpGMatrixNodeBone[0][3];
+				tmpMat4x4BoneGMatrix[1][0] = tmpGMatrixNodeBone[1][0]; tmpMat4x4BoneGMatrix[1][1] = tmpGMatrixNodeBone[1][1]; tmpMat4x4BoneGMatrix[1][2] = tmpGMatrixNodeBone[1][2]; tmpMat4x4BoneGMatrix[1][3] = tmpGMatrixNodeBone[1][3];
+				tmpMat4x4BoneGMatrix[2][0] = tmpGMatrixNodeBone[2][0]; tmpMat4x4BoneGMatrix[2][1] = tmpGMatrixNodeBone[2][1]; tmpMat4x4BoneGMatrix[2][2] = tmpGMatrixNodeBone[2][2]; tmpMat4x4BoneGMatrix[2][3] = tmpGMatrixNodeBone[2][3];
+				tmpMat4x4BoneGMatrix[3][0] = tmpGMatrixNodeBone[3][0]; tmpMat4x4BoneGMatrix[3][1] = tmpGMatrixNodeBone[3][1]; tmpMat4x4BoneGMatrix[3][2] = tmpGMatrixNodeBone[3][2]; tmpMat4x4BoneGMatrix[3][3] = tmpGMatrixNodeBone[3][3];
+
+				tmpOfStreamAnim.write((char*)(&tmpMat4x4BoneGMatrix), sizeof(tmpMat4x4BoneGMatrix));
+			}
+		}
+
+		//顶点权重信息
+		vector<map<unsigned short, float>> tmpVectorWeightNew;
+		for (size_t tmpVertexIndex = 0; tmpVertexIndex < tmpVectorWeight.size(); tmpVertexIndex++)
+		{
+			auto tmpIter = tmpMapIndicesOldToNew.find(tmpVertexIndex);
+			if (tmpIter != tmpMapIndicesOldToNew.end())
+			{
+				map<unsigned short, float> tmpMapVertexWeight;
+				tmpVectorWeightNew.push_back(tmpMapVertexWeight);
+			}
+		}
+
+		for (size_t tmpVertexIndex = 0; tmpVertexIndex < tmpVectorWeight.size(); tmpVertexIndex++)
+		{
+			auto tmpIter = tmpMapIndicesOldToNew.find(tmpVertexIndex);
+			if (tmpIter != tmpMapIndicesOldToNew.end())
+			{
+				int tmpVertexIndexNew = tmpMapIndicesOldToNew[tmpVertexIndex];
+
+				map<unsigned short, float> tmpMapWeightOneVertex = tmpVectorWeight[tmpVertexIndex];
+				tmpVectorWeightNew[tmpVertexIndexNew]=tmpMapWeightOneVertex;
+			}
+		}
+
+		int tmpVectorVertexSize = tmpVectorWeightNew.size();
+		tmpOfStreamAnim.write((char*)(&tmpVectorVertexSize), sizeof(tmpVectorVertexSize));
+
+		for (size_t tmpVertexIndex = 0; tmpVertexIndex < tmpVectorWeightNew.size(); tmpVertexIndex++)
+		{
+			
+			map<unsigned short, float> tmpMapWeightOneVertex = tmpVectorWeightNew[tmpVertexIndex];
+
+			int tmpMapWeightOneVertexSize = tmpMapWeightOneVertex.size();
+			tmpOfStreamAnim.write((char*)(&tmpMapWeightOneVertexSize), sizeof(tmpMapWeightOneVertexSize));
+
+			for (map<unsigned short, float>::iterator tmpIterBegin = tmpMapWeightOneVertex.begin(); tmpIterBegin != tmpMapWeightOneVertex.end(); tmpIterBegin++)
+			{
+				tmpOfStreamAnim.write((char*)(&tmpIterBegin->first), sizeof(tmpIterBegin->first));
+				tmpOfStreamAnim.write((char*)(&tmpIterBegin->second), sizeof(tmpIterBegin->second));
+			}
+		}
+
+
+		//计算顶点初始位置 并存储
+		for (size_t tmpVertexIndex = 0; tmpVertexIndex < tmpVectorWeightNew.size(); tmpVertexIndex++)
+		{
+			map<unsigned short, float> tmpMapWeightOneVertex = tmpVectorWeightNew[tmpVertexIndex];
+
+			//写入当前顶点受影响的骨骼数
+			unsigned short tmpMapWeightOneVertexSize = tmpMapWeightOneVertex.size();
+			tmpOfStreamAnim.write((char*)(&tmpMapWeightOneVertexSize), sizeof(tmpMapWeightOneVertexSize));
+
+			std::vector<glm::vec3> tmpVectorOneVertexPositionNoBone;
+			for (map<unsigned short, float>::iterator tmpIterBegin = tmpMapWeightOneVertex.begin(); tmpIterBegin != tmpMapWeightOneVertex.end(); tmpIterBegin++)
+			{
+				GMatrix tmpBoneGMatrixInvert = tmpVectorBoneGMatrixInvert[tmpIterBegin->first];
+
+				glm::mat4x4 tmpMat4x4BoneGMatrixInvert;
+				tmpMat4x4BoneGMatrixInvert[0][0] = tmpBoneGMatrixInvert[0][0]; tmpMat4x4BoneGMatrixInvert[0][1] = tmpBoneGMatrixInvert[0][1]; tmpMat4x4BoneGMatrixInvert[0][2] = tmpBoneGMatrixInvert[0][2]; tmpMat4x4BoneGMatrixInvert[0][3] = tmpBoneGMatrixInvert[0][3];
+				tmpMat4x4BoneGMatrixInvert[1][0] = tmpBoneGMatrixInvert[1][0]; tmpMat4x4BoneGMatrixInvert[1][1] = tmpBoneGMatrixInvert[1][1]; tmpMat4x4BoneGMatrixInvert[1][2] = tmpBoneGMatrixInvert[1][2]; tmpMat4x4BoneGMatrixInvert[1][3] = tmpBoneGMatrixInvert[1][3];
+				tmpMat4x4BoneGMatrixInvert[2][0] = tmpBoneGMatrixInvert[2][0]; tmpMat4x4BoneGMatrixInvert[2][1] = tmpBoneGMatrixInvert[2][1]; tmpMat4x4BoneGMatrixInvert[2][2] = tmpBoneGMatrixInvert[2][2]; tmpMat4x4BoneGMatrixInvert[2][3] = tmpBoneGMatrixInvert[2][3];
+				tmpMat4x4BoneGMatrixInvert[3][0] = tmpBoneGMatrixInvert[3][0]; tmpMat4x4BoneGMatrixInvert[3][1] = tmpBoneGMatrixInvert[3][1]; tmpMat4x4BoneGMatrixInvert[3][2] = tmpBoneGMatrixInvert[3][2]; tmpMat4x4BoneGMatrixInvert[3][3] = tmpBoneGMatrixInvert[3][3];
+
+				glm::vec3& tmpVec3PositionZeroFrame = tmpVectorVertexOnePart[tmpVertexIndex].Position;
+
+				glm::vec4 tmpVec4PositionZeroFrame;
+				tmpVec4PositionZeroFrame.x = tmpVec3PositionZeroFrame.x;
+				tmpVec4PositionZeroFrame.y = -tmpVec3PositionZeroFrame.z;
+				tmpVec4PositionZeroFrame.z = tmpVec3PositionZeroFrame.y;
+				tmpVec4PositionZeroFrame.w = 1;
+
+				glm::vec4 tmpPositionNoBone = tmpMat4x4BoneGMatrixInvert * tmpVec4PositionZeroFrame;
+
+				tmpOfStreamAnim.write((char*)(&tmpPositionNoBone), sizeof(tmpPositionNoBone));
+			}
+		}
+		tmpOfStreamAnim.close();
 	}
 
 	/*Material*/
@@ -962,160 +1135,6 @@ void IGameExporter::ExportMesh(IGameMesh* varGameMesh, const wchar_t* varNodeNam
 		}
 	}
 	foutMaterial.close();
-
-
-
-
-	/*Animation*/
-	if (tmpVectorGameNodeBones.size() == 0)
-	{
-		return;
-	}
-	string tmpExportAnimPath;
-
-	char tmpAnimFilePath[100];
-	tmpExportAnimPath = ws2s(tmpExportFullPath.substr(0, tmpFind) + L"_%s.anim");
-
-
-	sprintf(tmpAnimFilePath, tmpExportAnimPath.c_str(), tmpNodeName.c_str());
-	tmpExportAnimPath = tmpAnimFilePath;
-
-	//写文件
-	ofstream tmpOfStreamAnim(tmpExportAnimPath, ios::binary);
-
-	//写入骨骼数据
-	TimeValue tmpTimeValueBegin = mGameScene->GetSceneStartTime();
-	TimeValue tmpTimeValueEnd = mGameScene->GetSceneEndTime();
-	TimeValue tmpTimeValueTicks = mGameScene->GetSceneTicks();
-	int tmpFrameCount = (tmpTimeValueEnd - tmpTimeValueBegin) / tmpTimeValueTicks;
-	tmpFrameCount = tmpFrameCount + 1;
-	tmpOfStreamAnim.write((char*)(&tmpFrameCount), sizeof(tmpFrameCount));
-
-	tmpOfStreamAnim.write((char*)(&tmpTimeValueTicks), sizeof(tmpTimeValueTicks));
-
-
-	int tmpGameNodeBoneSize = tmpVectorGameNodeBones.size();
-	tmpOfStreamAnim.write((char*)(&tmpGameNodeBoneSize), sizeof(tmpGameNodeBoneSize));
-
-	for (size_t tmpGameNodeBoneIndex = 0; tmpGameNodeBoneIndex < tmpVectorGameNodeBones.size(); tmpGameNodeBoneIndex++)
-	{
-		const wchar_t* tmpGameNodeBoneName = tmpVectorGameNodeBones[tmpGameNodeBoneIndex]->GetName();
-		std::wstring tmpGameNodeBoneNameWString(tmpGameNodeBoneName);
-		std::string tmpGameNodeBoneNameString = ws2s(tmpGameNodeBoneNameWString);
-
-
-		int tmpGameNodeBoneNameStringSize = tmpGameNodeBoneNameString.size() + 1;
-		tmpOfStreamAnim.write((char*)(&tmpGameNodeBoneNameStringSize), sizeof(tmpGameNodeBoneNameStringSize));
-		tmpOfStreamAnim.write(tmpGameNodeBoneNameString.c_str(), tmpGameNodeBoneNameStringSize);
-	}
-
-
-
-	//写入第0帧逆矩阵
-	int tmpVectorBoneGMatrixInvertSize = tmpVectorBoneGMatrixInvert.size();
-	tmpOfStreamAnim.write((char*)(&tmpVectorBoneGMatrixInvertSize), sizeof(tmpVectorBoneGMatrixInvertSize));
-
-
-	for (size_t tmpBoneGMatrixInvertIndex = 0; tmpBoneGMatrixInvertIndex < tmpVectorBoneGMatrixInvert.size(); tmpBoneGMatrixInvertIndex++)
-	{
-
-		GMatrix tmpBoneGMatrixInvert = tmpVectorBoneGMatrixInvert[tmpBoneGMatrixInvertIndex];
-
-
-		glm::mat4x4 tmpMat4x4BoneGMatrixInvert;
-		tmpMat4x4BoneGMatrixInvert[0][0] = tmpBoneGMatrixInvert[0][0]; tmpMat4x4BoneGMatrixInvert[0][1] = tmpBoneGMatrixInvert[0][1]; tmpMat4x4BoneGMatrixInvert[0][2] = tmpBoneGMatrixInvert[0][2]; tmpMat4x4BoneGMatrixInvert[0][3] = tmpBoneGMatrixInvert[0][3];
-		tmpMat4x4BoneGMatrixInvert[1][0] = tmpBoneGMatrixInvert[1][0]; tmpMat4x4BoneGMatrixInvert[1][1] = tmpBoneGMatrixInvert[1][1]; tmpMat4x4BoneGMatrixInvert[1][2] = tmpBoneGMatrixInvert[1][2]; tmpMat4x4BoneGMatrixInvert[1][3] = tmpBoneGMatrixInvert[1][3];
-		tmpMat4x4BoneGMatrixInvert[2][0] = tmpBoneGMatrixInvert[2][0]; tmpMat4x4BoneGMatrixInvert[2][1] = tmpBoneGMatrixInvert[2][1]; tmpMat4x4BoneGMatrixInvert[2][2] = tmpBoneGMatrixInvert[2][2]; tmpMat4x4BoneGMatrixInvert[2][3] = tmpBoneGMatrixInvert[2][3];
-		tmpMat4x4BoneGMatrixInvert[3][0] = tmpBoneGMatrixInvert[3][0]; tmpMat4x4BoneGMatrixInvert[3][1] = tmpBoneGMatrixInvert[3][1]; tmpMat4x4BoneGMatrixInvert[3][2] = tmpBoneGMatrixInvert[3][2]; tmpMat4x4BoneGMatrixInvert[3][3] = tmpBoneGMatrixInvert[3][3];
-
-		tmpOfStreamAnim.write((char*)(&tmpMat4x4BoneGMatrixInvert), sizeof(tmpMat4x4BoneGMatrixInvert));
-	}
-
-	//写入骨骼时间轴矩阵
-	int tmpMapBoneGMatrixSize = tmpMapBoneGMatrix.size();
-	tmpOfStreamAnim.write((char*)(&tmpMapBoneGMatrixSize), sizeof(tmpMapBoneGMatrixSize));
-
-	for (map<TimeValue, vector<GMatrix>>::iterator tmpIterBegin = tmpMapBoneGMatrix.begin(); tmpIterBegin != tmpMapBoneGMatrix.end(); tmpIterBegin++)
-	{
-		TimeValue tmpTimeValueCurrent = tmpIterBegin->first;
-
-		tmpOfStreamAnim.write((char*)(&tmpTimeValueCurrent), sizeof(tmpTimeValueCurrent));
-
-		vector<GMatrix> tmpVectorGMatrixCurrent = tmpIterBegin->second;
-
-		int tmpVectorGMatrixCurrentSize = tmpVectorGMatrixCurrent.size();
-		tmpOfStreamAnim.write((char*)(&tmpVectorGMatrixCurrentSize), sizeof(tmpVectorGMatrixCurrentSize));
-
-		for (size_t tmpVectorGMatrixCurrentIndex = 0; tmpVectorGMatrixCurrentIndex < tmpVectorGMatrixCurrent.size(); tmpVectorGMatrixCurrentIndex++)
-		{
-
-			GMatrix tmpGMatrixNodeBone = tmpVectorGMatrixCurrent[tmpVectorGMatrixCurrentIndex];
-
-			glm::mat4x4 tmpMat4x4BoneGMatrix;
-			tmpMat4x4BoneGMatrix[0][0] = tmpGMatrixNodeBone[0][0]; tmpMat4x4BoneGMatrix[0][1] = tmpGMatrixNodeBone[0][1]; tmpMat4x4BoneGMatrix[0][2] = tmpGMatrixNodeBone[0][2]; tmpMat4x4BoneGMatrix[0][3] = tmpGMatrixNodeBone[0][3];
-			tmpMat4x4BoneGMatrix[1][0] = tmpGMatrixNodeBone[1][0]; tmpMat4x4BoneGMatrix[1][1] = tmpGMatrixNodeBone[1][1]; tmpMat4x4BoneGMatrix[1][2] = tmpGMatrixNodeBone[1][2]; tmpMat4x4BoneGMatrix[1][3] = tmpGMatrixNodeBone[1][3];
-			tmpMat4x4BoneGMatrix[2][0] = tmpGMatrixNodeBone[2][0]; tmpMat4x4BoneGMatrix[2][1] = tmpGMatrixNodeBone[2][1]; tmpMat4x4BoneGMatrix[2][2] = tmpGMatrixNodeBone[2][2]; tmpMat4x4BoneGMatrix[2][3] = tmpGMatrixNodeBone[2][3];
-			tmpMat4x4BoneGMatrix[3][0] = tmpGMatrixNodeBone[3][0]; tmpMat4x4BoneGMatrix[3][1] = tmpGMatrixNodeBone[3][1]; tmpMat4x4BoneGMatrix[3][2] = tmpGMatrixNodeBone[3][2]; tmpMat4x4BoneGMatrix[3][3] = tmpGMatrixNodeBone[3][3];
-
-			tmpOfStreamAnim.write((char*)(&tmpMat4x4BoneGMatrix), sizeof(tmpMat4x4BoneGMatrix));
-		}
-	}
-
-	//顶点权重信息
-	int tmpVectorVertexSize = tmpVectorVertex.size();
-	tmpOfStreamAnim.write((char*)(&tmpVectorVertexSize), sizeof(tmpVectorVertexSize));
-
-	for (size_t vertexindex = 0; vertexindex < tmpVectorWeight.size(); vertexindex++)
-	{
-
-		map<int, float> tmpMapWeightOneVertex = tmpVectorWeight[vertexindex];
-
-		int tmpMapWeightOneVertexSize = tmpMapWeightOneVertex.size();
-		tmpOfStreamAnim.write((char*)(&tmpMapWeightOneVertexSize), sizeof(tmpMapWeightOneVertexSize));
-
-		for (map<int, float>::iterator tmpIterBegin = tmpMapWeightOneVertex.begin(); tmpIterBegin != tmpMapWeightOneVertex.end(); tmpIterBegin++)
-		{
-
-			tmpOfStreamAnim.write((char*)(&tmpIterBegin->first), sizeof(tmpIterBegin->first));
-			tmpOfStreamAnim.write((char*)(&tmpIterBegin->second), sizeof(tmpIterBegin->second));
-		}
-	}
-
-
-	//计算顶点初始位置 并存储
-	for (size_t vertexindex = 0; vertexindex < tmpVectorWeight.size(); vertexindex++)
-	{
-		map<int, float> tmpMapWeightOneVertex = tmpVectorWeight[vertexindex];
-
-		//写入当前顶点受影响的骨骼数
-		int tmpMapWeightOneVertexSize = tmpMapWeightOneVertex.size();
-		tmpOfStreamAnim.write((char*)(&tmpMapWeightOneVertexSize), sizeof(tmpMapWeightOneVertexSize));
-
-		std::vector<glm::vec3> tmpVectorOneVertexPositionNoBone;
-		for (map<int, float>::iterator tmpIterBegin = tmpMapWeightOneVertex.begin(); tmpIterBegin != tmpMapWeightOneVertex.end(); tmpIterBegin++)
-		{
-			GMatrix tmpBoneGMatrixInvert = tmpVectorBoneGMatrixInvert[tmpIterBegin->first];
-
-			glm::mat4x4 tmpMat4x4BoneGMatrixInvert;
-			tmpMat4x4BoneGMatrixInvert[0][0] = tmpBoneGMatrixInvert[0][0]; tmpMat4x4BoneGMatrixInvert[0][1] = tmpBoneGMatrixInvert[0][1]; tmpMat4x4BoneGMatrixInvert[0][2] = tmpBoneGMatrixInvert[0][2]; tmpMat4x4BoneGMatrixInvert[0][3] = tmpBoneGMatrixInvert[0][3];
-			tmpMat4x4BoneGMatrixInvert[1][0] = tmpBoneGMatrixInvert[1][0]; tmpMat4x4BoneGMatrixInvert[1][1] = tmpBoneGMatrixInvert[1][1]; tmpMat4x4BoneGMatrixInvert[1][2] = tmpBoneGMatrixInvert[1][2]; tmpMat4x4BoneGMatrixInvert[1][3] = tmpBoneGMatrixInvert[1][3];
-			tmpMat4x4BoneGMatrixInvert[2][0] = tmpBoneGMatrixInvert[2][0]; tmpMat4x4BoneGMatrixInvert[2][1] = tmpBoneGMatrixInvert[2][1]; tmpMat4x4BoneGMatrixInvert[2][2] = tmpBoneGMatrixInvert[2][2]; tmpMat4x4BoneGMatrixInvert[2][3] = tmpBoneGMatrixInvert[2][3];
-			tmpMat4x4BoneGMatrixInvert[3][0] = tmpBoneGMatrixInvert[3][0]; tmpMat4x4BoneGMatrixInvert[3][1] = tmpBoneGMatrixInvert[3][1]; tmpMat4x4BoneGMatrixInvert[3][2] = tmpBoneGMatrixInvert[3][2]; tmpMat4x4BoneGMatrixInvert[3][3] = tmpBoneGMatrixInvert[3][3];
-
-			glm::vec3& tmpVec3PositionZeroFrame = tmpVectorVertex[vertexindex].Position;
-
-			glm::vec4 tmpVec4PositionZeroFrame;
-			tmpVec4PositionZeroFrame.x = tmpVec3PositionZeroFrame.x;
-			tmpVec4PositionZeroFrame.y = -tmpVec3PositionZeroFrame.z;
-			tmpVec4PositionZeroFrame.z = tmpVec3PositionZeroFrame.y;
-			tmpVec4PositionZeroFrame.w = 1;
-
-			glm::vec4 tmpPositionNoBone = tmpMat4x4BoneGMatrixInvert * tmpVec4PositionZeroFrame;
-
-			tmpOfStreamAnim.write((char*)(&tmpPositionNoBone), sizeof(tmpPositionNoBone));
-		}
-	}
-	tmpOfStreamAnim.close();
 }
 
 void IGameExporter::ExportNodeTraverse(IGameNode* varGameNode)
